@@ -1,0 +1,22 @@
+Setup and Run guide:
+
+1. Download node.js
+
+2. Download PostgreSQL
+    use this tutorial as reference:
+    https://www.youtube.com/watch?v=fZQI7nBu32M (its kind of a weird video tbh but its good enough)
+
+3. Go to db.js in the server folder and replace 'YOUR_POSTGRES_PASSWORD' with the password you set for PostgreSQL during installation
+
+4. Open database.sql in the server folder to see all of the sql scripts
+
+5. Open CMD and type 'psql -U postgres'
+
+6. copy and paste 'CREATE DATABASE writersblock;' into CMD to create the SQL database
+    you can use '\l' to view all of your current databases then '\c databaseName' to jump into a database
+
+7. do 'create exenstion if not exists "uuid-ossp";' in CMD to add uuid exention to sql
+    then copy and paste each CREATE TABLE statement in the database.sql to create all of the tables for the database
+
+8. To run the server, type 'nodemon index' in your IDE console. 
+    If you made code changes and want to rerun the server, hit control-s in index.js and nodemon will restart the server
