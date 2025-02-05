@@ -1,12 +1,12 @@
-\c postgres
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
-DROP DATABASE IF EXISTS writers_db;
+DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS groups CASCADE;
+DROP TABLE IF EXISTS users_groups CASCADE;
+DROP TABLE IF EXISTS channels CASCADE;
+DROP TABLE IF EXISTS threads CASCADE;
+DROP TABLE IF EXISTS comments CASCADE;
 
-
-
-CREATE DATABASE writers_db;
-
-\c writers_db
 
 CREATE TABLE users(
     userID uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -24,7 +24,7 @@ CREATE TABLE groups (
 
 CREATE TABLE users_groups (
     group_id INT REFERENCES groups(id),
-    user_id INT REFERENCES users(userID),
+    user_id uuid REFERENCES users(userID),
     role_id INT,
     PRIMARY KEY (group_id, user_id)
 );
@@ -54,11 +54,12 @@ CREATE TABLE comments (
     user_id uuid,
     thread_id INTEGER,
     body TEXT,
-    FOREIGN KEY (thread_id) REFERENCES threads(id)
+    FOREIGN KEY (thread_id) REFERENCES threads(id),
+    FOREIGN KEY (user_id) REFERENCES users(userID)
 );
-INSERT INTO users(userName, userEmail, userPassword) VALUES ('billy', "wiliaim321@gmail.com", 'sand');
-INSERT INTO users(userName, userEmail, userPassword) VALUES ('oats',  "wiliaim321@gmail.com",'sand');
-INSERT INTO users(userName, userEmail, userPassword) VALUES ('fox',  "wiliaim321@gmail.com",'sand');
+INSERT INTO users(userName, userEmail, userPassword) VALUES ('billy', 'wiliaim321@gmail.com', 'sand');
+INSERT INTO users(userName, userEmail, userPassword) VALUES ('oats', 'wiliaim321@gmail.com','sand');
+INSERT INTO users(userName, userEmail, userPassword) VALUES ('fox',  'wiliaim321@gmail.com','sand');
 
 INSERT INTO groups(id, name, description) VALUES (1, 'poet''s society', 'Writing Workshop for poets');
 INSERT INTO groups(id, name, description) VALUES (2, 'Short Story Group', 'Writing Workshop for short story writers');
@@ -72,5 +73,5 @@ VALUES (2, 1, 'Poetry Discussion', 'A poetry discussion channel');
 INSERT INTO channels (id, group_id, name, description)
 VALUES (3, 2, 'General Discussion', 'A general discussion channel');
 
-INSERT INTO threads (id, user_id, channel_id, title, body) VALUES (1, 1, 1, 'Favorite Poets?', 'What are your favorite poets and their works?');
-INSERT INTO threads (id, user_id, channel_id, title, body) VALUES (2, 3, 1, 'AI just took my job.', ':|');
+INSERT INTO threads (id, user_id, channel_id, title, body) VALUES (1, (SELECT userID FROM users WHERE userName = 'billy'), 1, 'Favorite Poets?', 'What are your favorite poets and their works?');
+INSERT INTO threads (id, user_id, channel_id, title, body) VALUES (2, (SELECT userID FROM users WHERE userName = 'fox'), 1, 'AI just took my job.', ':|');
