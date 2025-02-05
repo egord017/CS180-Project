@@ -1,27 +1,28 @@
-const { Client } = require('pg');
+const { Pool } = require('pg');
+const fs = require('fs');
 
 
-const client = new Client({
+const pool = new Pool({
 	user: process.env.PGUSER,
 	password: process.env.PGPASSWORD,
 	host: process.env.PGHOST,
 	port: process.env.PGPORT,
 	database: process.env.PGDB,
 });
-client.connect()
 
-client.query('SELECT * FROM users',(err, result)=>{
-    if (result){
-        console.log(result.rows);
-        
+async function init_db(){
+    try{
+        var sql_init = fs.readFileSync('./init.sql').toString();
+
+        const res = await pool.query(sql_init);
+        console.log("init db");
     }
-    else{
-        console.log("ERROR");
+    catch (err){
+        console.log(err);
     }
-    client.end();
-})
+    
+}
+init_db();
 
 
-
-
-module.exports = client;
+module.exports = pool;

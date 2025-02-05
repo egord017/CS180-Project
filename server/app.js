@@ -7,8 +7,9 @@ const db = require('./db.js');
 const app = express();
 const port = 8000;
 
-app.get('/', (req, res)=>{
-    res.send(db);
-});
+app.get('/', async (req, res)=>{
+    const users = await db.query("SELECT * FROM users");
+    res.send(users.rows);
+}); 
 app.get('/users')
 app.listen(port);
