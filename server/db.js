@@ -18,6 +18,7 @@ async function init_db(){
         console.log("init db");
     }
     catch (err){
+        console.log('grr');
         console.log(err);
     }
     
