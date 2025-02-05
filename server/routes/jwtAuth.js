@@ -8,10 +8,10 @@ const authorization = require("../middleware/authorization");
 
 //registering
 
-router.post("/register", validInfo, async (req, res) => {
+router.post("/register", async (req, res) => {
     try {
         
-        const {name, email, password} = req.body;
+        const {username, email, password} = req.body;
 
         //check if user already exists
         const user = await pool.query("SELECT * FROM users WHERE useremail = $1", [
@@ -19,27 +19,24 @@ router.post("/register", validInfo, async (req, res) => {
         ]);
 
         if(user.rows.length !== 0){
-            return res.status(401).send("User already exists");
+            return res.status(401).json("User already exists");
         }
 
         //encrypt user password
-        const saltRound = 10;
-        const salt = await bcrypt.genSalt(saltRounds);
-
-        const bcryptPassword = await bcrypt.hash(password, salt);
+        const bcryptPassword = await bcrypt.hash(password, 10);
 
         //enter new user into database
         const newUser = await pool.query("INSERT INTO users (username, useremail, userpassword) VALUES ($1, $2, $3) RETURNING *", 
-            [name, email, bcryptPassword]
+            [username, email, bcryptPassword]
         );
 
         //generate jwt token
-        const token = jwtGenerator(newUser.rows[0].userID);
+        const token = jwtGenerator(newUser.rows[0].userid);
 
         res.json({token});
     } catch (err) {
         console.error(err.message);
-        res.status(500).send("Server Error");
+        res.status(500).json("Server Error");
     }
 });
 
@@ -71,7 +68,7 @@ router.post("/login", validInfo, async (req, res) => {
 
     } catch (err){
         console.error(err.message);
-        res.status(500).send("Server Error");
+        res.status(500).json("Server Error");
     }
 });
 
@@ -82,7 +79,7 @@ router.get("/is-verify", authorization, async (req, res) => {
         
     } catch (err) {
         console.error(err.message);
-        res.status(500).send("Server Error"); 
+        res.status(500).json("Server Error"); 
     }
 });
 
