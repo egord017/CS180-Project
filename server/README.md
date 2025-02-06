@@ -30,6 +30,7 @@
     Create your local database
     __________________________
     1. Open CMD and type 'psql -U postgres'
+    -For windows, if psql is not recognized, add it to environment variables: "Edit the system environment variables" in windows settings. Click path and then add new. Add 'C:\Program Files\PostgreSQL\17\bin'
 
     2. copy and paste 'CREATE DATABASE writersblock;' into CMD to create the SQL database
     you can use '\l' to view all of your current databases then '\c databaseName' to jump into a database
@@ -43,7 +44,7 @@
     .env uses the dotenv node module, so google that if you have questions regarding this. .env is not tracked on git, because it contains sensitive data you do not want to share.
 
 ## 5. Start server
-To run the server, type 'nodemon index' in your IDE console (make sure youre in the server directory). 
+To run the server, type 'nodemon index' in your IDE console (make sure youre in the server directory). If nodemon is not recognized, run 'npm install -g nodemon'.
     If you made code changes and want to rerun the server, hit control-s in index.js and nodemon will restart the server
 
     You can also use node --watch index.js if your node is on a newer version.
