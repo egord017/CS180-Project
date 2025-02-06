@@ -43,8 +43,8 @@
     .env uses the dotenv node module, so google that if you have questions regarding this. .env is not tracked on git, because it contains sensitive data you do not want to share.
 
 ## 5. Start server
-To run the server, type 'nodemon app' in your IDE console (make sure youre in the server directory). 
+To run the server, type 'nodemon index' in your IDE console (make sure youre in the server directory). 
     If you made code changes and want to rerun the server, hit control-s in index.js and nodemon will restart the server
 
-    You can also use node --watch app.js if your node is on a newer version.
+    You can also use node --watch index.js if your node is on a newer version.
 
