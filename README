@@ -18,5 +18,7 @@ Setup and Run guide:
 7. do 'create exenstion if not exists "uuid-ossp";' in CMD to add uuid exention to sql
     then copy and paste each CREATE TABLE statement in the database.sql to create all of the tables for the database
 
-8. To run the server, type 'nodemon index' in your IDE console. 
+8. To run the server, cd into server and type 'nodemon index' in your IDE console. 
     If you made code changes and want to rerun the server, hit control-s in index.js and nodemon will restart the server
+
+9. To run the client, open another terminal, cd into client and type 'npm start'
