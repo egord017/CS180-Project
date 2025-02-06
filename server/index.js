@@ -12,9 +12,9 @@ app.use(express.json());
 app.use(cors());
 
 //routes
-app.use("/auth", require("./src/routes/jwtAuth")); //login and register route
+app.use("/auth", require("./src/routes/jwtAuth.js")); //login and register route
 
-app.use("/dashboard", require("./src/routes/dashboard")); //dashboard route
+app.use("/dashboard", require("./src/routes/dashboard.js")); //dashboard route
 
 
 //temporary test, will remove lol
