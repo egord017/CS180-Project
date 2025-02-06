@@ -50,6 +50,10 @@ function App() {
         <div className="container">
           <Routes>
             <Route 
+              path="/"
+              element={<Navigate to="/login"/>}
+              />
+            <Route 
               path="/login"
               element={!isAuthenticated ? <Login setAuth={setAuth}/> : <Navigate to="/dashboard" />}
             />
