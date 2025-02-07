@@ -28,6 +28,7 @@ async function get_channels_from_group(group_id){
     }
 }
 
+//UNUSED
 async function get_channel(channel_id){
     const query = 'SELECT * FROM channels WHERE channels.id=$1';
     try{
@@ -51,6 +52,14 @@ async function get_threads_from_group(group_id){
 }
 
 async function get_threads_from_channel(channel_id){
+    const query = 'SELECT * FROM threads WHERE threads.channel_id = $1';
+    try{
+        const result = await pool.query(query, channel_id);
+        return result.rows;
+    }
+    catch (err) {
+        console.log(err);
+    }
 
 }
 
