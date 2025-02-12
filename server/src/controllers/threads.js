@@ -9,6 +9,7 @@ async function get_thread(req, res) {
     const params = Object.values(req.params);
     console.log(params);
     const results = await threads_db.get_thread(params);
+    
     res.send(results);
 }
 
