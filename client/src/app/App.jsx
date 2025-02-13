@@ -1,14 +1,14 @@
 import React,{Fragment, useState, useEffect} from 'react';
-import './App.css';
+import '@/App.css';
 
 import {BrowserRouter as Router, Route, Routes, Navigate} from "react-router-dom";
 
 //components
-import Dashboard from "./components/Dashboard";
-import Login from "./components/Login";
-import Register from "./components/Register";
-
-
+import Dashboard from "@/components/Dashboard";
+import Login from "@/components/Login";
+import Register from "@/components/Register";
+import Landing from "@/app/pages/landing"
+import Groups from './pages/groups';
 function App() {
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -51,7 +51,7 @@ function App() {
           <Routes>
             <Route 
               path="/"
-              element={<Navigate to="/login"/>}
+              element={<Landing />}
               />
             <Route 
               path="/login"
@@ -65,6 +65,11 @@ function App() {
               path="/dashboard" 
               element={isAuthenticated ? <Dashboard setAuth={setAuth}/> : <Navigate to="/login" />}
             />
+            <Route 
+              path="/groups" 
+              element={<Groups/>}
+            />
+
           </Routes>
         </div>
       </Router>
