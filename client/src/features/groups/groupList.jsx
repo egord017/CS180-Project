@@ -9,20 +9,27 @@ function GroupList({showAll=true}){
           try {
             const groups = await get_groups();  // Fetch the groups
             setAllGroups(groups);  // Update the state with the fetched groups
-            return groups;
+            console.log(groups)
           } catch (error) {
             console.error("Error fetching groups:", error);
           }
         };
     
-        groups = fetch_groups();  // Call the fetch function inside useEffect
-        console.log(groups)
+        fetch_groups();  // Call the fetch function inside useEffect
+        
       }, []);  // Empty dependency array to run the effect only once (on mount)
     
 
-    return (
-        <p>hi</p>
-    );
+      return (
+        <div>
+          {all_groups.map(group => (
+            <div key={group.id}>
+              <h3>{group.name}</h3>
+              <p>{group.description}</p>
+            </div>
+          ))}
+        </div>
+      );
 }
 
 export default GroupList;

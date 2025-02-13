@@ -8,7 +8,7 @@ function LandingPage(){
         <div>
             <p>Writer's Block</p>
             <Button/>
-            
+            <GroupList/>
         </div>
         
     );
