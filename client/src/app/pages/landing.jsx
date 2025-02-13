@@ -7,7 +7,7 @@ function LandingPage(){
     return (
         <div>
             <p>Writer's Block</p>
-            <Button/>
+            <p>Groups</p>
             <GroupList/>
         </div>
         

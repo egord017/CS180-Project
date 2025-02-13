@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import {get_groups} from "./api.js"
+import Button from "@/components/Button.jsx";
 
 function GroupList({showAll=true}){
     const [all_groups, setAllGroups] = useState([]);
@@ -23,10 +24,13 @@ function GroupList({showAll=true}){
       return (
         <div>
           {all_groups.map(group => (
-            <div key={group.id}>
-              <h3>{group.name}</h3>
-              <p>{group.description}</p>
-            </div>
+            <Button>
+                <div key={group.id}>
+                <h3>{group.name}</h3>
+                <p>{group.description}</p>
+              </div>
+            </Button>
+            
           ))}
         </div>
       );

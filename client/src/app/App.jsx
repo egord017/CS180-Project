@@ -8,7 +8,7 @@ import Dashboard from "@/components/Dashboard";
 import Login from "@/components/Login";
 import Register from "@/components/Register";
 import Landing from "@/app/pages/landing"
-
+import Groups from './pages/groups';
 function App() {
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -66,8 +66,8 @@ function App() {
               element={isAuthenticated ? <Dashboard setAuth={setAuth}/> : <Navigate to="/login" />}
             />
             <Route 
-              path="/" 
-              element={isAuthenticated ? <Dashboard setAuth={setAuth}/> : <Navigate to="/login" />}
+              path="/groups" 
+              element={<Groups/>}
             />
 
           </Routes>
