@@ -4,10 +4,10 @@ import '@/App.css';
 import {BrowserRouter as Router, Route, Routes, Navigate} from "react-router-dom";
 
 //components
-import Dashboard from "./components/Dashboard";
-import Login from "./components/Login";
-import Register from "./components/Register";
-
+import Dashboard from "@/components/Dashboard";
+import Login from "@/components/Login";
+import Register from "@/components/Register";
+import Landing from "@/app/pages/landing"
 
 function App() {
 
@@ -51,7 +51,7 @@ function App() {
           <Routes>
             <Route 
               path="/"
-              element={<Navigate to="/login"/>}
+              element={<Landing />}
               />
             <Route 
               path="/login"
@@ -65,6 +65,11 @@ function App() {
               path="/dashboard" 
               element={isAuthenticated ? <Dashboard setAuth={setAuth}/> : <Navigate to="/login" />}
             />
+            <Route 
+              path="/" 
+              element={isAuthenticated ? <Dashboard setAuth={setAuth}/> : <Navigate to="/login" />}
+            />
+
           </Routes>
         </div>
       </Router>
