@@ -12,7 +12,7 @@ async function get_threads() {
 async function get_thread(thread_id) {
     try {
         const query = "SELECT * FROM threads WHERE id = $1";
-        const result = await pool.query(query, thread_id);
+        const result = await pool.query(query, [thread_id]); 
         return result.rows;
     } catch (err) {
         console.error(err);
@@ -22,7 +22,7 @@ async function get_thread(thread_id) {
 async function get_comments_from_thread(thread_id) {
     try {
         const query = "SELECT * FROM comments WHERE thread_id = $1";
-        const result = await pool.query(query, thread_id);
+        const result = await pool.query(query, [thread_id]); 
         return result.rows;
     } catch (err) {
         console.error(err);
