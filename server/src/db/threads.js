@@ -35,9 +35,23 @@ async function create_thread(user_id, channel_id, title, body) {
     return result.rows[0];
 }
 
+async function update_thread(thread_id, title, body) {
+
+    if (!title || !body) {
+        throw new Error("Title and body missingd");
+    }
+    const result = await pool.query("UPDATE threads SET title = $1, body = $2 WHERE id = $3 RETURNING *",[title, body, thread_id])
+    return result.rows[0];
+}
+
+async function delete_thread(thread_id) {
+    return await pool.query("DELETE FROM threads WHERE id = $1", [thread_id]);
+}
 module.exports = {
     get_threads,
     get_thread,
     get_comments_from_thread,
-    create_thread
+    create_thread,
+    update_thread,
+    delete_thread
 };

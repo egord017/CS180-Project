@@ -4,7 +4,6 @@ const express = require("express");
 require('dotenv').config();
 const db = require('./db.js');
 const morgan = require("morgan");
-const threadsRoutes = require("./src/routes/threads");
 
 const app = express();
 const cors = require("cors");
