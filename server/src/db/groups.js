@@ -63,11 +63,61 @@ async function get_threads_from_channel(channel_id){
 
 }
 
+async function put_new_group(params){
+    try {
+        const {group_name, group_description, user_id } = params;
+
+        //check if group already exists
+        const group = await pool.query("SELECT * FROM groups WHERE name = $1", [group_name]);
+
+        if(group.rows.length !== 0){
+            return res.status(401).json("A group with that name already exists");
+        }
+
+        //insert new group into db
+        const newGroup = await pool.query("INSERT INTO groups (name, description) VALUES ($1, $2)", [group_name, group_description])
+
+        //make user who created group the admin
+        const userAdmin = await pool.query("INSERT INTO users_groups (group_id, user_id, role_id) VALUES ($1, $2, 1)", [newGroup.rows[0].id, user_id])
+
+        const result = newGroup.rows[0];
+
+        res.json({result});
+
+    } catch (err) {
+        console.log(err.message);
+    }
+}
+
+async function join_group(params){
+    try {
+        const {group_id, user_id } = params;
+
+        //check if user already in group
+        const userInGroup = await pool.query("SELECT * FROM users_groups WHERE group_id = $1 AND user_id = $2", [group_id, user_id])
+        if(userInGroup.rows.length !== 0){
+            return res.status(401).json("User is already in this group");
+        }
+
+        //insert user into users_groups in db
+        const userGroup = await pool.query("INSERT INTO users_groups (group_id, user_id, role_id) VALUES ($1, $2, 0)", [group_id, user_id])
+
+        const result = userGroup.rows[0];
+
+        res.json({result});
+
+    } catch (err) {
+        console.log(err.message);
+    }
+}
+
 module.exports = {
     get_groups,
     get_group,
     get_channels_from_group,
     get_channel,
     get_threads_from_group,
-    get_threads_from_channel
+    get_threads_from_channel,
+    put_new_group,
+    join_group
 }

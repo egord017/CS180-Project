@@ -29,10 +29,24 @@ async function get_threads_from_channel(req, res){
     res.send(results);
 }
 
+async function put_new_group(req, res){
+    const {group_name, group_description, user_id} = req.body;
+    const results = await groups_db.put_new_group({group_name, group_description, user_id});
+    res.json(results);
+}
+
+async function join_group(req, res){
+    const {group_id, user_id} = req.body;
+    const results = await groups_db.join_group({group_id, user_id});
+    res.json(results);
+}
+
 module.exports = {
     get_groups,
     get_group,
     get_channels_from_group,
     get_threads_from_group,
     get_threads_from_channel,
+    put_new_group,
+    join_group
 }
