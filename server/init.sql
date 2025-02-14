@@ -75,3 +75,6 @@ VALUES (3, 2, 'General Discussion', 'A general discussion channel');
 
 INSERT INTO threads (id, user_id, channel_id, title, body) VALUES (1, (SELECT userID FROM users WHERE userName = 'billy'), 1, 'Favorite Poets?', 'What are your favorite poets and their works?');
 INSERT INTO threads (id, user_id, channel_id, title, body) VALUES (2, (SELECT userID FROM users WHERE userName = 'fox'), 1, 'AI just took my job.', ':|');
+
+INSERT INTO comments (user_id, thread_id, body) VALUES ((SELECT userID FROM users WHERE userName = 'billy'), 1, 'Testing comments');
+INSERT INTO comments (user_id, thread_id, body) VALUES ((SELECT userID FROM users WHERE userName = 'fox'), 1, 'I love Edgar Allan Poe!');
