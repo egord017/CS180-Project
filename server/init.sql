@@ -12,7 +12,8 @@ CREATE TABLE users(
     userID uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
     userName VARCHAR(255) NOT NULL,
     userEmail VARCHAR(255) NOT NULL,
-    userPassword VARCHAR(255) NOT NULL
+    userPassword VARCHAR(255) NOT NULL,
+    userBio VARCHAR(255) NULL
 );
 
 
@@ -57,24 +58,30 @@ CREATE TABLE comments (
     FOREIGN KEY (thread_id) REFERENCES threads(id),
     FOREIGN KEY (user_id) REFERENCES users(userID)
 );
-INSERT INTO users(userName, userEmail, userPassword) VALUES ('billy', 'wiliaim321@gmail.com', 'sand');
-INSERT INTO users(userName, userEmail, userPassword) VALUES ('oats', 'wiliaim321@gmail.com','sand');
-INSERT INTO users(userName, userEmail, userPassword) VALUES ('fox',  'wiliaim321@gmail.com','sand');
 
-INSERT INTO groups(id, name, description) VALUES (1, 'poet''s society', 'Writing Workshop for poets');
-INSERT INTO groups(id, name, description) VALUES (2, 'Short Story Group', 'Writing Workshop for short story writers');
 
-INSERT INTO channels (id, group_id, name, description)
-VALUES (1, 1, 'General', 'A general discussion channel');
 
-INSERT INTO channels (id, group_id, name, description)
-VALUES (2, 1, 'Poetry Discussion', 'A poetry discussion channel');
 
-INSERT INTO channels (id, group_id, name, description)
-VALUES (3, 2, 'General Discussion', 'A general discussion channel');
 
-INSERT INTO threads (id, user_id, channel_id, title, body) VALUES (1, (SELECT userID FROM users WHERE userName = 'billy'), 1, 'Favorite Poets?', 'What are your favorite poets and their works?');
-INSERT INTO threads (id, user_id, channel_id, title, body) VALUES (2, (SELECT userID FROM users WHERE userName = 'fox'), 1, 'AI just took my job.', ':|');
 
-INSERT INTO comments (user_id, thread_id, body) VALUES ((SELECT userID FROM users WHERE userName = 'billy'), 1, 'Testing comments');
-INSERT INTO comments (user_id, thread_id, body) VALUES ((SELECT userID FROM users WHERE userName = 'fox'), 1, 'I love Edgar Allan Poe!');
+-- INSERT INTO users(userName, userEmail, userPassword) VALUES ('billy', 'wiliaim321@gmail.com', 'sand');
+-- INSERT INTO users(userName, userEmail, userPassword) VALUES ('oats', 'wiliaim321@gmail.com','sand');
+-- INSERT INTO users(userName, userEmail, userPassword) VALUES ('fox',  'wiliaim321@gmail.com','sand');
+
+-- INSERT INTO groups(id, name, description) VALUES (1, 'poet''s society', 'Writing Workshop for poets');
+-- INSERT INTO groups(id, name, description) VALUES (2, 'Short Story Group', 'Writing Workshop for short story writers');
+
+-- INSERT INTO channels (id, group_id, name, description)
+-- VALUES (1, 1, 'General', 'A general discussion channel');
+
+-- INSERT INTO channels (id, group_id, name, description)
+-- VALUES (2, 1, 'Poetry Discussion', 'A poetry discussion channel');
+
+-- INSERT INTO channels (id, group_id, name, description)
+-- VALUES (3, 2, 'General Discussion', 'A general discussion channel');
+
+-- INSERT INTO threads (id, user_id, channel_id, title, body) VALUES (1, (SELECT userID FROM users WHERE userName = 'billy'), 1, 'Favorite Poets?', 'What are your favorite poets and their works?');
+-- INSERT INTO threads (id, user_id, channel_id, title, body) VALUES (2, (SELECT userID FROM users WHERE userName = 'fox'), 1, 'AI just took my job.', ':|');
+
+-- INSERT INTO comments (user_id, thread_id, body) VALUES ((SELECT userID FROM users WHERE userName = 'billy'), 1, 'Testing comments');
+-- INSERT INTO comments (user_id, thread_id, body) VALUES ((SELECT userID FROM users WHERE userName = 'fox'), 1, 'I love Edgar Allan Poe!');
