@@ -41,9 +41,11 @@ async function get_threads_from_user(user_id) { // aka get posts from user
 
 async function get_groups_from_user(user_id) {
     try {
-        
+        const query = "SELECT * FROM groups g JOIN users_groups ug ON g.id = ug.group_id WHERE ug.user_id = #1";
+        const results = await pool.query(query, user_id)
+        return results.rows;
     } catch (err) {
-        
+        console.error(err);
     }
 }
 
