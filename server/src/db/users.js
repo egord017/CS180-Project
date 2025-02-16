@@ -39,13 +39,12 @@ async function get_threads_from_user(user_id) { // aka get posts from user
     }
 }
 
-async function get_groups_from_user() {
-    // try {
-    //     const results = await pool.query("SELECT * FROM users WHERE id = $1");
-    //     return results.rows;
-    // } catch (err) {
-    //     console.error(err);
-    // }
+async function get_groups_from_user(user_id) {
+    try {
+        
+    } catch (err) {
+        
+    }
 }
 
 
@@ -54,6 +53,6 @@ module.exports = {
     get_users,
     get_user,
     get_comments_from_user,
-    get_threads_from_user
-    //get_groups_from_user
+    get_threads_from_user,
+    get_groups_from_user
 };
