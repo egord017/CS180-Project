@@ -23,14 +23,14 @@ app.use("/threads", require("./src/routes/threads.js")); //threads route
 
 
 //temporary test, will remove lol
-app.get('/', (req, res)=>{
-    res.send("/ GET request");
-});
-app.get('/users', async (req, res)=>{
-    const users = await db.query("SELECT * FROM users");
-    res.send(users.rows);
-}); 
+// app.get('/', (req, res)=>{
+//     res.send("/ GET request");
+// });
+// app.get('/users', async (req, res)=>{
+//     const users = await db.query("SELECT * FROM users");
+//     res.send(users.rows);
+// }); 
 
-app.listen(5000, () => {
-    console.log("Server is running on port 5000")
-});
+// app.listen(5000, () => {
+//     console.log("Server is running on port 5000")
+// });
