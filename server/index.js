@@ -15,7 +15,7 @@ app.use(cors());
 app.use("/auth", require("./src/routes/jwtAuth.js")); //login and register route
 
 app.use("/dashboard", require("./src/routes/dashboard.js")); //dashboard route
-
+app.use("/threads", require("./src/routes/threads.js"));
 
 //temporary test, will remove lol
 app.get('/', (req, res)=>{
