@@ -36,7 +36,7 @@ CREATE TABLE channels (
     group_id INTEGER,
     name TEXT NOT NULL,
     description TEXT NOT NULL,
-    FOREIGN KEY (group_id) REFERENCES groups(id)
+    FOREIGN KEY (group_id) REFERENCES groups(id) ON DELETE CASCADE
 );
 
 
@@ -46,8 +46,8 @@ CREATE TABLE threads (
     channel_id INTEGER,
     title TEXT NOT NULL,
     body TEXT,
-    FOREIGN KEY (user_id) REFERENCES users(userID),
-    FOREIGN KEY (channel_id) REFERENCES channels(id)
+    FOREIGN KEY (user_id) REFERENCES users(userID) ON DELETE SET NULL,
+    FOREIGN KEY (channel_id) REFERENCES channels(id) ON DELETE CASCADE
 );
 
 CREATE TABLE comments (
@@ -55,8 +55,8 @@ CREATE TABLE comments (
     user_id uuid,
     thread_id INTEGER,
     body TEXT,
-    FOREIGN KEY (thread_id) REFERENCES threads(id),
-    FOREIGN KEY (user_id) REFERENCES users(userID)
+    FOREIGN KEY (thread_id) REFERENCES threads(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(userID) ON DELETE SET NULL
 );
 
 
