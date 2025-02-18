@@ -42,9 +42,35 @@ async function post_thread(user_id, channel_id, title, body){
     }
 }
 
+async function patch_thread(id, body){
+    try {
+        const query = "UPDATE threads SET body=$1 WHERE id=$2 RETURNING id, user_id, channel_id, title, body";
+        const result = await pool.query(query, [body, id]);
+        console.log(id, body, result.rows);
+        return result.rows;
+    }
+    catch (err){
+        console.error(err);
+    }
+    
+}
+
+async function delete_thread(id){
+    try{   
+        const query = "DELETE FROM threads WHERE id=$1 RETURNING *";
+        const result = await pool.query(query, id);
+        return result.rows;
+    }
+    catch (err){
+        console.error(err);
+    }
+}
+
 module.exports = {
     get_threads,
     get_thread,
     get_comments_from_thread,
-    post_thread
+    post_thread,
+    patch_thread,
+    delete_thread
 };

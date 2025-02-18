@@ -15,5 +15,8 @@ router.get("/:thread_id/comments", threadController.get_comments_from_thread);
 //POST /threads (required body : channel_id, title, body, user_id)
 router.post('/', threadController.post_thread);
 
-
+//UPDATE PATCH /thread (required body : id, body)
+router.patch('/:thread_id', threadController.patch_thread);
 module.exports = router;
+
+router.delete('/:thread_id', threadController.delete_thread);
