@@ -82,7 +82,7 @@ async function delete_group(req, res){
     }
 }
 
-async function update_name(rew, res){
+async function update_name(req, res){
     const {group_id, user_id, new_name} = req.body;
     const results = await groups_db.update_name({group_id, user_id, new_name})
     if(results === "not_admin"){
@@ -93,7 +93,7 @@ async function update_name(rew, res){
     }
 }
 
-async function update_description(rew, res){
+async function update_description(req, res){
     const {group_id, user_id, new_name} = req.body;
     const results = await groups_db.update_description({group_id, user_id, new_name})
     if(results === "not_admin"){
