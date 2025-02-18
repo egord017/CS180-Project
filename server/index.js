@@ -21,7 +21,7 @@ app.use("/dashboard", require("./src/routes/dashboard.js")); //dashboard route
 app.use('/groups', require('./src/routes/groups.js')); //groups route
 app.use('/channels', require('./src/routes/channels.js'));
 app.use("/threads", require("./src/routes/threads.js")); //threads route
-
+app.use("/comments", require("./src/routes/comments.js")); 
 
 app.listen(5000, () => {
     console.log("Server is running on port 5000")
