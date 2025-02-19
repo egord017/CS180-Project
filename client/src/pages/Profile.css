@@ -1,0 +1,14 @@
+.profilePic {
+  height: 280px;
+  width: 280px;
+  background-color: #A4B5A0;
+  border-radius: 50%;
+
+}
+
+.my_fullscreen_div {
+  width: 100%;
+  height: 100vh;
+/* margin: 0;
+padding: 0;  */
+}
