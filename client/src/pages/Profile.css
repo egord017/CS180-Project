@@ -1,14 +1,74 @@
+.profilePage {
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  background-color: #F0E3D7 0.1;
+  
+}
+
+.profilePicContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+  padding-bottom: 111px;
+  padding: 1 em;
+}
+
+
 .profilePic {
   height: 280px;
   width: 280px;
   background-color: #A4B5A0;
   border-radius: 50%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.iconButton {
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  border-radius: 50%;
+  padding: 10px;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.iconImage {
+  width: 36px;
+  height: 36px;
+}
+
+.textBoxContainer {
+  margin-top: 111px; /* Space between the profile picture and the text boxes */
+  display: flex;
+  flex-direction: column;  /* Stack the elements vertically */
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+  text-align: center; /* Center the text inside the container */
 
 }
 
-.my_fullscreen_div {
-  width: 100%;
-  height: 100vh;
-/* margin: 0;
-padding: 0;  */
+.textBox {
+  padding: 10px;
+  margin: 10px 0;  /* Space between the text boxes */
+  width: 1066px;    /* Width of the text boxes */
+  height: 57px;
+  background-color: #A4B5A0;
+  border-radius: 1px;
+  font-size: 16px;
+  text-align: center;  /* Center text inside the input box */
+}
+
+
+.textBox::placeholder {
+  font-style: italic;
+  color: #888;
 }
