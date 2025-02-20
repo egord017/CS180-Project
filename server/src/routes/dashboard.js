@@ -3,7 +3,9 @@ const router = express.Router();
 const pool = require("../../db");
 const authorization = require("../middleware/authorization");
 
-router.get("/", authorization, async(req, res) => {
+
+//get current user's name
+router.get("/username", authorization, async(req, res) => {
     try {
         
         const user = await pool.query("SELECT username FROM users WHERE userid = $1", [req.user]);
@@ -15,6 +17,15 @@ router.get("/", authorization, async(req, res) => {
         res.status(500).json("Server Error");
     }
 });
+
+//get current user's id
+router.get("/userid", authorization, async(req, res) => {
+    try {
+        res.json({ userID: req.user });
+    } catch (err) {
+        console.log(err.message);
+    }
+})
 
 
 module.exports = router;
