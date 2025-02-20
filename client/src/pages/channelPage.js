@@ -5,12 +5,18 @@ import './threadPage.css';
 
 
 function ChannelPage(){
+
     const channel_id = Object.values(useParams())[0];
     const [channel, setChannel] =  useState(null);
     const [group, setGroup] =  useState(null);
     const [threads, setThreads] = useState([]);
 
     const navigate = useNavigate();
+
+    function backToGroup(group_id){
+        if (group_id) navigate(`/group/${channel_id}`);
+    }
+
 
     function visitThread(thread_id){
         navigate(`/thread/${thread_id}`);
@@ -31,13 +37,14 @@ function ChannelPage(){
             setChannel(new_channel);
             //return new_channel.group_id;
         }
-
         getChannelAndGroup();
         getThreads();
     }, []);
 
+
     return (
         <div>
+            <Button onClick={()=>{backToGroup(channel?.group_id)}}>Back To Group</Button>
             <div>{group?.name}</div>
             <div>{channel?.name}</div>
             <div>{channel?.description}</div>
