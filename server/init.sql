@@ -73,11 +73,11 @@ VALUES (2, 1, 'Poetry Discussion', 'A poetry discussion channel');
 INSERT INTO channels (id, group_id, name, description)
 VALUES (3, 2, 'General Discussion', 'A general discussion channel');
 
-INSERT INTO threads (user_id, channel_id, title, body) 
-VALUES ((SELECT userID FROM users WHERE userName = 'billy'), 1, 'Favorite Poets?', 'What are your favorite poets and their works?');
-INSERT INTO threads (user_id, channel_id, title, body) 
-VALUES ((SELECT userID FROM users WHERE userName = 'fox'), 1, 'AI just took my job.', ':|');
+INSERT INTO threads (user_id, channel_id, title, body) VALUES ((SELECT userID FROM users WHERE userName = 'billy'), 1, 'Favorite Poets?', 'What are your favorite poets and their works?');
+INSERT INTO threads (user_id, channel_id, title, body) VALUES ((SELECT userID FROM users WHERE userName = 'fox'), 1, 'AI just took my job.', ':|');
+INSERT INTO threads (user_id, channel_id, title, body) VALUES ((SELECT userID FROM users WHERE userName = 'oats'), 2, 'How to study effectively?', 'What do you do?');
 
 
 INSERT INTO comments (user_id, thread_id, body) VALUES ((SELECT userID FROM users WHERE userName = 'billy'), 1, 'Testing comments');
 INSERT INTO comments (user_id, thread_id, body) VALUES ((SELECT userID FROM users WHERE userName = 'fox'), 1, 'I love Edgar Allan Poe!');
+INSERT INTO comments (user_id, thread_id, body) VALUES ((SELECT userID FROM users WHERE userName = 'oats'), 2, 'how creative!');
