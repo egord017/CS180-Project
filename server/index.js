@@ -6,17 +6,20 @@ const db = require('./db.js');
 
 const app = express();
 const cors = require("cors");
+const morgan = require("morgan");
 
 
 //middleware
 app.use(express.json());
 app.use(cors());
+app.use(morgan("dev")); //added morgan for api testing
 
 //routes
 app.use("/auth", require("./src/routes/jwtAuth.js")); //login and register route
 
 app.use("/dashboard", require("./src/routes/dashboard.js")); //dashboard route
-app.use('/groups', require('./src/routes/groups.js'));
+app.use('/groups', require('./src/routes/groups.js')); //groups route
+app.use("/threads", require("./src/routes/threads.js")); //threads route
 
 
 //temporary test, will remove lol
