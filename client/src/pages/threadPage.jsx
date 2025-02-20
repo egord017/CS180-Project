@@ -10,8 +10,8 @@ function ThreadPage(){
     function onClickGoHome(){
         navigate('/');
     }
-    function BackToChannel(channel_id){
-        navigate(`/channel/${channel_id}`);
+    function backToChannel(channel_id){
+        if (channel_id) navigate(`/channel/${channel_id}`);
     }
 
     //fetch thread object using my url param thread/:thread_id
@@ -55,7 +55,7 @@ function ThreadPage(){
     //somehow put data into the return ina nice way. maybe ill create a commentssection component and threadview component
     return (
         <div>
-            <Button onClick={onClickGoHome}>Back</Button>
+            <Button onClick={()=>{backToChannel(thread?.channel_id)}}>Back</Button>
             <div>{group?.name}</div>
             <div>{channel?.name}</div>
             <div>
