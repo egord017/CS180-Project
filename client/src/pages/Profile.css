@@ -7,12 +7,13 @@
 }
 
 .profilePicContainer {
+  padding-top: 86px;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 50vh;
   padding-bottom: 111px;
-  padding: 1 em;
+  width: 100%;
+  text-align: center;
 }
 
 
@@ -21,10 +22,10 @@
   width: 280px;
   background-color: #A4B5A0;
   border-radius: 50%;
-  position: relative;
-  display: flex;
+  position: relative; 
+  display: flex; 
   justify-content: center;
-  align-items: center;
+  align-items: center; 
 }
 
 .iconButton {
@@ -33,11 +34,8 @@
   border-radius: 50%;
   padding: 10px;
   cursor: pointer;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
+
 
 
 .iconImage {
@@ -45,21 +43,34 @@
   height: 36px;
 }
 
-.textBoxContainer {
-  margin-top: 111px; /* Space between the profile picture and the text boxes */
+.textBoxFullContainer {
   display: flex;
   flex-direction: column;  /* Stack the elements vertically */
-  justify-content: center;
+  justify-content: space-between;
+  gap: 30px;
   align-items: center;
-  height: 50vh;
+  /* height: 30vh; */
   text-align: center; /* Center the text inside the container */
 
+}
+
+.textBoxContainer {
+  display: flex;
+  flex-direction: row;  /* Stack the elements vertically */
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
+
+}
+
+.h1, h1 {
+  font-size: 30px;
 }
 
 .textBox {
   padding: 10px;
   margin: 10px 0;  /* Space between the text boxes */
-  width: 1066px;    /* Width of the text boxes */
+  width: 900px;    /* Width of the text boxes */
   height: 57px;
   background-color: #A4B5A0;
   border-radius: 1px;

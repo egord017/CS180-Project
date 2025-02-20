@@ -1,10 +1,22 @@
-import React from 'react';
 import './Profile.css';
-import cameraIcon from '../assets/Icon.png'; // Import your image here
+import cameraIcon from '../assets/Icon.png'; 
+import React, { useRef, useState } from 'react';
 
 function Profile() {
+  const fileInputRef = useRef(null);
+  const [profilePhoto, setProfilePhoto] = useState(null);
+
   const handleIconClick = () => {
-    console.log('icon clicked');
+    fileInputRef.current.click();
+    
+  };
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0]; 
+    if (file) {
+      const imageURL = URL.createObjectURL(file);
+      setProfilePhoto(imageURL); 
+    }
   };
 
   return (
@@ -15,17 +27,47 @@ function Profile() {
           <button className="iconButton" onClick={handleIconClick}>
             <img src={cameraIcon} alt="Camera Icon" className="iconImage" />
           </button>
-        </div>
+          <input
+            type="file"
+            ref={fileInputRef}
+            onChange={handleFileChange}
+            style={{ display: 'none' }}
+          />
 
-        {/* Text Boxes Below the Profile Picture */}
-        <div className="textBoxContainer">
-          <input type="text" placeholder="Username" className="textBox" />
-          <input type="email" placeholder="Email" className="textBox" />
-          <input type="password" placeholder="Password" className="textBox" />
+          {/* Display the image preview if a file is selected */}
+      { profilePhoto && (
+        <img
+        src={profilePhoto}
+        alt="Preview"
+        style={{
+          width: '100%', 
+          height: '100%', 
+          borderRadius: '50%', 
+          position: 'absolute', 
+        }}
+        />
+      )}
+          
         </div>
       </div>
+        {/* Replace username/email/password with variables */}
+        <div className="textBoxFullContainer">
+          <div className="textBoxContainer"> 
+            <h1> Change Username: </h1>
+            <input type="text" placeholder="Username" className="textBox" />
+          </div>
+          <div className="textBoxContainer"> 
+            <h1> Change Email: </h1>
+            <input type="text" placeholder="Email" className="textBox" />
+          </div>
+          <div className="textBoxContainer"> 
+            <h1> Change Password: </h1>
+            <input type="text" placeholder="*********" className="textBox" />
+          </div>
+        </div>
     </div>
-    
+
+
   );
 }
 
