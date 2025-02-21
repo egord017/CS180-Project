@@ -3,7 +3,7 @@ const profileController = require("../controllers/profile.js");
 
 const router = express.Router();
 
-//Get all users
+//Get all users user_id for testing
 router.get("/", profileController.get_users);
 
 //GET get user based on user id
