@@ -2,13 +2,13 @@ const groups_db = require('../db/groups.js');
 
 async function get_groups(req, res){
     const results = await groups_db.get_groups();
-    res.send(results);
+    res.json(results);
 }
 
 async function get_group(req, res){
-    const params = Object.values(req.params);
+    const group_id = req.params.group_id;
     console.log(params);
-    const results = await groups_db.get_group(params);
+    const results = await groups_db.get_group(group_id);
     res.send(results);
 }
 

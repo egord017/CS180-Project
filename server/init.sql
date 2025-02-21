@@ -66,6 +66,10 @@ INSERT INTO users(userName, userEmail, userPassword) VALUES ('fox',  'wiliaim321
 
 INSERT INTO groups(id, name, description) VALUES (1, 'poet''s society', 'Writing Workshop for poets');
 INSERT INTO groups(id, name, description) VALUES (2, 'Short Story Group', 'Writing Workshop for short story writers');
+INSERT INTO groups(id, name, description) VALUES (3, 'minecraft guide', 'group from gamers');
+INSERT INTO groups(id, name, description) VALUES (4, 'DIY Projects', 'group for creative creations');
+INSERT INTO groups(id, name, description) VALUES (5, 'Food Pics', 'group for food lovers');
+INSERT INTO groups(id, name, description) VALUES (6, 'Movie Enthusiasts', 'Group for movie/film appreciation');
 
 INSERT INTO channels (id, group_id, name, description)
 VALUES (1, 1, 'General', 'A general discussion channel');
