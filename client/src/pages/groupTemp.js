@@ -17,6 +17,9 @@ function GroupPage(){
     const group_id = Object.values(useParams())[0];
     const navigate = useNavigate();
     
+    function visitChannel(channel_id){
+        navigate(`/channel/${channel_id}`)
+    }
     useEffect(()=>{
         async function getGroup(){
             const group_obj = await fetch(`http://localhost:5000/groups/${group_id}`);
@@ -67,10 +70,26 @@ function GroupPage(){
         const new_threads = []
         for (const i in threads){
             console.log(threads[i]?.title);
-            new_threads.oush(threads[i]);
+            new_threads.push(threads[i]);
         }
-
+        return new_threads;
         
+    }
+    function getChannelInfo(channel_id){
+        //simple for loop over another fetch because a group wont have too many channels
+        for (const i in channels){
+            //console.log(channel);
+            if (channels[i]?.id==channel_id){
+                //console.log("got:",channel);
+                return (
+                    <Fragment>
+                        <div>{channels[i]?.name}</div>
+                        <div>{channels[i]?.description}</div>
+                    </Fragment>
+                    
+                )
+            }
+        }
     }
     return (
         <div>
@@ -78,15 +97,21 @@ function GroupPage(){
 
             {Object.entries(threads).map((channel)=>{
                 
-                return (<Fragment>
-                    <div>{channel[0]}</div>
-                    {/* {returnThreads(channel[1])} */}
+                return (<Button onClick={()=>{visitChannel(channel[0])}}>
+                
+                    {getChannelInfo(channel[0])}
+                    {returnThreads(channel[1])?.map((thread)=>(
+                        <Fragment>
+                            <div>{thread.title}</div>
+                            <div>{thread.body.substr(0, 25)}</div>
+                        </Fragment>
+                    ))}
                 
                     {/* {channel[1]?.map((thread)=>{
                         return <div>{thread?.title}</div>
                     })} */}
                     <div>{channel[1][0]?.title}</div>
-                </Fragment>)
+                </Button>)
                 
             })}
             

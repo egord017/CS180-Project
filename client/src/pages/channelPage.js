@@ -14,7 +14,7 @@ function ChannelPage(){
     const navigate = useNavigate();
 
     function backToGroup(group_id){
-        if (group_id) navigate(`/group/${channel_id}`);
+        if (group_id) navigate(`/group/${group_id}`);
     }
 
 
