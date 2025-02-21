@@ -1,3 +1,5 @@
+-- \i init.sql
+
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 DROP TABLE IF EXISTS users CASCADE;
@@ -73,16 +75,30 @@ INSERT INTO users(userName, userEmail, userPassword, userBio) VALUES ('julian', 
 INSERT INTO users(userName, userEmail, userPassword) VALUES ('billy', 'wiliaim321@gmail.com', 'sand');
 INSERT INTO users(userName, userEmail, userPassword) VALUES ('oats', 'meal','breakfast');
 INSERT INTO users(userName, userEmail, userPassword) VALUES ('fox', 'fdani012@ucr.edu','cs152');
-INSERT INTO users(userName, userEmail, userPassword) VALUES ('faye', 'fayela44@gmail.com','littlemice');\
+INSERT INTO users(userName, userEmail, userPassword) VALUES ('faye', 'fayela44@gmail.com','littlemice');
 INSERT INTO users(userName, userEmail, userPassword) VALUES ('jason', 'jms312@gmail.com','chillax');
 INSERT INTO users(userName, userEmail, userPassword) VALUES ('rebby', 'becca102@yahoo.com','karmasa');
 
 -- GROUPS -------------------------------------------------
-INSERT INTO groups(name, description) VALUES ("Poet's Society", 'Writing Group for poets'); -- 1
+INSERT INTO groups(name, description) VALUES ('Poet''s Society', 'Writing Group for poets'); -- 1
 INSERT INTO groups(name, description) VALUES ('Short Story Group', 'Writing Group for short story writers'); -- 2
 INSERT INTO groups(name, description) VALUES ('Non Fiction Group', 'Writing Group for non fiction writers'); -- 3
 INSERT INTO groups(name, description) VALUES ('Fiction Group', 'Writing Group for fiction writers'); -- 4
 INSERT INTO groups(name, description) VALUES ('Philosophy Group', 'Writing Group for philosophy writers'); -- 5
+
+
+-- insert user into groups
+INSERT INTO users_groups (group_id, user_id, role_id) 
+VALUES (1, (SELECT userID FROM users WHERE userName = 'daniel'), 1);
+INSERT INTO users_groups (group_id, user_id, role_id) 
+VALUES (2, (SELECT userID FROM users WHERE userName = 'daniel'), 1);
+INSERT INTO users_groups (group_id, user_id, role_id) 
+VALUES (3, (SELECT userID FROM users WHERE userName = 'daniel'), 1);
+
+INSERT INTO users_groups (group_id, user_id, role_id) 
+VALUES (1, (SELECT userID FROM users WHERE userName = 'faye'), 1);
+INSERT INTO users_groups (group_id, user_id, role_id) 
+VALUES (2, (SELECT userID FROM users WHERE userName = 'faye'), 2);
 
 -- CHANNELS -----------------------------------------------
 -- 1
@@ -114,11 +130,7 @@ INSERT INTO channels (group_id, name, description)
 VALUES (5, 'General Discussion', 'A general discussion channel');
 
 
-
-
-
 -- THREADS -----------------------------------------------
-
 INSERT INTO threads (user_id, channel_id, title, body) VALUES ((SELECT userID FROM users WHERE userName = 'daniel'), 1, 'I Love Poems', 'Why do you like poems?');
 INSERT INTO threads (user_id, channel_id, title, body) VALUES ((SELECT userID FROM users WHERE userName = 'daniel'), 1, 'Thoughts on Interstellar?', 'Not a poem but thoughts?');
 INSERT INTO threads (user_id, channel_id, title, body) VALUES ((SELECT userID FROM users WHERE userName = 'daniel'), 1, 'Join Miyagido', 'New club at school for locals');
