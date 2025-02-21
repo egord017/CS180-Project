@@ -17,6 +17,9 @@ function ChannelPage(){
         if (group_id) navigate(`/group/${group_id}`);
     }
 
+    function postThread(){
+        
+    }
 
     function visitThread(thread_id){
         navigate(`/thread/${thread_id}`);
