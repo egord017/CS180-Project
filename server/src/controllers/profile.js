@@ -1,4 +1,4 @@
-const users_db = require('../db/users.js');
+const users_db = require('../db/profile.js');
 
 async function get_users(req, res) {
     const results = await users_db.get_users();

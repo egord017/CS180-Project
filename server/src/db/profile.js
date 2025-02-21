@@ -11,7 +11,7 @@ async function get_users() {
 
 async function get_user(user_id) {
     try {
-        const query = "SELECT * FROM threads WHERE id = $1";
+        const query = "SELECT * FROM users WHERE id = $1";
         const results = await pool.query(query, user_id);
         return results.rows;
     } catch (err) {
