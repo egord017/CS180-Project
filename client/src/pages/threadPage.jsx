@@ -33,6 +33,7 @@ function ThreadPage(){
                 });
                 const thread_data = await thread_obj.json();
                 setThreadData(thread_data);
+                console.log(thread_data);
                 
                 const comments_obj = await fetch((`http://localhost:5000/threads/${thread_id[0]}/comments`));
                 setComments(await comments_obj.json());
@@ -51,6 +52,7 @@ function ThreadPage(){
         async function getChannelAndGroup(){
             try{
                 if (!thread) return;
+                console.log(thread.channel_id);
                 const channelObj = await fetch(`http://localhost:5000/channels/${thread.channel_id}`);
                 const new_channel = await channelObj.json();
     
