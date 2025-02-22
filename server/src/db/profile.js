@@ -31,25 +31,25 @@ async function get_groups_from_user(userID) {
     }
 }
 
-// async function get_comments_from_user(userID) {
-//     try {
-//         const query = "SELECT * FROM comments WHERE userID = $1";
-//         const results = await pool.query(query, userID);
-//         return results.rows;
-//     } catch (err) {
-//         console.error(err);
-//     }
-// }
+async function get_comments_from_user(user_id) {
+    try {
+        const query = "SELECT * FROM comments WHERE user_id = $1";
+        const results = await pool.query(query, user_id);
+        return results.rows;
+    } catch (err) {
+        console.error(err);
+    }
+}
 
-// async function get_threads_from_user(userID) {
-//     try {
-//         const query = "SELECT * FROM threads WHERE userID = $1";
-//         const results = await pool.query(query, userID);
-//         return results.rows;
-//     } catch (err) {
-//         console.error(err);
-//     }
-// }
+async function get_threads_from_user(user_id) {
+    try {
+        const query = "SELECT * FROM threads WHERE user_id = $1";
+        const results = await pool.query(query, user_id);
+        return results.rows;
+    } catch (err) {
+        console.error(err);
+    }
+}
 
 
 
@@ -58,8 +58,8 @@ async function get_groups_from_user(userID) {
 module.exports = {
     get_users,
     get_user,
-    get_groups_from_user
-    // get_comments_from_user,
-    //get_threads_from_user,
+    get_groups_from_user,
+    get_comments_from_user,
+    get_threads_from_user
     
 };

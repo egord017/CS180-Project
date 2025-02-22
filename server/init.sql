@@ -153,4 +153,4 @@ INSERT INTO comments (user_id, thread_id, body) VALUES ((SELECT userID FROM user
 
 INSERT INTO comments (user_id, thread_id, body) VALUES ((SELECT userID FROM users WHERE userName = 'fox'), 2, 'I love Edgar Allan Poe!');
 INSERT INTO comments (user_id, thread_id, body) VALUES ((SELECT userID FROM users WHERE userName = 'faye'), 2, 'I hate Edgar Allan Poe!');
-INSERT INTO comments (user_id, thread_id, body) VALUES ((SELECT userID FROM users WHERE userName = 'daniel'), 3, 'join miyagido');
+INSERT INTO comments (user_id, thread_id, body) VALUES ((SELECT userID FROM users WHERE userName = 'daniel'), 3, 'join miyagido guys!');
