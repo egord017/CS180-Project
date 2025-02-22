@@ -1,11 +1,30 @@
-import React, { useState, useEffect } from 'react';
-//import { useNavigate, useParams } from 'react-router-dom';
-import "./groups.css";
+import React from "react";
+import "./profilePage.css";
 
-import { Link } from "react-router-dom";
-
-function ProfilePage() {
-
-}
+const ProfilePage = () => {
+  return (
+    <div className="profile-container">
+      <div className="profile-sidebar">
+        <div className="profile-image"></div>
+        <div className="profile-name"></div>
+        <div className="profile-bio"></div>
+      </div>
+      <div className="profile-content">
+        <div className="profile-section">
+          <h3>Groups Joined</h3>
+          <div className="profile-box"></div>
+        </div>
+        <div className="profile-section">
+          <h3>Thread Posted</h3>
+          <div className="profile-box"></div>
+        </div>
+        <div className="profile-section">
+          <h3>Recent Comments</h3>
+          <div className="profile-box"></div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default ProfilePage;
