@@ -11,6 +11,7 @@ import Register from "./components/Register";
 import GroupPage from './pages/groupTemp';
 import ChannelPage from './pages/channelPage';
 import ThreadPage from './pages/threadPage';
+import ThreadPostForm from './pages/threadPostForm';
 
 function App() {
 
@@ -79,6 +80,10 @@ function App() {
             <Route 
               path="/thread/:thread_id" 
               element={<ThreadPage/>}
+            />
+            <Route 
+              path="/channel/:channel_id/submit" 
+              element={<ThreadPostForm/>}
             />
           </Routes>
         </div>

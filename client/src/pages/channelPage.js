@@ -17,8 +17,8 @@ function ChannelPage(){
         if (group_id) navigate(`/group/${group_id}`);
     }
 
-    function postThread(){
-        
+    function visitThreadForm(){
+        navigate('submit');
     }
 
     function visitThread(thread_id){
@@ -48,6 +48,7 @@ function ChannelPage(){
     return (
         <div>
             <Button onClick={()=>{backToGroup(channel?.group_id)}}>Back To Group</Button>
+            <Button onClick={()=>{visitThreadForm()}}>Post</Button>
             <div>{group?.name}</div>
             <div>{channel?.name}</div>
             <div>{channel?.description}</div>
