@@ -8,7 +8,8 @@ import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 
-import GroupPage from './pages/groupTemp';
+import Groups from './pages/groups';
+import GroupPage from './pages/groupPage';
 import ChannelPage from './pages/channelPage';
 import ThreadPage from './pages/threadPage';
 import ThreadPostForm from './pages/threadPostForm';
@@ -68,6 +69,10 @@ function App() {
             <Route 
               path="/dashboard" 
               element={isAuthenticated ? <Dashboard setAuth={setAuth}/> : <Navigate to="/login" />}
+            />
+            <Route 
+              path="/groups" 
+              element={<Groups/>}
             />
             <Route 
               path="/group/:group_id" 

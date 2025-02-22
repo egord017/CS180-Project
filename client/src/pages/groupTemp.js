@@ -1,83 +1,131 @@
-import React, { Fragment, useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import Button from '../components/Button';
-import './threadPage.css';
+// import React, { Fragment, useState, useEffect } from 'react';
+// import { useNavigate, useParams } from 'react-router-dom';
+// import Button from '../components/Button';
+// import './threadPage.css';
 
-function GroupPage() {
-    const [group, setGroup] = useState(null);
-    const [channels, setChannels] = useState([]);
-    const [threads, setThreads] = useState({});
-    const { group_id } = useParams();
-    const navigate = useNavigate();
+// import "./groups.css"; // Import the CSS file
 
-    function visitChannel(channel_id) {
-        navigate(`/channel/${channel_id}`);
-    }
+// function Groups() {
+//   const [groupsData, setGroupsData] = useState([]);
 
-    useEffect(() => {
-        async function fetchGroupData() {
-            try {
-                const [group_obj, channels_obj] = await Promise.all([
-                    fetch(`http://localhost:5000/groups/${group_id}`),
-                    fetch(`http://localhost:5000/groups/${group_id}/channels`),
-                ]);
+//   useEffect(() => {
+//     const getGroups = async () => {
+//     const response = await fetch("http://localhost:5000/groups");
+//     if (!response.ok) {
+//         throw new Error("Failed to fetch groups");
+//     }
+//     const data = await response.json();
+//     setGroupsData(data); 
+//     };
 
-                const group_data = await group_obj.json();
-                const channels_data = await channels_obj.json();
+//     getGroups();
+//   }, []);
 
-                setGroup(group_data);
-                setChannels(channels_data);
+//   return (
+//     <div className="groups-container">
+//       <div className="groups-header">
+//         <h1>Join A Group</h1>
+//         <button className="groups-add-button">
+//           <span>+</span>
+//         </button>
+//       </div>
+//       <div className="groups-grid">
+//         {groupsData.length > 0 ? (
+//           groupsData.map((group) => (
+//             <div className="group-card" key={group.id}>
+//               <div className="group-card-top"></div>
+//               <div className="group-card-body">
+//                 <p className="group-category">{group.category || "No Category"}</p>
+//                 <h2 className="group-title">{group.name}</h2>
+//                 <p className="group-subtitle">{group.description}</p>
+//               </div>
+//             </div>
+//           ))
+//         ) : (
+//           <p>Loading groups...</p>
+//         )}
+//       </div>
+//     </div>
+//   );
+// }
 
-            //craete promise.all to fetch multiple req??
-                const threads_data = await Promise.all(channels_data.map(async channel => {
-                    const results = await fetch(`http://localhost:5000/channels/${channel.id}/threads`)
-                    return await results.json();    
-                }));
+// export default Groups;
 
-                const threads_dict = channels_data.reduce((acc, channel, index) => {
-                    acc[channel.id] = threads_data[index];
-                    return acc;
-                }, {});
+// // function GroupPage() {
+// //     const [group, setGroup] = useState(null);
+// //     const [channels, setChannels] = useState([]);
+// //     const [threads, setThreads] = useState({});
+// //     const { group_id } = useParams();
+// //     const navigate = useNavigate();
 
-                setThreads(threads_dict);
-            } catch (error) {
-                console.error("error fetching in group : ", error);
-            }
-        }
-        //console.log("running useeffect");
-        fetchGroupData();
-    }, [group_id]);
+// //     function visitChannel(channel_id) {
+// //         navigate(`/channel/${channel_id}`);
+// //     }
 
-    function getChannelInfo(channel_id) {
-        const channel = channels.find(c => c.id == channel_id);
-        if (!channel) return null;
-        return (
-            <Fragment>
-                <div>{channel.name}</div>
-                <div>{channel.description}</div>
-                <div>-------------</div>
-            </Fragment>
-        );
-    }
+// //     useEffect(() => {
+// //         async function fetchGroupData() {
+// //             try {
+// //                 const [group_obj, channels_obj] = await Promise.all([
+// //                     fetch(`http://localhost:5000/groups/${group_id}`),
+// //                     fetch(`http://localhost:5000/groups/${group_id}/channels`),
+// //                 ]);
 
-    return (
-        <div>
-            <div className="group-header">{group?.name}</div>
-            {Object.entries(threads).map(([channel_id, thread_list]) => (
-                <Button class="channel-card" key={channel_id} onClick={() => visitChannel(channel_id)}>
-                    {getChannelInfo(channel_id)}
-                    {thread_list.map((thread) => (
-                        <Fragment key={thread.id}>
-                            <div>{thread.title}</div>
-                            <p>{thread.body?.substr(0, 25)}</p>
-                            <div>--------</div>
+// //                 const group_data = await group_obj.json();
+// //                 const channels_data = await channels_obj.json();
 
-                        </Fragment>
-                    ))}
-                </Button>
-            ))}
-        </div>
-    );
-}
+// //                 setGroup(group_data);
+// //                 setChannels(channels_data);
 
-export default GroupPage;
+// //             //craete promise.all to fetch multiple req??
+// //                 const threads_data = await Promise.all(channels_data.map(async channel => {
+// //                     const results = await fetch(`http://localhost:5000/channels/${channel.id}/threads`)
+// //                     return await results.json();    
+// //                 }));
+
+// //                 const threads_dict = channels_data.reduce((acc, channel, index) => {
+// //                     acc[channel.id] = threads_data[index];
+// //                     return acc;
+// //                 }, {});
+
+// //                 setThreads(threads_dict);
+// //             } catch (error) {
+// //                 console.error("error fetching in group : ", error);
+// //             }
+// //         }
+// //         //console.log("running useeffect");
+// //         fetchGroupData();
+// //     }, [group_id]);
+
+// //     function getChannelInfo(channel_id) {
+// //         const channel = channels.find(c => c.id == channel_id);
+// //         if (!channel) return null;
+// //         return (
+// //             <Fragment>
+// //                 <div>{channel.name}</div>
+// //                 <div>{channel.description}</div>
+// //                 <div>-------------</div>
+// //             </Fragment>
+// //         );
+// //     }
+
+// //     return (
+// //         <div>
+// //             <div className="group-header">{group?.name}</div>
+// //             {Object.entries(threads).map(([channel_id, thread_list]) => (
+// //                 <Button class="channel-card" key={channel_id} onClick={() => visitChannel(channel_id)}>
+// //                     {getChannelInfo(channel_id)}
+// //                     {thread_list.map((thread) => (
+// //                         <Fragment key={thread.id}>
+// //                             <div>{thread.title}</div>
+// //                             <p>{thread.body?.substr(0, 25)}</p>
+// //                             <div>--------</div>
+
+// //                         </Fragment>
+// //                     ))}
+// //                 </Button>
+// //             ))}
+// //         </div>
+// //     );
+// // }
+
+// // export default GroupPage;

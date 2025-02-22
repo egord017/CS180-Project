@@ -73,7 +73,7 @@ INSERT INTO users(userName, userEmail, userPassword, userBio) VALUES ('julian', 
 
 -- without bio
 INSERT INTO users(userName, userEmail, userPassword) VALUES ('billy', 'wiliaim321@gmail.com', 'sand');
-INSERT INTO users(userName, userEmail, userPassword) VALUES ('oats', 'meal','breakfast');
+INSERT INTO users(userName, userEmail, userPassword) VALUES ('oats', 'aphan@gmail.com','test');
 INSERT INTO users(userName, userEmail, userPassword) VALUES ('fox', 'fdani012@ucr.edu','cs152');
 INSERT INTO users(userName, userEmail, userPassword) VALUES ('faye', 'fayela44@gmail.com','littlemice');
 INSERT INTO users(userName, userEmail, userPassword) VALUES ('jason', 'jms312@gmail.com','chillax');
