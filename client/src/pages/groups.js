@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Button from '../components/Button';
+import { getGroups } from "../api/groupAPI";
 import './threadPage.css';
 import "./groups.css";
 
@@ -10,16 +11,12 @@ function Groups() {
   const [groupsData, setGroupsData] = useState([]);
 
   useEffect(() => {
-    const getGroups = async () => {
-    const response = await fetch("http://localhost:5000/groups");
-    if (!response.ok) {
-        throw new Error("Failed to fetch groups");
-    }
-    const data = await response.json();
-    setGroupsData(data); 
+    const fetchGroups = async () => {
+      const data = await getGroups(); 
+      setGroupsData(data);
     };
 
-    getGroups();
+    fetchGroups();
   }, []);
 
   return (
