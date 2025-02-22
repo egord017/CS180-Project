@@ -12,7 +12,8 @@ CREATE TABLE users(
     userID uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
     userName VARCHAR(255) NOT NULL,
     userEmail VARCHAR(255) NOT NULL,
-    userPassword VARCHAR(255) NOT NULL
+    userPassword VARCHAR(255) NOT NULL,
+    userBio VARCHAR(255) NULL
 );
 
 
@@ -35,7 +36,7 @@ CREATE TABLE channels (
     group_id INTEGER,
     name TEXT NOT NULL,
     description TEXT NOT NULL,
-    FOREIGN KEY (group_id) REFERENCES groups(id)
+    FOREIGN KEY (group_id) REFERENCES groups(id) ON DELETE CASCADE
 );
 
 
@@ -45,8 +46,8 @@ CREATE TABLE threads (
     channel_id INTEGER,
     title TEXT NOT NULL,
     body TEXT,
-    FOREIGN KEY (user_id) REFERENCES users(userID),
-    FOREIGN KEY (channel_id) REFERENCES channels(id)
+    FOREIGN KEY (user_id) REFERENCES users(userID) ON DELETE SET NULL,
+    FOREIGN KEY (channel_id) REFERENCES channels(id) ON DELETE CASCADE
 );
 
 CREATE TABLE comments (
@@ -54,24 +55,26 @@ CREATE TABLE comments (
     user_id uuid,
     thread_id INTEGER,
     body TEXT,
-    FOREIGN KEY (thread_id) REFERENCES threads(id),
-    FOREIGN KEY (user_id) REFERENCES users(userID)
+    FOREIGN KEY (thread_id) REFERENCES threads(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(userID) ON DELETE SET NULL
 );
-INSERT INTO users(userName, userEmail, userPassword) VALUES ('billy', 'wiliaim321@gmail.com', 'sand');
+
+
+INSERT INTO users(userName, userEmail, userPassword, userBio) VALUES ('billy', 'wiliaim321@gmail.com', 'sand', 'hello');
 INSERT INTO users(userName, userEmail, userPassword) VALUES ('oats', 'wiliaim321@gmail.com','sand');
 INSERT INTO users(userName, userEmail, userPassword) VALUES ('fox',  'wiliaim321@gmail.com','sand');
 
-INSERT INTO groups(id, name, description) VALUES (1, 'poet''s society', 'Writing Workshop for poets');
-INSERT INTO groups(id, name, description) VALUES (2, 'Short Story Group', 'Writing Workshop for short story writers');
+INSERT INTO groups(name, description) VALUES ('poet''s society', 'Writing Workshop for poets');
+INSERT INTO groups(name, description) VALUES ('Short Story Group', 'Writing Workshop for short story writers');
 
-INSERT INTO channels (id, group_id, name, description)
-VALUES (1, 1, 'General', 'A general discussion channel');
+INSERT INTO channels (group_id, name, description)
+VALUES (1, 'General', 'A general discussion channel');
 
-INSERT INTO channels (id, group_id, name, description)
-VALUES (2, 1, 'Poetry Discussion', 'A poetry discussion channel');
+INSERT INTO channels (group_id, name, description)
+VALUES (1, 'Poetry Discussion', 'A poetry discussion channel');
 
-INSERT INTO channels (id, group_id, name, description)
-VALUES (3, 2, 'General Discussion', 'A general discussion channel');
+INSERT INTO channels (group_id, name, description)
+VALUES (2, 'General Discussion', 'A general discussion channel');
 
 INSERT INTO threads (user_id, channel_id, title, body) VALUES ((SELECT userID FROM users WHERE userName = 'billy'), 1, 'Favorite Poets?', 'What are your favorite poets and their works?');
 INSERT INTO threads (user_id, channel_id, title, body) VALUES ((SELECT userID FROM users WHERE userName = 'fox'), 1, 'AI just took my job.', ':|');

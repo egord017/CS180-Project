@@ -8,6 +8,10 @@ import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 
+import GroupPage from './pages/groupTemp';
+import ChannelPage from './pages/channelPage';
+import ThreadPage from './pages/threadPage';
+import ThreadPostForm from './pages/threadPostForm';
 
 function App() {
 
@@ -64,6 +68,22 @@ function App() {
             <Route 
               path="/dashboard" 
               element={isAuthenticated ? <Dashboard setAuth={setAuth}/> : <Navigate to="/login" />}
+            />
+            <Route 
+              path="/group/:group_id" 
+              element={<GroupPage/>}
+            />
+            <Route 
+              path="/channel/:channel_id" 
+              element={<ChannelPage/>}
+            />
+            <Route 
+              path="/thread/:thread_id" 
+              element={<ThreadPage/>}
+            />
+            <Route 
+              path="/channel/:channel_id/submit" 
+              element={<ThreadPostForm/>}
             />
           </Routes>
         </div>
