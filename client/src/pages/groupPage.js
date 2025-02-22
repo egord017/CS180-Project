@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-
+//i assume this is the individual groups page
 function GroupPage() {
   const { group_id } = useParams();
 

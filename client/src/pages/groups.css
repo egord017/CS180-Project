@@ -1,10 +1,15 @@
+.background{
+  background-color: #F0E3D71A;
+  /* background-color: #ffffff; */
+}
+
 .groups-container {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    padding: 60px;
+    align-items: center;
+    padding: 30px;
     width: 100%;
-    max-width: 1200px;
+    max-width: 1100px;
     margin: 0 auto;
   }
   
@@ -17,14 +22,14 @@
   }
   
   .groups-add-button {
-    background-color: #000000;
-    color: #ffffff;
-    border: none;
-    border-radius: 50%;
+    background-color: #F0E3D71A;
+    /* background-color: #ffffff; */
+    color: #000000;
+    border: 3.5px solid #000000;
+    border-radius: 7px;/* rounds the corners of the square*/
     width: 40px;
-    
     height: 40px;
-    font-size: 24px;
+    font-size: 35px;
     cursor: pointer;
     display: flex;
     justify-content: center;
@@ -38,21 +43,21 @@
   .groups-grid {
     display: flex;
     flex-wrap: wrap;
-    gap: 50px;
-    justify-content: flex-start;
-    margin-top: 20px;
+    gap: 50px 85px; /* column x row spacing */
+    justify-content: center;
+    margin-top: 10px;
     max-width: 1400px;
   }
   
   .group-card {
     width: 250px;
     height: 320px;
-    justify-content: space-between;
+    justify-content: flex-center;
     background-color: #A4B5A0;
-    border-radius: 10px;
+    border-radius: 4px;
     overflow: hidden;
     align-items: left;
-    box-shadow: 4px 8px 15px rgba(43, 41, 41, 0.48);
+    box-shadow: 4px 8px 5px rgba(43, 41, 41, 0.48);
   }
   
   .group-card-top {
@@ -73,7 +78,17 @@
     font-size: 28px;
     font-weight: bold;
   }
-  
+
+  .groups-grid a {
+    text-decoration: none; /*removes underline from link*/
+    color: inherit; 
+}
+
+.groups-grid a:hover { /*gets rid of the blue text from </link>*/
+    text-decoration: none;
+    color: inherit;
+}
+
   .group-subtitle {
     font-size: 16px;
     color: #555;

@@ -85,9 +85,10 @@ INSERT INTO groups(name, description) VALUES ('Short Story Group', 'Writing Grou
 INSERT INTO groups(name, description) VALUES ('Non Fiction Group', 'Writing Group for non fiction writers'); -- 3
 INSERT INTO groups(name, description) VALUES ('Fiction Group', 'Writing Group for fiction writers'); -- 4
 INSERT INTO groups(name, description) VALUES ('Philosophy Group', 'Writing Group for philosophy writers'); -- 5
+INSERT INTO groups(name, description) VALUES ('Creative Writing Group', 'Writing Group for creative writing writers'); -- 6
 
 
--- insert user into groups
+-- insert user into groups ------------------------------------------
 INSERT INTO users_groups (group_id, user_id, role_id) 
 VALUES (1, (SELECT userID FROM users WHERE userName = 'daniel'), 1);
 INSERT INTO users_groups (group_id, user_id, role_id) 
