@@ -14,6 +14,8 @@ import ChannelPage from './pages/channelPage';
 import ThreadPage from './pages/threadPage';
 import ThreadPostForm from './pages/threadPostForm';
 
+import ProfilePage from './pages/profilePage'
+
 function App() {
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -89,6 +91,10 @@ function App() {
             <Route 
               path="/channel/:channel_id/submit" 
               element={<ThreadPostForm/>}
+            />
+            <Route 
+              path="/profile"
+              element={<ProfilePage/>}
             />
           </Routes>
         </div>
