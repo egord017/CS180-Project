@@ -5,9 +5,12 @@ async function get_channel(id){
     try{
         const query = "SELECT * FROM channels WHERE id=$1";
         const results = await pool.query(query, id);
+        
+        console.log(results);
         return results.rows[0];
     }
     catch (err){
+        console.log("r", id);
         console.error(err);
     }
     

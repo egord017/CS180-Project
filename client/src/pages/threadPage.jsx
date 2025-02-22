@@ -49,15 +49,21 @@ function ThreadPage(){
     
     useEffect(()=>{
         async function getChannelAndGroup(){
-            if (!thread) return;
-            const channelObj = await fetch(`http://localhost:5000/channels/${thread.channel_id}`);
-            const new_channel = await channelObj.json();
-
-
-            const groupObj = await fetch(`http://localhost:5000/groups/${new_channel.group_id}`);
-            setChannel(new_channel);
-            setGroup(await groupObj.json());
-            //return new_channel.group_id;
+            try{
+                if (!thread) return;
+                const channelObj = await fetch(`http://localhost:5000/channels/${thread.channel_id}`);
+                const new_channel = await channelObj.json();
+    
+    
+                const groupObj = await fetch(`http://localhost:5000/groups/${new_channel.group_id}`);
+                setChannel(new_channel);
+                setGroup(await groupObj.json());
+                //return new_channel.group_id;
+            }
+            catch (err){
+                console.error(err);
+            }
+            
         }
         getChannelAndGroup();
     }, [thread]);
