@@ -1,6 +1,8 @@
 export const getGroups = async () => {
     try {
-      const response = await fetch("http://localhost:5000/groups");
+      const response = await fetch("http://localhost:5000/groups", {
+        method: "GET"
+      });
       if (!response.ok) {
         throw new Error("Failed to fetch groups");
       }
@@ -11,6 +13,3 @@ export const getGroups = async () => {
       return [];
     }
 };
-  
-
-  

@@ -11,8 +11,9 @@ function Groups() {
   const [groupsData, setGroupsData] = useState([]);
 
   useEffect(() => {
+
     const fetchGroups = async () => {
-      const data = await getGroups(); 
+      const data = await getGroups();
       setGroupsData(data);
     };
 
