@@ -94,7 +94,7 @@ function App() {
             />
             <Route 
               path="/profile"
-              element={<ProfilePage/>}
+              element={<ProfilePage userId = "a1614348-4dc2-455d-a56a-64b88840cd61"/>}
             />
           </Routes>
         </div>
