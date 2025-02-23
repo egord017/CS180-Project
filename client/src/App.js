@@ -94,7 +94,10 @@ function App() {
             />
             <Route 
               path="/profile"
-              element={<ProfilePage userId = "a1614348-4dc2-455d-a56a-64b88840cd61"/>}
+              element={<ProfilePage userId = "3a5d29fd-44d7-4dac-b14c-d49d1d9c02a1"/>}
+              // I hard coded a user's unique id to test if backend works with frontend.
+              // need something to make it dynamic by button. 
+              // to test do curl http://localhost:5000/profile/ to get user userid and paste it above.
             />
           </Routes>
         </div>
