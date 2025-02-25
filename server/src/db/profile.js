@@ -51,6 +51,26 @@ async function get_threads_from_user(user_id) {
     }
 }
 
+async function get_user_followers(user_id) {
+    try {
+        const query = "SELECT * FROM users_followers uf JOIN users u ON uf.follower_id = u.userID WHERE uf.user_id = $1";
+        const results = await pool.query(query, user_id);
+        return results.rows;
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+async function get_user_following(userID) {
+    try {
+        const query = "SELECT u.userID, u.userName, u.userEmail, u.userBio FROM users_followers uf JOIN users u ON uf.user_id = u.userID WHERE uf.follower_id = $1";
+        const results = await pool.query(query, userID);
+        return results.rows;
+    } catch (err) {
+        console.error(err);
+    }
+}
+
 
 
 
@@ -60,6 +80,7 @@ module.exports = {
     get_user,
     get_groups_from_user,
     get_comments_from_user,
-    get_threads_from_user
-    
+    get_threads_from_user,
+    get_user_followers,
+    get_user_following
 };
