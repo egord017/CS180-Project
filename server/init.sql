@@ -3,6 +3,7 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS users_followers CASCADE;
 DROP TABLE IF EXISTS groups CASCADE;
 DROP TABLE IF EXISTS users_groups CASCADE;
 DROP TABLE IF EXISTS channels CASCADE;
@@ -30,6 +31,12 @@ CREATE TABLE users_groups (
     user_id uuid REFERENCES users(userID),
     role_id INT,
     PRIMARY KEY (group_id, user_id)
+);
+
+CREATE TABLE users_followers (
+    user_id uuid REFERENCES users(userID),
+    follower_id uuid REFERENCES users(userID),
+    PRIMARY KEY (user_id, follower_id)
 );
 
 
@@ -78,6 +85,23 @@ INSERT INTO users(userName, userEmail, userPassword) VALUES ('fox', 'fdani012@uc
 INSERT INTO users(userName, userEmail, userPassword) VALUES ('faye', 'fayela44@gmail.com','littlemice');
 INSERT INTO users(userName, userEmail, userPassword) VALUES ('jason', 'jms312@gmail.com','chillax');
 INSERT INTO users(userName, userEmail, userPassword) VALUES ('rebby', 'becca102@yahoo.com','karmasa');
+
+--FOLLOWERS----------------------------------------------------
+-- daniel is being followed by billy, faye, and rebby
+INSERT INTO users_followers(user_id, follower_id)
+VALUES ((SELECT userID FROM users WHERE userName = 'daniel'), (SELECT userID FROM users WHERE userName = 'billy'));
+INSERT INTO users_followers(user_id, follower_id)
+VALUES ((SELECT userID FROM users WHERE userName = 'daniel'), (SELECT userID FROM users WHERE userName = 'faye'));
+INSERT INTO users_followers(user_id, follower_id)
+VALUES ((SELECT userID FROM users WHERE userName = 'daniel'), (SELECT userID FROM users WHERE userName = 'rebby'));
+
+-- daniel is following billy, mark, and hanni
+INSERT INTO users_followers(user_id, follower_id)
+VALUES ((SELECT userID FROM users WHERE userName = 'billy'), (SELECT userID FROM users WHERE userName = 'daniel'));
+INSERT INTO users_followers(user_id, follower_id)
+VALUES ((SELECT userID FROM users WHERE userName = 'mark'), (SELECT userID FROM users WHERE userName = 'daniel'));
+INSERT INTO users_followers(user_id, follower_id)
+VALUES ((SELECT userID FROM users WHERE userName = 'hanni'), (SELECT userID FROM users WHERE userName = 'daniel'));
 
 -- GROUPS -------------------------------------------------
 INSERT INTO groups(name, description) VALUES ('Poet''s Society', 'Writing Group for poets'); -- 1
