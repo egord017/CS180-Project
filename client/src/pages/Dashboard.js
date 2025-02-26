@@ -38,7 +38,6 @@ const Dashboard = ({setAuth}) => {
             localStorage.setItem("userID", parseResponse.userID);
             
             //console.log(parseResponse);
-            console.log(localStorage.userID)
 
             setID(parseResponse.userID)
 

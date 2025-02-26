@@ -17,6 +17,7 @@ import ThreadPostForm from './pages/threadPostForm';
 function App() {
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const setAuth = (boolean) => {
     setIsAuthenticated(boolean);
@@ -39,15 +40,21 @@ function App() {
       } else{
         setIsAuthenticated(false);
       }
-
     } catch (err) {
       console.error(err.message);
+    } finally {
+      setLoading(false);
     }
   }
 
   useEffect(() => {
     isAuth();
-  })
+    console.log(isAuthenticated)
+  });
+
+  if (loading) {
+    return <div>Loading...</div>; // Prevents incorrect redirects
+  }
 
   return (
     <Fragment>
@@ -72,23 +79,23 @@ function App() {
             />
             <Route 
               path="/groups" 
-              element={<Groups/>}
+              element={isAuthenticated ? <Groups/> : <Navigate to="/login" />}
             />
             <Route 
               path="/group/:group_id" 
-              element={<GroupPage/>}
+              element={isAuthenticated ? <GroupPage/> : <Navigate to="/login" />}
             />
             <Route 
               path="/channel/:channel_id" 
-              element={<ChannelPage/>}
+              element={isAuthenticated ? <ChannelPage/> : <Navigate to="/login" />}
             />
             <Route 
               path="/thread/:thread_id" 
-              element={<ThreadPage/>}
+              element={isAuthenticated ? <ThreadPage/> : <Navigate to="/login" />}
             />
             <Route 
               path="/channel/:channel_id/submit" 
-              element={<ThreadPostForm/>}
+              element={isAuthenticated ? <ThreadPostForm/> : <Navigate to="/login" />}
             />
           </Routes>
         </div>
