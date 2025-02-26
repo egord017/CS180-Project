@@ -35,10 +35,12 @@ const Dashboard = ({setAuth}) => {
             });
 
             const parseResponse = await response.json();
+            localStorage.setItem("userID", parseResponse.userID);
             
             //console.log(parseResponse);
+            console.log(localStorage.userID)
 
-            setID(parseResponse.username)
+            setID(parseResponse.userID)
 
         } catch (err) {
             console.error(err.message);
