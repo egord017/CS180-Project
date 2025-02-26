@@ -13,7 +13,7 @@ async function get_thread(thread_id) {
     try {
         const query = "SELECT * FROM threads WHERE id = $1";
         const result = await pool.query(query, thread_id); 
-        return result.rows;
+        return result.rows[0];
     } catch (err) {
         console.error(err);
     }

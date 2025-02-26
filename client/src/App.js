@@ -10,6 +10,7 @@ import Register from "./pages/Register";
 
 import Groups from './pages/groups';
 import GroupPage from './pages/groupPage';
+import GroupPageTemp from './pages/groupTemp';
 import ChannelPage from './pages/channelPage';
 import ThreadPage from './pages/threadPage';
 import ThreadPostForm from './pages/threadPostForm';
@@ -76,8 +77,9 @@ function App() {
             />
             <Route 
               path="/group/:group_id" 
-              element={<GroupPage/>}
+              element={<GroupPageTemp/>}
             />
+            
             <Route 
               path="/channel/:channel_id" 
               element={<ChannelPage/>}

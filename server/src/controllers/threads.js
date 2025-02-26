@@ -25,7 +25,7 @@ async function create_thread(req, res) {
 
     let { user_id, channel_id, title, body } = req.body;
 
-    if (!title || !body || !channel_id || !user_id) {
+    if (!title || !channel_id || !user_id) {
         return res.status(400).json({ error: "Missing required fields" });
     }
 
@@ -33,7 +33,7 @@ async function create_thread(req, res) {
         const userCheck = await pool.query("SELECT userid FROM users WHERE userid = $1", [user_id]);
 
         if (userCheck.rows.length === 0) {
-            return res.status(400).json({ error: `Invalid user_id: ${user_id}. User does not exist.` });
+           return res.status(400).json({ error: `Invalid user_id: ${user_id}. User does not exist.` });
         }
         const result = await threads_db.create_thread(user_id, channel_id, title, body);
         res.status(201).json({ message: "Thread created successfully!", thread: result });

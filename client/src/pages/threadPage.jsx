@@ -18,7 +18,7 @@ function ThreadPage(){
     
 
     //fetch thread object using my url param thread/:thread_id
-    const thread_id = Object.values(useParams());
+    const thread_id = Object.values(useParams())[0];
     const [thread, setThreadData] = useState(null);
     const [comments, setComments] = useState([]);
     const [group, setGroup] = useState(null);
@@ -27,15 +27,12 @@ function ThreadPage(){
     useEffect(()=>{
         async function fetchThreadAndComments(){
             try{
-                const thread_obj = await fetch((`http://localhost:5000/threads/${thread_id[0]}`),
-                {
-                    method:"GET"
-                });
+                const thread_obj = await fetch((`http://localhost:5000/threads/${thread_id}`));
                 const thread_data = await thread_obj.json();
                 setThreadData(thread_data);
-                console.log(thread_data);
+                console.log("HreL:",thread_data);
                 
-                const comments_obj = await fetch((`http://localhost:5000/threads/${thread_id[0]}/comments`));
+                const comments_obj = await fetch((`http://localhost:5000/threads/${thread_id}/comments`));
                 setComments(await comments_obj.json());
    
             }
@@ -98,6 +95,7 @@ function ThreadPage(){
             <div>
                 <p>{thread?.title}</p>
                 <p>{thread?.user_id}</p>
+                {console.log("thread: ", thread)}
                 <p>{thread?.body}</p>
             </div>
             

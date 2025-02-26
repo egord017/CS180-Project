@@ -7,7 +7,6 @@ async function get_groups(req, res){
 
 async function get_group(req, res){
     const group_id = req.params.group_id;
-    console.log(params);
     const results = await groups_db.get_group(group_id);
     res.send(results);
 }
