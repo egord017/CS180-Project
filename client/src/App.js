@@ -14,7 +14,7 @@ import ChannelPage from './pages/channelPage';
 import ThreadPage from './pages/threadPage';
 import ThreadPostForm from './pages/threadPostForm';
 
-import ProfilePage from './pages/profilePage'
+import ProfilePage from './pages/profilePage';
 
 import NewGroup from './pages/newGroup';
 
@@ -102,8 +102,8 @@ function App() {
               element={isAuthenticated ? <ThreadPostForm/> : <Navigate to="/login" />}
             />
             <Route 
-              path="/profile"
-              element={<ProfilePage userId = "b7f31081-4460-422a-be09-18cc6f512ecd"/>}
+              path="/profile/:userIid"
+              element={<ProfilePage userId = "24c84380-793f-4235-8099-1996968f0aa2"/>}
               // I hard coded a user's unique id to test if backend works with frontend. I use daniel
               // need something to make it dynamic by button. 
               // to test do curl http://localhost:5000/profile/ to get user userid and paste it above.
