@@ -23,7 +23,8 @@ CREATE TABLE users(
 CREATE TABLE groups (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
-    description TEXT NOT NULL
+    description TEXT NOT NULL,
+    date_created timestamp DEFAULT NOW()
 );
 
 CREATE TABLE users_groups (
@@ -43,9 +44,12 @@ CREATE TABLE users_followers (
 CREATE TABLE channels (
     id SERIAL PRIMARY KEY,
     group_id INTEGER,
+    group_order INTEGER,
     name TEXT NOT NULL,
     description TEXT NOT NULL,
     FOREIGN KEY (group_id) REFERENCES groups(id) ON DELETE CASCADE
+
+
 );
 
 
@@ -55,6 +59,7 @@ CREATE TABLE threads (
     channel_id INTEGER,
     title TEXT NOT NULL,
     body TEXT,
+    time_stamp timestamp DEFAULT NOW(),
     FOREIGN KEY (user_id) REFERENCES users(userID) ON DELETE SET NULL,
     FOREIGN KEY (channel_id) REFERENCES channels(id) ON DELETE CASCADE
 );
@@ -74,6 +79,7 @@ CREATE TABLE comments (
     user_id uuid,
     thread_id INTEGER,
     body TEXT,
+    time_stamp timestamp DEFAULT NOW(),
     FOREIGN KEY (thread_id) REFERENCES threads(id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES users(userID) ON DELETE SET NULL
 );
@@ -87,6 +93,9 @@ INSERT INTO users(userName, userEmail, userPassword, userBio) VALUES ('walter', 
 INSERT INTO users(userName, userEmail, userPassword, userBio) VALUES ('bucky', 'wintercapt@gmail.com','again', 'again again again');
 INSERT INTO users(userName, userEmail, userPassword, userBio) VALUES ('hanni', 'newjeans32@gmail.com','kpop', 'supershy');
 INSERT INTO users(userName, userEmail, userPassword, userBio) VALUES ('julian', 'strokesband52@gmail.com','hititfab', 'under cover of darkness');
+
+-- USE AS DUMMY USER. copy the user_id
+INSERT INTO users(userID, userName, userEmail, userPassword, userBio) VALUES ('9a80cfb3-5535-4889-8fca-b213ae3607ba', 'dummy', 'dummy@gmail.com','dummy', 'a dummy');
 
 -- without bio
 INSERT INTO users(userName, userEmail, userPassword) VALUES ('billy', 'wiliaim321@gmail.com', 'sand');
