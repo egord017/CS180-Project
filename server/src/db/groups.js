@@ -8,7 +8,7 @@ async function get_groups(){
 //GET /groups
 async function get_group(group_id){
     try{
-        const result = await pool.query('SELECT * FROM groups WHERE groups.id=$1', group_id);
+        const result = await pool.query('SELECT * FROM groups WHERE groups.id=$1', [group_id]);
         return (result.rows[0]);
     }
     catch (err) {

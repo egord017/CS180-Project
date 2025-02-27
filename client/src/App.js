@@ -10,8 +10,12 @@ import Register from "./pages/Register";
 
 import Groups from './pages/groups';
 import GroupPage from './pages/groupPage';
+import GroupPageTemp from './pages/groupTemp';
 import ChannelPage from './pages/channelPage';
 import ThreadPage from './pages/threadPage';
+
+import GroupPostForm from './pages/groupPostForm';
+import ChannelPostForm from './pages/channelPostForm';
 import ThreadPostForm from './pages/threadPostForm';
 
 import ProfilePage from './pages/profilePage';
@@ -85,8 +89,9 @@ function App() {
             />
             <Route 
               path="/group/:group_id" 
-              element={isAuthenticated ? <GroupPage/> : <Navigate to="/login" />}
+              element={isAuthenticated ? <GroupPageTemp/> : <Navigate to="/login" />}
             />
+            
             <Route 
               path="/channel/:channel_id" 
               element={isAuthenticated ? <ChannelPage/> : <Navigate to="/login" />}
@@ -94,6 +99,14 @@ function App() {
             <Route 
               path="/thread/:thread_id" 
               element={isAuthenticated ? <ThreadPage/> : <Navigate to="/login" />}
+            />
+            <Route 
+              path="/group/submit" 
+              element={<GroupPostForm/>}
+            />
+            <Route 
+              path="/group/:group_id/submit" 
+              element={<ChannelPostForm/>}
             />
             <Route 
               path="/channel/:channel_id/submit" 
