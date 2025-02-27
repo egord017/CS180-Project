@@ -4,7 +4,7 @@ async function post_comment(thread_id, user_id, body){
     try{
         const query = "INSERT INTO comments (thread_id, user_id, body) VALUES ($1, $2, $3) RETURNING *";
         const result = await pool.query(query, [thread_id, user_id, body]);
-        return (result).rows;
+        return (result).rows[0];
     }
     catch (err){
         console.error(err);

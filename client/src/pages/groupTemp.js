@@ -61,6 +61,9 @@ function GroupPageTemp() {
     function visitChannel(channel_id) {
         navigate(`/channel/${channel_id}`);
     }
+    function visitChannelForm(){
+        navigate('submit')
+    }
 
     useEffect(() => {
         async function fetchGroupData() {
@@ -110,13 +113,29 @@ function GroupPageTemp() {
         );
     }
 
+    async function deleteChannel(channel_id){
+        try{
+            //refresh lol
+        }
+        catch (err){
+
+        }
+        
+
+    }
+
     return (
         <div>
+            <button onClick={()=>(visitChannelForm())}>Create Channel$</button>
             <div className="group-header">{group?.name}</div>
             {Object.entries(threads).map(([channel_id, thread_list]) => (
                 <Button class="channel-card" key={channel_id} onClick={() => visitChannel(channel_id)}>
+                    <button onClick={(e)=>{
+                        e.stopPropagation();
+                        deleteChannel(channel_id);
+                    }}>X</button>
                     {getChannelInfo(channel_id)}
-                    {thread_list.map((thread) => (
+                    {thread_list.slice(0,3).map((thread) => (
                         <Fragment key={thread.id}>
                             <div>{thread.title}</div>
                             <p>{thread.body?.substr(0, 25)}</p>

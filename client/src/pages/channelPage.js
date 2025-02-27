@@ -20,6 +20,7 @@ function ChannelPage(){
     function visitThreadForm(){
         navigate('submit');
     }
+    
 
     function visitThread(thread_id){
         navigate(`/thread/${thread_id}`);

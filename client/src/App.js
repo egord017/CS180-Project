@@ -13,6 +13,9 @@ import GroupPage from './pages/groupPage';
 import GroupPageTemp from './pages/groupTemp';
 import ChannelPage from './pages/channelPage';
 import ThreadPage from './pages/threadPage';
+
+import GroupPostForm from './pages/groupPostForm';
+import ChannelPostForm from './pages/channelPostForm';
 import ThreadPostForm from './pages/threadPostForm';
 
 function App() {
@@ -87,6 +90,14 @@ function App() {
             <Route 
               path="/thread/:thread_id" 
               element={<ThreadPage/>}
+            />
+            <Route 
+              path="/group/submit" 
+              element={<GroupPostForm/>}
+            />
+            <Route 
+              path="/group/:group_id/submit" 
+              element={<ChannelPostForm/>}
             />
             <Route 
               path="/channel/:channel_id/submit" 
