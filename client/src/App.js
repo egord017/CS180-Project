@@ -16,6 +16,8 @@ import ThreadPostForm from './pages/threadPostForm';
 
 import ProfilePage from './pages/profilePage'
 
+import NewGroup from './pages/newGroup';
+
 function App() {
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -106,6 +108,10 @@ function App() {
               // need something to make it dynamic by button. 
               // to test do curl http://localhost:5000/profile/ to get user userid and paste it above.
             />
+            <Route
+              path="/new_group"
+              element={isAuthenticated? <NewGroup /> : <Navigate to="/login" />}
+            />  
           </Routes>
         </div>
       </Router>
