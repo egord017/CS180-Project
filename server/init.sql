@@ -59,6 +59,16 @@ CREATE TABLE threads (
     FOREIGN KEY (channel_id) REFERENCES channels(id) ON DELETE CASCADE
 );
 
+CREATE TABLE workshop (
+    id SERIAL PRIMARY KEY,
+    user_id uuid,
+    channel_id INTEGER,
+    title TEXT NOT NULL,
+    body TEXT,
+    FOREIGN KEY (user_id) REFERENCES users(userID) ON DELETE SET NULL,
+    FOREIGN KEY (channel_id) REFERENCES channels(id) ON DELETE CASCADE
+);
+
 CREATE TABLE comments (
     id SERIAL PRIMARY KEY,
     user_id uuid,
