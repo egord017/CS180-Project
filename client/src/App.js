@@ -14,6 +14,8 @@ import ChannelPage from './pages/channelPage';
 import ThreadPage from './pages/threadPage';
 import ThreadPostForm from './pages/threadPostForm';
 
+import ProfilePage from './pages/profilePage'
+
 function App() {
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -96,6 +98,13 @@ function App() {
             <Route 
               path="/channel/:channel_id/submit" 
               element={isAuthenticated ? <ThreadPostForm/> : <Navigate to="/login" />}
+            />
+            <Route 
+              path="/profile"
+              element={<ProfilePage userId = "b7f31081-4460-422a-be09-18cc6f512ecd"/>}
+              // I hard coded a user's unique id to test if backend works with frontend. I use daniel
+              // need something to make it dynamic by button. 
+              // to test do curl http://localhost:5000/profile/ to get user userid and paste it above.
             />
           </Routes>
         </div>

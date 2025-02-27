@@ -18,5 +18,10 @@ router.get("/:user_id/comments", profileController.get_comments_from_user);
 //GET get all threads (posts) based on user id
 router.get("/:user_id/threads", profileController.get_threads_from_user);
 
+//GET get all followers based on the userID
+router.get("/:user_id/followers", profileController.get_user_followers);
+
+//GET get all following based on the userID
+router.get("/:user_id/following", profileController.get_user_following);
 
 module.exports = router;
