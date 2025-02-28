@@ -57,7 +57,6 @@ function App() {
 
   useEffect(() => {
     isAuth();
-    console.log(isAuthenticated)
   });
 
   if (loading) {
@@ -89,6 +88,10 @@ function App() {
               path="/groups" 
               element={isAuthenticated ? <Groups/> : <Navigate to="/login" />}
             />
+            <Route
+              path="groups/new_group"
+              element={isAuthenticated? <NewGroup /> : <Navigate to="/login" />}
+            />  
             <Route 
               path="/group/:group_id" 
               element={isAuthenticated ? <GroupPageTemp/> : <Navigate to="/login" />}
@@ -121,10 +124,6 @@ function App() {
               // need something to make it dynamic by button. 
               // to test do curl http://localhost:5000/profile/ to get user userid and paste it above.
             />
-            <Route
-              path="/new_group"
-              element={isAuthenticated? <NewGroup /> : <Navigate to="/login" />}
-            />  
           </Routes>
         </div>
       </Router>

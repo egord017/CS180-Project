@@ -1,60 +1,66 @@
 import React, { useState } from "react";
 import "./newGroup.css";
+import {newGroup} from "../api/groupAPI";
 
-const NewGroup = () => {
-    const [groupName, setGroupName] = useState("");
-    const [category, setCategory] = useState("");
-    const [description, setDescription] = useState("");
-    const [image, setImage] = useState(null);
+function NewGroup() {
+    const [inputs, setInputs] = useState({
+        groupName: "",
+        description: ""
+    });
+
+    const {groupName, description} = inputs;
+
+    const onChange = (e) => {
+        setInputs({...inputs, [e.target.name] : e.target.value})
+    };
+    
+    const userID = localStorage.userID;
 
     // image
-    const handleImageUpload = (event) => {
-        setImage(event.target.files[0]);
-    };
-
+    //const handleImageUpload = (event) => {
+       // setImage(event.target.files[0]);
+    //};
+    
     // submission
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        console.log({ groupName, category, description, image });
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log({groupName, description, userID});
+        newGroup(groupName, description, userID);
     };
-
+    
     return (
         <div className="new-group-container">
             <h2>New Group</h2>
             <form onSubmit={handleSubmit}>
-                {/* file image upload */}
-                <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageUpload}
-                />
                 {/* text input for group name */}
                 <input
                     type="text"
+                    name="groupName"
                     placeholder="Group Name..."
                     value={groupName}
-                    onChange={(e) => setGroupName(e.target.value)}
+                    onChange={e => onChange(e)}
                 />
-                {/* dropdown menu for category */}
-                <select
-                    value={category}
-                    onChange={(e) => setCategory(e.target.value)}
-                >
-                    <option value="">- Select -</option>
-                    <option value="Tech">Tech</option>
-                    <option value="Health">Health</option>
-                    <option value="Education">Education</option>
-                </select>
                 {/* text area for group description */}
                 <textarea
-                    placeholder="Text Description..."
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
+                     name="description"
+                     placeholder="Group Description..."
+                     value={description}
+                     onChange={e => onChange(e)}
                 />
                 <button type="submit">Create Group</button>
             </form>
         </div>
     );
-};
+}
+
+//Code for group image, temporarily removed
+
+//{/* file image upload */}
+//<input
+//type="file"
+//accept="image/*"
+//onChange={handleImageUpload}
+///>
+
 
 export default NewGroup;
