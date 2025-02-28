@@ -85,7 +85,7 @@ async function create_new_group(params){
         }
 
         //insert new group into db
-        const newGroup = await pool.query("INSERT INTO groups (name, description) VALUES ($1, $2)", [group_name, group_description])
+        const newGroup = await pool.query("INSERT INTO groups (name, description) VALUES ($1, $2) RETURNING *", [group_name, group_description])
 
         //make user who created group the admin
         await pool.query("INSERT INTO users_groups (group_id, user_id, role_id) VALUES ($1, $2, 1)", [newGroup.rows[0].id, user_id])
@@ -93,7 +93,8 @@ async function create_new_group(params){
         return {status: "created", group: newGroup.rows};
 
     } catch (err) {
-        console.log(err.message);
+        console.error("Database Error:", err.message);
+        return {status: "error", message: err.message };
     }
 }
 

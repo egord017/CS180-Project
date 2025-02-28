@@ -35,13 +35,21 @@ async function get_threads_from_channel(req, res){
 }
 
 async function create_new_group(req, res){
-    const {group_name, group_description, user_id} = req.body;
-    const results = await groups_db.create_new_group({group_name, group_description, user_id});
-    if(results === "already exists"){
-        res.status(401).json("A group with that name already exists");
-    }
-    if(results.status === "created"){
-        return res.status(200).json({message: "User has created the group", created_group: results.group});
+    try {
+        const {group_name, group_description, user_id} = req.body;
+        const results = await groups_db.create_new_group({group_name, group_description, user_id});
+        if(results === "already exists"){
+            res.status(401).json("A group with that name already exists");
+        } 
+        if(results.status === "created"){
+            return res.status(200).json({message: "User has created the group", created_group: results.group});
+        }  
+        if(results.status === "error"){
+            return res.status(500).json({ message: "Database error", error: results.message });
+        }
+    } catch (error) {
+        console.log(error)
+        
     }
 }
 

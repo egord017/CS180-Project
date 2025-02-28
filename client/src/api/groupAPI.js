@@ -25,7 +25,9 @@ export const newGroup = async (group_name, group_description, user_id) => {
     });
 
     const parseResponse = await response.json();
-    console.log(parseResponse)
+    //console.log(parseResponse)
+
+    return parseResponse;
 
   } catch (error) {
     console.error("Error creating group:", error);

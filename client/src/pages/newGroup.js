@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./newGroup.css";
 import {newGroup} from "../api/groupAPI";
+import { useNavigate } from 'react-router-dom';
 
 function NewGroup() {
     const [inputs, setInputs] = useState({
@@ -9,6 +10,8 @@ function NewGroup() {
     });
 
     const {groupName, description} = inputs;
+
+    const navigate = useNavigate();
 
     const onChange = (e) => {
         setInputs({...inputs, [e.target.name] : e.target.value})
@@ -22,10 +25,20 @@ function NewGroup() {
     //};
     
     // submission
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         console.log({groupName, description, userID});
-        newGroup(groupName, description, userID);
+
+        try {
+            const response = await newGroup(groupName, description, userID);
+            console.log(response)
+            if(response && response.created_group){
+                navigate(`/group/${response.created_group[0].id}`);
+            }
+
+        } catch (error) {
+            console.error(error);
+        }
     };
     
     return (
