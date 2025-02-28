@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./profilePage.css";
 
-function ProfilePage({ userId }) {
+function ProfilePage({}) {
+  const { userId } = useParams();
   const [userData, setUserData] = useState(null);
   const [groups, setGroups] = useState([]);
   const [threads, setThreads] = useState([]);
@@ -85,7 +88,9 @@ function ProfilePage({ userId }) {
             {groups.length ? (
               groups.map((group) => (
                 <li key={group.id}>
-                  <strong>{group.name || "Unnamed Group"}</strong> (Group ID: {group.id})
+                  <Link to={`/group/${group.id}`}>
+                    <strong>{group.name || "Unnamed Group"}</strong> (Group ID: {group.id})
+                  </Link>
                   <p>{group.description}</p>
                 </li>
               ))
@@ -101,7 +106,9 @@ function ProfilePage({ userId }) {
             {threads.length ? (
               threads.map((thread) => (
                 <li key={thread.id}>
-                  <strong>{thread.title || "Untitled Thread"}</strong> (Thread ID: {thread.id})
+                  <Link to={`/thread/${thread.id}`}>
+                    <strong>{thread.title || "Untitled Thread"}</strong> (Thread ID: {thread.id})
+                  </Link>
                   <p>{thread.description} {thread.body}</p>
                 </li>
               ))
@@ -117,7 +124,9 @@ function ProfilePage({ userId }) {
             {comments.length ? (
               comments.map((comment) => (
                 <li key={comment.id}>
-                  <strong>{comment.body || "No Comment"}</strong>
+                  <Link to={`/thread/${comment.thread_id}`}>
+                    <strong>{comment.body || "No Comment"}</strong>
+                  </Link>
                   <p>(Comment ID: {comment.id}) (Thread ID: {comment.thread_id})</p>
                 </li>
               ))
@@ -136,7 +145,9 @@ function ProfilePage({ userId }) {
             {followers.length ? (
               followers.map((follower) => (
                 <li key={follower.id}>
-                  <strong>{follower.username || "Unknown"}</strong> (ID: {follower.follower_id})
+                  <Link to={`/profile/${follower.userid}`}>
+                    <strong>{follower.username || "Unknown"}</strong> (ID: {follower.follower_id})
+                  </Link>
                 </li>
               ))
             ) : (
@@ -149,8 +160,11 @@ function ProfilePage({ userId }) {
           <ul>
             {following.length ? (
               following.map((followed) => (
+
                 <li key={followed.id}>
-                  <strong>{followed.username || "Unknown"}</strong> (ID: {followed.userid})
+                  <Link to={`/profile/${followed.userid}`}>
+                    <strong>{followed.username || "Unknown"}</strong> (ID: {followed.userid})
+                  </Link>
                 </li>
               ))
             ) : (
