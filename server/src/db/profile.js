@@ -11,11 +11,12 @@ async function get_users() {
     }
 }
 
+//CHANGED: returns object instead of array [single object]
 async function get_user(userID) {
     try {
         const query = "SELECT * FROM users WHERE userID = $1";
         const results = await pool.query(query, userID);
-        return results.rows;
+        return results.rows[0];
     } catch (err) {
         console.error(err);
     }
@@ -70,9 +71,6 @@ async function get_user_following(userID) {
         console.error(err);
     }
 }
-
-
-
 
 
 module.exports = {
