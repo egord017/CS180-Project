@@ -7,6 +7,7 @@ import {BrowserRouter as Router, Route, Routes, Navigate} from "react-router-dom
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import GroupPage from './pages/GroupPage';
 
 
 function App() {
@@ -64,6 +65,10 @@ function App() {
             <Route 
               path="/dashboard" 
               element={isAuthenticated ? <Dashboard setAuth={setAuth}/> : <Navigate to="/login" />}
+            />
+            <Route 
+              path="/group-page" 
+              element={ <GroupPage/>}
             />
           </Routes>
         </div>

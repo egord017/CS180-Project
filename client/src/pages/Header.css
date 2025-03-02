@@ -1,0 +1,18 @@
+.header {
+	background-color: #4A7C25 !important; /* Custom Material-UI blue */
+	width: 100%;
+	position: sticky !important;
+	top:0;
+	z-index: 100;
+	/* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.559); */
+  }
+  
+  .logo {
+	flex-grow: 1; /* Pushes navigation links to the right */
+	padding: 0.5%;
+  }
+  
+  .nav-links button {
+	margin-left: 10px;
+  }
+  

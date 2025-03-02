@@ -48,6 +48,7 @@ const Login = ({setAuth}) => {
 
         } catch (err) {
             console.log(err.message);
+            
         }
     }
 

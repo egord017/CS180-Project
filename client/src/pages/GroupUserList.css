@@ -1,0 +1,19 @@
+.group-user-list {
+    top: 20px;
+    right: 20px;
+}
+
+.toggle-button {
+    background-color: #4A7C25 !important;
+    color: white !important;
+}
+
+.drawer-header {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px;
+}
+
+.drawer-header .MuiIconButton-root {
+    color: #4A7C25;
+}
