@@ -9,7 +9,12 @@ DROP TABLE IF EXISTS users_groups CASCADE;
 DROP TABLE IF EXISTS channels CASCADE;
 DROP TABLE IF EXISTS threads CASCADE;
 DROP TABLE IF EXISTS comments CASCADE;
-DROP TABLE IF EXISTS workshop CASCADE;
+DROP TABLE IF EXISTS workshops CASCADE;
+DROP TABLE IF EXISTS workshop_threads CASCADE;
+DROP TABLE IF EXISTS freeform_critiques CASCADE;
+DROP TABLE IF EXISTS embedded_critiques CASCADE;
+DROP TABLE IF EXISTS embedded_comments CASCADE;
+
 
 
 CREATE TABLE users(
@@ -49,10 +54,7 @@ CREATE TABLE channels (
     name TEXT NOT NULL,
     description TEXT NOT NULL,
     FOREIGN KEY (group_id) REFERENCES groups(id) ON DELETE CASCADE
-
-
 );
-
 
 CREATE TABLE threads (
     id SERIAL PRIMARY KEY,
@@ -65,14 +67,57 @@ CREATE TABLE threads (
     FOREIGN KEY (channel_id) REFERENCES channels(id) ON DELETE CASCADE
 );
 
-CREATE TABLE workshop (
+CREATE TABLE workshops (
+    id SERIAL PRIMARY KEY,
+    group_id INTEGER,
+    group_order INTEGER,
+    name TEXT NOT NULL,
+    description TEXT NOT NULL,
+    FOREIGN KEY (group_id) REFERENCES groups(id) ON DELETE CASCADE
+);
+
+CREATE TABLE workshop_threads (
     id SERIAL PRIMARY KEY,
     user_id uuid,
-    channel_id INTEGER,
+    workshop_id INTEGER,
     title TEXT NOT NULL,
-    body TEXT,
+    context TEXT,
+    guidance TEXT,
+    post_body TEXT,
+    passage_body TEXT NOT NULL,
+    time_stamp timestamp DEFAULT NOW(),
     FOREIGN KEY (user_id) REFERENCES users(userID) ON DELETE SET NULL,
-    FOREIGN KEY (channel_id) REFERENCES channels(id) ON DELETE CASCADE
+    FOREIGN KEY (workshop_id) REFERENCES workshops(id) ON DELETE CASCADE
+);
+
+
+CREATE TABLE freeform_critiques (
+    id SERIAL PRIMARY KEY,
+    user_id uuid,
+    workshop_thread_id INTEGER,
+    opening TEXT,
+    body TEXT,
+    closing TEXT,
+    time_stamp timestamp DEFAULT NOW(),
+    FOREIGN KEY (workshop_thread_id) REFERENCES threads(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(userID) ON DELETE SET NULL
+);
+
+CREATE TABLE embedded_critiques (
+    id SERIAL PRIMARY KEY,
+    user_id uuid,
+    workshop_thread_id INTEGER,
+    critique_body TEXT,
+    FOREIGN KEY (workshop_thread_id) REFERENCES threads(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(userID) ON DELETE SET NULL
+);
+CREATE TABLE embedded_comments (
+    id SERIAL PRIMARY KEY,
+    critique_id INTEGER,
+    comment TEXT,
+    index_start INTEGER,
+    index_end INTEGER,
+    FOREIGN KEY (critique_id) REFERENCES embedded_critiques(id) ON DELETE CASCADE
 );
 
 CREATE TABLE comments (
@@ -85,7 +130,6 @@ CREATE TABLE comments (
     FOREIGN KEY (user_id) REFERENCES users(userID) ON DELETE SET NULL
 );
 
-
 -- USERS -------------------------------------------------
 -- with bio
 INSERT INTO users(userName, userEmail, userPassword, userBio) VALUES ('daniel', 'miyagifan2@icloud.com','miyagido', 'mr. miyagi once said...');
@@ -97,6 +141,8 @@ INSERT INTO users(userName, userEmail, userPassword, userBio) VALUES ('julian', 
 
 -- USE AS DUMMY USER. copy the user_id
 INSERT INTO users(userID, userName, userEmail, userPassword, userBio) VALUES ('9a80cfb3-5535-4889-8fca-b213ae3607ba', 'dummy', 'dummy@gmail.com','dummy', 'a dummy');
+INSERT INTO users(userID, userName, userEmail, userPassword, userBio) VALUES ('7ce5ee1d-8889-4892-813e-54870e4172c2', 'friend', 'dummy2@gmail.com','friend', 'your friend');
+INSERT INTO users(userID, userName, userEmail, userPassword, userBio) VALUES ('c7e8dea4-5998-47db-9ce6-2f22afb9ffb6', 'elliot', 'robot@gmail.com','elliot', 'my nanme is elliot');
 
 -- without bio
 INSERT INTO users(userName, userEmail, userPassword) VALUES ('billy', 'wiliaim321@gmail.com', 'sand');
@@ -199,3 +245,44 @@ INSERT INTO comments (user_id, thread_id, body) VALUES ((SELECT userID FROM user
 INSERT INTO comments (user_id, thread_id, body) VALUES ((SELECT userID FROM users WHERE userName = 'fox'), 2, 'I love Edgar Allan Poe!');
 INSERT INTO comments (user_id, thread_id, body) VALUES ((SELECT userID FROM users WHERE userName = 'faye'), 2, 'I hate Edgar Allan Poe!');
 INSERT INTO comments (user_id, thread_id, body) VALUES ((SELECT userID FROM users WHERE userName = 'daniel'), 3, 'join miyagido guys!');
+
+
+-- WORKSHOP CHANNELS --
+INSERT INTO workshops (group_id, name, description)
+VALUES (1, 'Short Stories Workshop', 'Post your short stories for critique here :)');
+
+INSERT INTO workshops (group_id, name, description)
+VALUES (1, 'Close Reading Workshop', 'Post your essays, paragraphs, bits for critique here :)');
+
+-- WORKSHOP THREAD --
+INSERT INTO workshop_threads (user_id, workshop_id, title, context, guidance, post_body, passage_body)
+VALUES ('9a80cfb3-5535-4889-8fca-b213ae3607ba', 1, 'Notes From The Ground CH2', 'A cynical man has just finished rambling on free will, and is embarassed.','I welcome all thoughts! I have no idea what people are thinking while they read so the more information the better! :) I want to know if the chapter is engaging. where in this did you find yourself skipping lines?', 'let me know what u think :3',
+ '“I should like to tell you now, whether you want to hear it or not, why I couldn’t even make an insect of myself. I tell you solemnly that I have wanted to make an insect of myself many times. But I couldn’t succeed even in that. I swear to you that to think too much is a disease, a real, actual disease. For ordinary human life it would be more than sufficient to possess ordinary “human intellectual activity, that is to say, half or a quarter as much as falls to the lot of an educated man in our unhappy nineteenth century, and especially one having the misfortune to live in St Petersburg, the most abstract and intentional city in the whole round world. (Towns can be either intentional or unintentional.) It would be quite enough, for example, to have the consciousness of all our so-called men of action and public figures. I am prepared to let you think that in writing all this I am simply striking attitudes and scoring off men of action, and in the worst of taste, too; I am rattling my sword, like that officer. But who can be vain of his disease, still less swagger with it? Why do I say that, though? Everybody does it – we all show off with our diseases, and I, perhaps, more than anybody. Don’t let’s argue; I expressed myself clumsily. But all the same I’m firmly convinced that not only a great deal, but every kind, of intellectual activity is a disease. I hold to that. Let us leave it for the moment. Tell me this: why is it that it[…]”
+
+Excerpt From
+Notes from Underground and The Double
+Fyodor Dostoyevsky
+This material may be protected by copyright.');
+
+INSERT INTO workshop_threads (user_id, workshop_id, title, context, guidance, post_body, passage_body)
+VALUES ('9a80cfb3-5535-4889-8fca-b213ae3607ba', 1, 'lorem ipsum', 'A cynical man has just finished rambling on free will, and is embarassed.','I welcome all thoughts! I have no idea what people are thinking while they read so the more information the better! :) I want to know if the chapter is engaging. where in this did you find yourself skipping lines?', 'let me know what u think :3',
+ 'lorem ipsum');
+
+INSERT INTO workshop_threads (user_id, workshop_id, title, context, guidance, post_body, passage_body)
+VALUES ('9a80cfb3-5535-4889-8fca-b213ae3607ba', 1, 'Loomings', 'A cynical man has just finished rambling on free will, and is embarassed.','I welcome all thoughts! I have no idea what people are thinking while they read so the more information the better! :) I want to know if the chapter is engaging. where in this did you find yourself skipping lines?', 'let me know what u think :3',
+ 'Call me Ishmael. Some years ago—never mind how long precisely—having little or no money in my purse, and nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the world. It is a way I have of driving off the spleen and regulating the circulation. Whenever I find myself growing grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people’s hats off—then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. With a philosophical flourish Cato throws himself upon his sword; I quietly take to the ship. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings towards the ocean with me.');
+
+
+--BODY CRITIQUE --
+
+INSERT INTO freeform_critiques (user_id, workshop_thread_id, opening,body, closing)
+VALUES ('c7e8dea4-5998-47db-9ce6-2f22afb9ffb6', 1, 'Pretty good, pretty good.', 'Yeah, real good stuff. ', 'Last paragraph needs work, but overall a great and interesting read.');
+
+INSERT INTO freeform_critiques (user_id, workshop_thread_id, opening,body, closing)
+VALUES ('c7e8dea4-5998-47db-9ce6-2f22afb9ffb6', 1, 'Pretty good, pretty good.', 'Yeah, real good stuff. ', 'Last paragraph needs work, but overall a great and interesting read.');
+
+INSERT INTO embedded_critiques (user_id, workshop_thread_id, critique_body)
+VALUES ('c7e8dea4-5998-47db-9ce6-2f22afb9ffb6', 1, 'Last paragraph needs work, but overall a great and interesting read.');
+
+INSERT INTO embedded_comments (critique_id, comment, index_start, index_end)
+VALUES (1, 'fix this', 0, 5);
