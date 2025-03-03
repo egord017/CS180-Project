@@ -1,24 +1,233 @@
-p{
-    
+/* -----------------Delete & Back -------------------- */
+.delete-btn {
+    background-color: #d9544fbe;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 1095px;
 }
 
+.delete-btn:hover {
+    background-color: #c9302c; 
+}
+
+.delete-btn:active {
+    transform: scale(0.95);
+}
+
+.back-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.back-btn:hover {
+    background-color: #45a049;
+}
+
+.back-btn:active {
+    transform: scale(0.95);
+}
+
+/*------------------Group & Channle Name-------------------*/
+.info-container {
+    display: flex; 
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center; 
+    padding: 15px;
+    background-color: #ffffff; 
+    width: 100%; 
+    max-width: 600px;
+    margin: 20px auto; 
+    text-align: center; 
+    margin-top: 10px;
+    margin-bottom: -30px;
+
+}
+
+.group-name {
+    font-size: 20px; 
+    font-weight: bold; 
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.channel-name {
+    font-size: 18px; 
+    font-style: italic; 
+    color: #666; 
+}
+
+/*-------------------------------------------------------------------*/
+
+
+/* Thread Page Container */
+.thread-container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #F0E3D7;
+    border-radius: 10px;
+}
+
+/* ---------------OP Section -----------------------*/
 .op-container {
-    display:flex;
-    flex-direction:row;
-    align-items:center;
-    gap:2rem;
-    background-color:green;
-    padding:15px;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center;
+    background-color: #A4B5A0; 
+    margin-bottom: 10px; 
+    padding-top: 20px;
+    padding-bottom: 10px;
+    width: 100%;
+    margin: 20px auto; 
+    text-align: center; 
+    box-shadow: 12px 7px 5px rgba(0, 0, 0, 0.336);
 }
 
-.comment-container{
-    display:flex;
-    flex-direction:row;
-    align-items:center;
-    gap:2rem;
-    background-color:green;
-    padding:15px;
+.op-username {
+    font-size: 16px; 
+    color: #ffffff; 
+    margin-bottom: 5px;
+    text-align: center; 
 }
+
+.op-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px; 
+    text-align: center; 
+}
+
+.op-body {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 15px; 
+    text-align: center; 
+}
+
+.op-body {
+    flex-grow: 1;
+}
+
+.op-body h3 {
+    margin-bottom: 5px;
+    text-align: center;
+    font-size: 18px;
+}
+
+/* -----------------Comments Stuff -------------------- */
+.comments-section {
+    text-align: center; 
+    width: 100%;
+}
+
+.comments-section h3 {
+    font-size: 18px; /* Adjust font size */
+    font-weight: bold;
+    margin-bottom: 7px; /* Adds spacing below */
+}
+
+.comment-container {
+    display: flex;
+    flex-direction: column;  
+    align-items: flex-start; 
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 800px;
+    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.151);
+}
+
+.comment-container .username {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 3px; 
+}
+
+/* -----------------Reply -------------------- */
+.reply-button {
+    background-color: #4CAF50; 
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    /* margin-left: 1095px; */ /*depending on whether you want reply on left or right */
+    margin-left: 370px; /*depending on whether you want reply on left or right */
+
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.reply-button:hover {
+    background-color: #3e9042;
+}
+
+.reply-button:active {
+    transform: scale(0.95);
+}
+
+/* -----------------Actual Comments Text Stuff -------------------- */
+.comment-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 5px 12px;
+    margin-bottom: 12px;
+    margin-left: 370px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 800px;
+    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.comment-container .username {
+    font-weight: bold;
+    color: #333;
+    display: block;  
+    margin-bottom: 7px; 
+}
+
+/* Comment Text */
+.comment-container .comment-text {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.4;
+    word-wrap: break-word; 
+}
+
 .comment-container .del-btn {
-    background-color: red;
+    align-self: flex-end;
+    background-color: rgba(255, 0, 0, 0.442);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 3px;
+    margin-top: 5px;
+}
+
+.comment-container .del-btn:hover {
+    background-color: rgb(255, 0, 0);
 }
