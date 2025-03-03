@@ -1,4 +1,111 @@
+
+/*-----------------------Info-------------------------*/
+.info-container {
+    text-align: center;
+    margin-bottom: -20px;
+    margin-top: -50px;
+}
+
+.group-name {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.channel-name {
+    font-size: 20px;
+    font-style: italic;
+    color: #555;
+    margin-bottom:5px;
+}
+
+.channel-desc {
+    font-size: 16px;
+    color: #777;
+    margin-bottom:5px;
+}
+
+/*-------------------Threads-----------------------*/
 .threads-container {
-    display:flex;
+    display: flex;
     flex-direction: column;
+    align-items: center;
+    width: 90%;
+    max-width: 850px;
+    margin: 0 auto; 
+    gap: 15px; 
+}
+
+.threads-container button {
+    width: 100%;
+    padding: 15px;
+    background-color: #4A7C2A;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    box-shadow: 2px 4px 5px rgba(0, 0, 0, 0.575);
+    transition: background-color 0.3s;
+    text-align: center;
+    margin-bottom: -7px;
+}
+
+.thread-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    
+}
+
+.thread-body {
+    font-size: 14px;
+    font-style: italic;
+    color: #e1e1e1;
+}
+
+.threads-container button p {
+    margin: 0;
+    text-align: center;
+}
+
+.threads-container button:hover {
+    background-color: #5c8d5e;
+}
+
+
+/*-----------------Back & Post Buttons ---------------------*/
+.button-container {
+    display: flex;
+    flex-direction: column;  
+    align-items: flex-start; 
+    gap: 5px; 
+}
+
+.back-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 14px;
+    border-radius: 10px;
+    margin-left: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.back-button:hover {
+    background-color: #388E3C;
+}
+
+.post-button{
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 10px;
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+.post-button:hover {
+    background-color: #388E3C;
 }

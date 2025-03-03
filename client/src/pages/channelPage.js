@@ -48,18 +48,23 @@ function ChannelPage(){
 
     return (
         <div>
-            <Button onClick={()=>{backToGroup(channel?.group_id)}}>Back To Group</Button>
-            <Button onClick={()=>{visitThreadForm()}}>Post</Button>
-            <div>{group?.name}</div>
-            <div>{channel?.name}</div>
-            <div>{channel?.description}</div>
+            <div className="button-container">
+                <Button className="back-button" onClick={() => backToGroup(channel?.group_id)}>Back To Group</Button>
+                <Button className="post-button" onClick={() => visitThreadForm()}>Post</Button>
+            </div>  
+
+            <div className = "info-container">
+                <p className="group-name">{group?.name}</p>
+                <p className="channel-name">{channel?.name}</p>
+                <p className="channel-desc">{channel?.description}</p>
+            </div>
             <div className="threads-container">
                {threads.map((thread)=>{
                     return (
                         <Button key={thread.id} onClick={()=>{visitThread(thread.id)}}>
                             {/* <Link to={`/profile/${user id here}`}></Link>  */}
-                            <p>{thread.title}</p>
-                            <p>{thread.body}</p>
+                            <p className="thread-title">{thread?.title}</p>
+                            <p className="thread-body">{thread?.body}</p>
                             
                         </Button>
                         

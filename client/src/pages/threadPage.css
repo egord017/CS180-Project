@@ -87,7 +87,7 @@
     flex-direction: column; 
     justify-content: center; 
     align-items: center;
-    background-color: #A4B5A0; 
+    background-color: #4A7C2A; 
     margin-bottom: 10px; 
     padding-top: 20px;
     padding-bottom: 10px;
@@ -107,16 +107,17 @@
 .op-title {
     font-size: 20px;
     font-weight: bold;
-    color: #333;
+    color: #ffffff;
     margin-bottom: 15px; 
     text-align: center; 
 }
 
 .op-body {
     font-size: 16px;
-    color: #333;
+    color: #ffffff;
     margin-bottom: 15px; 
     text-align: center; 
+    font-style: italic;
 }
 
 .op-body {
@@ -152,7 +153,7 @@
     border-radius: 5px;
     width: 100%;
     max-width: 800px;
-    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.151);
+    box-shadow: 5px 5px 4px rgba(0, 0, 0, 0.251);
 }
 
 .comment-container .username {
