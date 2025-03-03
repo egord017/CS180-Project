@@ -12,6 +12,8 @@ router.get("/:group_id", groupController.get_group);
 //GET /groups/:group_id/channels
 router.get('/:group_id/channels', groupController.get_channels_from_group);
 
+//GET /groups/:group_id/channels
+router.get('/:group_id/workshops', groupController.get_workshops_from_group);
 
 //get users in group
 router.get('/:group_id/users', groupController.get_users_group);
