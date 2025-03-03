@@ -24,6 +24,7 @@ app.use("/comments", require("./src/routes/comments.js"));
 app.use("/profile", require("./src/routes/profile.js")); //profile route
 app.use("/workshops", require("./src/routes/workshop.js")); //workshop
 app.use("/workshop_threads", require("./src/routes/workshopThread.js")); //workshop threads
+app.use("/critiques", require("./src/routes/critiques.js")); //critiques
 
 
 app.listen(5000, () => {
