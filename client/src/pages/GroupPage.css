@@ -1,11 +1,13 @@
 
 .group-page-header {
-    padding: 2% !important;
-    width: 90% !important;
+    padding: 2% ;
+    width: 100% !important;
     margin: 0 auto 3%;
-	margin-top: 3%;
+	margin-top: 2%;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
 	display: flex;
+	padding-bottom: 4%;
+	margin-bottom: 0px;
 }
 
 .group-page-title{

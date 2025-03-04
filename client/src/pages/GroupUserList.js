@@ -13,9 +13,13 @@ const GroupUserList = ({ users }) => {
 
     return (
         <div className="group-user-list">
+            <div className="member-button">
+
+            
             <IconButton onClick={toggleDrawer(true)} className="toggle-button">
-                <PeopleIcon fontSize="large" />
+                <PeopleIcon fontSize="small" /> <h2 id="member-text">Members</h2>
             </IconButton>
+            </div>
             <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
                 <div className="drawer-header">
                     <IconButton onClick={toggleDrawer(false)}>

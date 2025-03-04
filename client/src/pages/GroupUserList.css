@@ -5,6 +5,7 @@
 
 .toggle-button {
     background-color: #4A7C25 !important;
+    border-radius: 10px !important;
     color: white !important;
 }
 
@@ -16,4 +17,9 @@
 
 .drawer-header .MuiIconButton-root {
     color: #4A7C25;
+}
+
+#member-text{
+    padding-left: 10px;
+    font-size: 17px;
 }
