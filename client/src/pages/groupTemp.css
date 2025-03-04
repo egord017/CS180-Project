@@ -1,0 +1,8 @@
+.channels-container {
+    background-color: whitesmoke;
+    display:flex;
+    flex-direction:column;
+    gap:2rem;
+    padding:2rem;
+}
+

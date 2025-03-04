@@ -17,6 +17,9 @@ import ThreadPage from './pages/threadPage';
 import GroupPostForm from './pages/groupPostForm';
 import ChannelPostForm from './pages/channelPostForm';
 import ThreadPostForm from './pages/threadPostForm';
+import WorkshopPage from './pages/workshopPage';
+import WorkshopThreadPage from './pages/workshopThreadPage';
+import CritiquePage from './pages/critiquePage';
 
 import ProfilePage from './pages/profilePage';
 
@@ -115,6 +118,22 @@ function App() {
             />
             <Route 
               path="/channel/:channel_id/submit" 
+              element={isAuthenticated ? <ThreadPostForm/> : <Navigate to="/login" />}
+            />
+            <Route 
+              path="/workshop/:workshop_id/" 
+              element={isAuthenticated ? <WorkshopPage/> : <Navigate to="/login" />}
+            />
+            <Route 
+              path="/workshop-thread/:thread_id/" 
+              element={isAuthenticated ? <WorkshopThreadPage/> : <Navigate to="/login" />}
+            />
+            <Route 
+              path="/critique/:critique_id/" 
+              element={isAuthenticated ? <CritiquePage/> : <Navigate to="/login" />}
+            />
+            <Route 
+              path="/workshop/:workshop_id/submit" 
               element={isAuthenticated ? <ThreadPostForm/> : <Navigate to="/login" />}
             />
             <Route 

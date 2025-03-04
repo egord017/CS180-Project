@@ -5,11 +5,9 @@ async function get_workshop(id){
         const query = "SELECT * FROM workshops WHERE id=$1";
         const results = await pool.query(query, id);
         
-        console.log(results);
         return results.rows[0];
     }
     catch (err){
-        console.log("r", id);
         console.error(err);
     }
 }

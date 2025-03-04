@@ -1,13 +1,13 @@
 import React,{Fragment, useState, useEffect} from 'react';
 import {useNavigate, useParams, Link} from 'react-router-dom';
 import Button from '../components/Button';
-import './channelPage.css';
+import './workshopPage.css';
 
 
-function ChannelPage(){
+function WorkshopPage(){
 
-    const channel_id = Object.values(useParams())[0];
-    const [channel, setChannel] =  useState(null);
+    const workshop_id = Object.values(useParams())[0];
+    const [workshop, setWorkshop] =  useState(null);
     const [group, setGroup] =  useState(null);
     const [threads, setThreads] = useState([]);
 
@@ -23,36 +23,36 @@ function ChannelPage(){
     
 
     function visitThread(thread_id){
-        navigate(`/thread/${thread_id}`);
+        navigate(`/workshop-thread/${thread_id}`);
     }
     useEffect(()=>{
         async function getThreads(){
-            const threadsObj = await fetch(`http://localhost:5000/channels/${channel_id}/threads`);
+            const threadsObj = await fetch(`http://localhost:5000/workshops/${workshop_id}/threads`);
             const new_threads = await threadsObj.json();
 
             setThreads(new_threads);
         }
-        async function getChannelAndGroup(){
-            const channelObj = await fetch(`http://localhost:5000/channels/${channel_id}`);
-            const new_channel = await channelObj.json();
+        async function getworkshopAndGroup(){
+            const workshopObj = await fetch(`http://localhost:5000/workshops/${workshop_id}`);
+            const new_workshop = await workshopObj.json();
 
-            const groupObj = await fetch(`http://localhost:5000/groups/${new_channel.group_id}`);
+            const groupObj = await fetch(`http://localhost:5000/groups/${new_workshop?.group_id}`);
             setGroup(await groupObj.json());
-            setChannel(new_channel);
-            //return new_channel.group_id;
+            setWorkshop(new_workshop);
+            //return new_workshop.group_id;
         }
-        getChannelAndGroup();
+        getworkshopAndGroup();
         getThreads();
     }, []);
 
 
     return (
         <div>
-            <Button onClick={()=>{backToGroup(channel?.group_id)}}>Back To Group</Button>
+            <Button onClick={()=>{backToGroup(workshop?.group_id)}}>Back To Group</Button>
             <Button onClick={()=>{visitThreadForm()}}>Post</Button>
             <div>{group?.name}</div>
-            <div>{channel?.name}</div>
-            <div>{channel?.description}</div>
+            <div>{workshop?.name}</div>
+            <div>{workshop?.description}</div>
             <div className="threads-container">
                {threads.map((thread)=>{
                     return (
@@ -71,4 +71,4 @@ function ChannelPage(){
     )
 }
 
-export default ChannelPage;
+export default WorkshopPage;

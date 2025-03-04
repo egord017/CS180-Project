@@ -188,6 +188,7 @@ VALUES (3, (SELECT userID FROM users WHERE userName = 'daniel'), 1);
 
 INSERT INTO users_groups (group_id, user_id, role_id) 
 VALUES (1, (SELECT userID FROM users WHERE userName = 'faye'), 1);
+
 INSERT INTO users_groups (group_id, user_id, role_id) 
 VALUES (2, (SELECT userID FROM users WHERE userName = 'faye'), 2);
 

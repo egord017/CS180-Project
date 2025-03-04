@@ -5,71 +5,47 @@ import './threadPage.css';
 
 import {get_groups} from "../api/groupAPI.js"
 
-function ThreadPage(){
+function WorkshopThreadPage(){
     let is_error = false;
     const navigate = useNavigate();
 
-    function onCreateCommentPress(){
-        setIsCommenting(true);
-    }
-
-    async function handleCommentSubmit(event){
-        event.preventDefault();
-        console.log("HI");
-        try{
-            const res = await fetch("http://localhost:5000/comments",
-                {
-                    method:"POST",
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        body:reply,
-                        thread_id:thread_id,
-                        user_id:"9a80cfb3-5535-4889-8fca-b213ae3607ba"
-                    })
-                }
-            )
-            const comment = await res.json();
-            setComments((prev) => [...prev, comment]);
-        }
-        catch (err){
-            console.error(err);
-        }
-    }
 
     function onClickGoHome(){
         navigate('/');
     }
     function backToChannel(channel_id){
-        if (channel_id) navigate(`/channel/${channel_id}`);
+        if (channel_id) navigate(`/workshop/${channel_id}`);
+    }
+    function visitCritique(critique_id){
+        if (critique_id) navigate(`/critique/${critique_id}`)
     }
 
     //fetch thread object using my url param thread/:thread_id
     const thread_id = Object.values(useParams())[0];
     const [thread, setThreadData] = useState(null);
-    const [comments, setComments] = useState([]);
+    const [critiques, setCritiques] = useState([]);
     const [group, setGroup] = useState(null);
-    const [channel, setChannel] = useState(null);
-    const [isCommenting, setIsCommenting] = useState(false);
-    const [commenters, setCommenters] = useState({}); //map with key being user_id 
+    const [workshop, setWorkshop] = useState(null);
+
+    const [critics, setCritics] = useState({}); //map with key being user_id 
     const [op, setOp] = useState(null);
 
     const [reply, setReply] = useState("");
 
     //TODO: the useffects are fucked up, mush into one or something idk.
     useEffect(()=>{
-        async function fetchThreadAndComments(){
+        async function fetchThreadAndCritiques(){
             try{
                 //fetch threads
-                const thread_obj = await fetch((`http://localhost:5000/threads/${thread_id}`));
+                const thread_obj = await fetch((`http://localhost:5000/workshop-threads/${thread_id}`));
                 const thread_data = await thread_obj.json();
                 setThreadData(thread_data);
-                console.log("HreL:");
-                
-                //fetch comments
-                const comments_obj = await fetch((`http://localhost:5000/threads/${thread_id}/comments`));
-                const comments_data = await comments_obj.json();
-                setComments(comments_data);
 
+                //fetch critiques
+                const critiques_obj = await fetch((`http://localhost:5000/workshop-threads/${thread_id}/critiques`));
+                const critiques_data = await critiques_obj.json();
+                console.log("critiques:", thread_id, critiques_data);
+                setCritiques(critiques_data);
 
                 //USERS
                 //fetch OP
@@ -80,28 +56,28 @@ function ThreadPage(){
                 //fetch channel info
                 //fetch users for each comment.
 
-                const commenters_data = await Promise.all(comments_data.map(async comment => {
+                const critics_data = await Promise.all(critiques_data.map(async comment => {
                     const results = await fetch(`http://localhost:5000/profile/${comment.user_id}`)
                     return await results.json();    
                 }));
 
                 const users_dict = {};
-                for (const i in commenters_data){
+                for (const i in critics_data){
                     
-                    console.log(commenters_data[i]);
-                    users_dict[commenters_data[i].userid] = commenters_data[i];
+                    console.log(critics_data[i]);
+                    users_dict[critics_data[i].userid] = critics_data[i];
                 }
                 console.log(users_dict);
-                setCommenters(users_dict);
+                setCritics(users_dict);
                 
                 
                 //fetch channel info
-                const channelObj = await fetch(`http://localhost:5000/channels/${thread_data.channel_id}`);
+                const channelObj = await fetch(`http://localhost:5000/workshops/${thread_data.workshop_id}`);
                 const new_channel = await channelObj.json();
             
                 //fetch group info
                 const groupObj = await fetch(`http://localhost:5000/groups/${new_channel.group_id}`);
-                setChannel(new_channel);
+                setWorkshop(new_channel);
                 setGroup(await groupObj.json());
    
             }
@@ -111,7 +87,7 @@ function ThreadPage(){
             }
             
         }
-        fetchThreadAndComments();
+        fetchThreadAndCritiques();
     }, []); 
         
    
@@ -121,15 +97,12 @@ function ThreadPage(){
             method:"DELETE"
         }
         );
-
-
-        navigate(`/channel/${channel?.id}`)
-
+        navigate(`/workshop/${workshop?.id}`)
     }
 
     async function deleteComment(comment_id){
         try {
-            const response = await fetch((`http://localhost:5000/comments/${comment_id}`),
+            const response = await fetch((`http://localhost:5000/critiques/${comment_id}`),
                 {
                     method:"DELETE"
                 }
@@ -151,41 +124,34 @@ function ThreadPage(){
     //somehow put data into the return ina nice way. maybe ill create a commentssection component and threadview component
     return (
         <div>
-            <Button onClick={()=>{backToChannel(thread?.channel_id)}}>Back</Button>
+            <Button onClick={()=>{backToChannel(thread?.workshop_id)}}>Back</Button>
             <Button className="delete-btn" onClick={()=>{deleteThread()}}>Delete Thread</Button>
             <div>{group?.name}</div>
-            <div>{channel?.name}</div>
+            <div>{workshop?.name}</div>
             <div className="op-container">
                 <div className="op">
                     <p>{op?.username}</p>
                 </div>
                 <div>
                     <p>{thread?.title}</p>
-                    <p>{thread?.body}</p>
+                    <p>{thread?.context}</p>
+                    <p>{thread?.post_body}</p>
+                    <p>Passage</p>
+                    <p>{thread?.passage_body}</p>
                 </div>
-                
             </div>
-            <button onClick={()=>{onCreateCommentPress()}}>Reply</button>
-            {isCommenting ? 
-                (<form onSubmit={handleCommentSubmit}>
-                    <textarea onChange={(e)=>{setReply(e.target.value)}} name="comment-body" id="comment-body"></textarea>
-                    <button type="submit"></button>
-                </form>)
-                :
-                null
-                }
-            
+            <button>Critique</button>
             <div>
-                <div>Comments</div>
-                {comments.map((comment)=>(
-                    <div className="comment-container">
-                        <div>{commenters[comment?.user_id]?.username} | {comment?.body}</div>
+                <div>Critiques</div>
+                {critiques.map((comment)=>(
+                    <button className="comment-container" onClick={()=>{visitCritique(comment.id)}}>
+                        <div>{critics[comment?.user_id]?.username} | {comment?.body}</div>
                         <button className="del-btn" onClick={()=>{deleteComment(comment.id)}}>Delete</button>
-                    </div>
+                    </button>
                 ))}
             </div>
         </div>
     );
 }
 
-export default ThreadPage;
+export default WorkshopThreadPage;
