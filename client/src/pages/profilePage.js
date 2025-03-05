@@ -60,47 +60,96 @@ function ProfilePage({}) {
   }
 
   return (
-    <div className="profile-page-container">
-      <div className="profile-header">
+    <div className="profile-page-container-1">
+      <div className="profile-container">
         <div className="avatar-circle">
           {/* Optionally render an <img> if userData contains an avatar URL */}
         </div>
-        <div className="profile-summary">
-          <h2>{userData.username || "N/A"}</h2>
+        <h2>{userData.username || "N/A"}</h2>
+        <div className="bio-box">
           <p>{userData.userbio || "No bio available."}</p>
         </div>
       </div>
 
-      {/* i added this to see the unique id of the user. hide this for normal user or make only admins see it */}
-      <div className="small-box">
-        <p>User ID: {userData.userid}</p>
-      </div>
-
-      {/* longer bio can go here if we want */}
-      <div className="large-box">
-        <p>{userData.userbio}</p>
-      </div>
 
       <div className="sections-container">
+        <h3>Groups Joined</h3>
         <div className="section-box">
-          <h3>Groups Joined</h3>
-          <ul>
-            {groups.length ? (
-              groups.map((group) => (
-                <li key={group.id}>
-                  <Link to={`/group/${group.id}`}>
-                    <strong>{group.name || "Unnamed Group"}</strong> (Group ID: {group.id})
-                  </Link>
-                  <p>{group.description}</p>
-                </li>
-              ))
-            ) : (
-              <li>No groups joined.</li>
-            )}
-          </ul>
+          <div className="groups-box-container">
+        
+              <div className="sections-container-in-box">
+                  {groups.length ? (
+                    groups.map((group) => (
+                      <div className="groups-box" key={group.id}>
+
+                        <div className="groups-box-elem">
+                          <img src={group.image || "/images/placeholder.jpg"} alt={group.name} className="group-box-image" />
+                        </div>
+                        <div className="groups-box-elem">
+                          <h2>{group.category || "No Category"}</h2> 
+                          <Link to={`/group/${group.id}`}>
+                            <h1>{group.name || "Unnamed Group"}</h1>
+                          </Link>
+                          <p>{group.description}</p>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <h3>No groups joined.</h3>
+                  )}
+               </div>
+           </div>
         </div>
 
+        <h3>Threads Posted</h3>
         <div className="section-box">
+          <div className="groups-box-container">
+        
+              <div className="sections-container-in-box">
+                  {threads.length ? (
+                    threads.map((thread) => (
+                      <div className="threads-box" key={thread.id}>
+                          <Link to={`/thread/${thread.id}`}>
+                            <h1>{thread.title || "Untitled Thread"}</h1>
+                          </Link>
+                          <p>{thread.body}</p>
+                        </div>
+                    
+                    ))
+                  ) : (
+                    <h3>No threads posted.</h3>
+                  )}
+               </div>
+           </div>
+        </div>
+
+        <h3>Recent Comments</h3>
+        <div className="section-box">
+          <div className="groups-box-container">
+        
+              <div className="sections-container-in-box">
+                  {comments.length ? (
+                    comments.map((comment) => (
+                      <div className="comments-box" key={comment.id}>
+              
+                          <h2>{comment.body || "No Comment"}</h2> 
+                          <Link to={`/thread/${comment.thread_id}`}>
+                            <h1>{comment.thread_title || "Untitled Thread"}</h1>
+                          </Link>
+               
+                        </div>
+                      
+                    ))
+                  ) : (
+                    <li>No groups joined.</li>
+                  )}
+               </div>
+           </div>
+        </div>
+
+        
+
+        {/* <div className="section-box">
           <h3>Threads Posted</h3>
           <ul>
             {threads.length ? (
@@ -134,11 +183,11 @@ function ProfilePage({}) {
               <li>No comments found.</li>
             )}
           </ul>
-        </div>
-
+        </div> */}
+      
 
         {/* New section for Followers and Following */}
-      <div className="follow-container">
+      {/* <div className="follow-container">
         <div className="follow-box">
           <h3>Followers</h3>
           <ul>
@@ -155,6 +204,7 @@ function ProfilePage({}) {
             )}
           </ul>
         </div>
+      
         <div className="follow-box">
           <h3>Following</h3>
           <ul>
@@ -172,7 +222,7 @@ function ProfilePage({}) {
             )}
           </ul>
         </div>
-      </div>
+      </div> */}
       </div>
     </div>
   );
