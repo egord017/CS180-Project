@@ -17,6 +17,7 @@ function WorkshopPage(){
         if (group_id) navigate(`/group/${group_id}`);
     }
 
+    
     function visitThreadForm(){
         navigate('submit');
     }

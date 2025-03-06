@@ -25,9 +25,9 @@ async function get_critiques_from_thread(req, res) {
 async function create_thread(req, res) {
     console.log("Received body:", req.body);
 
-    let { user_id, channel_id, title, body } = req.body;
+    let { user_id, workshop_id, title, context, preference, post_body, passage_body } = req.body;
 
-    if (!title || !channel_id || !user_id) {
+    if (!title || !workshop_id || !passage_body) {
         return res.status(400).json({ error: "Missing required fields" });
     }
     try {
@@ -36,7 +36,8 @@ async function create_thread(req, res) {
         if (userCheck.rows.length === 0) {
            return res.status(400).json({ error: `Invalid user_id: ${user_id}. User does not exist.` });
         }
-        const result = await threads_db.create_thread(user_id, channel_id, title, body);
+
+        const result = await threads_db.create_thread( user_id, workshop_id, title, context, preference, post_body, passage_body);
         res.status(201).json({ message: "Thread created successfully!", thread: result });
 
     } catch (err) {
@@ -68,14 +69,13 @@ async function create_thread(req, res) {
 
 async function delete_thread(req, res) {
     const { thread_id } = req.params;
-
+    console.log(thread_id);
     try {
         const deletedThread = await threads_db.delete_thread(thread_id);
 
         if (!deletedThread) {
             return res.status(404).json({ error: "Thread missing" });
         }
-
         res.status(200).json({ message: "Thread deleted", thread: deletedThread });
     } catch (err) {
         console.error("Database error:", err);

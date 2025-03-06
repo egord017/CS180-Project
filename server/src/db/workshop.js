@@ -27,7 +27,7 @@ async function post_workshop(group_id, name, description){
     try{
         const query = "INSERT into workshops (group_id, name, description) VALUES ($1, $2, $3) RETURNING *";
         const results = await pool.query(query, [group_id, name, description]);
-        return results.rows;
+        return results.rows[0];
     }
     catch (err){
         console.error(err);

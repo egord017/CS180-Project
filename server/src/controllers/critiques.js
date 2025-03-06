@@ -7,13 +7,15 @@ async function get_critique(req, res){
 }
 
 async function post_critique(req, res){
-    const {thread_id, user_id, body} = req.body;
-    if (!thread_id||!body){
+    const {workshop_thread_id, user_id, opening, body, closing} = req.body;
+    console.log(workshop_thread_id, user_id, opening, body, closing);
+    if (!workshop_thread_id||!body){
         return res.status(400).json({
             error: "payload is malformed, should be : 'thread_id', 'user_id', 'body'."
         });
     }
-    const results = await critiques_db.post_critique(thread_id, user_id, body);
+    console.log(req.body);
+    const results = await critiques_db.post_critique(user_id, workshop_thread_id, opening, body, closing);
     res.send(results);
 }
 
@@ -33,7 +35,7 @@ async function edit_critique(req, res){
 
 async function delete_critique(req, res){
     const id = Object.values(req.params);
-    console.log(id);
+    console.log("idd:", id);
     const results = await critiques_db.delete_critique(id);
     res.send(results);
 }

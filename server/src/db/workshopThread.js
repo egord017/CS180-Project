@@ -30,7 +30,7 @@ async function get_critiques_from_thread(thread_id) {
 }
 
 async function create_thread(user_id, workshop_id, title, context, preference, post_body, passage_body) {
-    const query = `INSERT INTO workshop_threads (user_id, channel_id, title, context, preference, post_body, passage_body) VALUES ($1, $2, $3, $4) RETURNING *; `;
+    const query = `INSERT INTO workshop_threads (user_id, workshop_id, title, context, preference, post_body, passage_body) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *; `;
 
     try {
         console.log("Executing query with:", [user_id, workshop_id, title, context, preference, post_body, passage_body]);
@@ -55,10 +55,8 @@ async function create_thread(user_id, workshop_id, title, context, preference, p
 
 async function delete_thread(thread_id) {
     try {
-        
-        await pool.query("DELETE FROM comments WHERE thread_id = $1", [thread_id]);//deletes all coments in a therwad
 
-        const result = await pool.query("DELETE FROM threads WHERE id = $1 RETURNING *", [thread_id]);//deletes thrwad
+        const result = await pool.query("DELETE FROM workshop_threads WHERE id = $1 RETURNING *", [thread_id]);//deletes thrwad
 
         if (result.rowCount === 0) {
             return null; //Thread missing

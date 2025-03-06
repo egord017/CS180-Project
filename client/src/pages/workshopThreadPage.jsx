@@ -13,13 +13,18 @@ function WorkshopThreadPage(){
     function onClickGoHome(){
         navigate('/');
     }
-    function backToChannel(channel_id){
-        if (channel_id) navigate(`/workshop/${channel_id}`);
+
+
+    function backToWorkshop(workshop_id){
+        if (workshop_id) navigate(`/workshop/${workshop_id}`);
     }
     function visitCritique(critique_id){
         if (critique_id) navigate(`/critique/${critique_id}`)
     }
 
+    function visitCritiqueForm(){
+        navigate("submit");
+    }
     //fetch thread object using my url param thread/:thread_id
     const thread_id = Object.values(useParams())[0];
     const [thread, setThreadData] = useState(null);
@@ -92,7 +97,7 @@ function WorkshopThreadPage(){
         
    
     async function deleteThread(){
-        const req = await fetch((`http://localhost:5000/threads/${thread_id[0]}`),
+        const req = await fetch((`http://localhost:5000/workshop-threads/${thread_id}`),
         {
             method:"DELETE"
         }
@@ -101,6 +106,7 @@ function WorkshopThreadPage(){
     }
 
     async function deleteComment(comment_id){
+        
         try {
             const response = await fetch((`http://localhost:5000/critiques/${comment_id}`),
                 {
@@ -124,7 +130,7 @@ function WorkshopThreadPage(){
     //somehow put data into the return ina nice way. maybe ill create a commentssection component and threadview component
     return (
         <div>
-            <Button onClick={()=>{backToChannel(thread?.workshop_id)}}>Back</Button>
+            <Button onClick={()=>{backToWorkshop(thread?.workshop_id)}}>Back</Button>
             <Button className="delete-btn" onClick={()=>{deleteThread()}}>Delete Thread</Button>
             <div>{group?.name}</div>
             <div>{workshop?.name}</div>
@@ -140,11 +146,11 @@ function WorkshopThreadPage(){
                     <p>{thread?.passage_body}</p>
                 </div>
             </div>
-            <button>Critique</button>
+            <button onClick={()=>{visitCritiqueForm()}}>Critique</button>
             <div>
                 <div>Critiques</div>
                 {critiques.map((comment)=>(
-                    <button className="comment-container" onClick={()=>{visitCritique(comment.id)}}>
+                    <button key={comment.id} className="comment-container" onClick={()=>{visitCritique(comment.id)}}>
                         <div>{critics[comment?.user_id]?.username} | {comment?.body}</div>
                         <button className="del-btn" onClick={()=>{deleteComment(comment.id)}}>Delete</button>
                     </button>

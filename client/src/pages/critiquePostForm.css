@@ -1,0 +1,11 @@
+.page {
+    display:flex;
+    justify-content:center;
+}
+
+.strikethrough {
+    text-decoration: line-through;
+}
+.highlight {
+    background-color:hotpink;
+}

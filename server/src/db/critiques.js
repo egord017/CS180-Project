@@ -36,7 +36,7 @@ async function delete_critique(id){
     try{
         const query = "DELETE FROM freeform_critiques WHERE id=$1 RETURNING *";
         const result = await pool.query(query, id);
-        return result.rows;
+        return result.rows[0];
     }
     catch (err){
         console.error(err);

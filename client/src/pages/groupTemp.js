@@ -66,14 +66,14 @@ function GroupPageTemp() {
         navigate(`/channel/${channel_id}`);
     }
     function visitChannelForm(){
-        navigate('submit')
+        navigate('channel-submit');
     }
 
     function visitWorkshop(channel_id) {
         navigate(`/workshop/${channel_id}`);
     }
     function visitWorkshopForm(){
-        navigate('submit')
+        navigate('workshop-submit');
     }
 
     useEffect(() => {
@@ -193,7 +193,7 @@ function GroupPageTemp() {
             ))}
             </div>
             <div className="workshops-container">
-            <button onClick={()=>(visitWorkshopForm())}>Create Channel$</button>
+            <button onClick={()=>(visitWorkshopForm())}>Create Workshop</button>
 
             {Object.entries(workshopThreads).map(([workshop_id, ws_thread_list]) => (
                 <Button class="workshop-card" key={workshop_id} onClick={() => visitWorkshop(workshop_id)}>
