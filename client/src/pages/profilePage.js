@@ -134,7 +134,7 @@ function ProfilePage({}) {
                 
                             <h2>{comment.body || "No Comment"}</h2> 
                             <Link to={`/thread/${comment.thread_id}`}>
-                              <h1>{comment.thread_title || "Untitled Thread"}</h1>
+                              <h1>{comment.thread_id || "Untitled Thread"}</h1>
                             </Link>
                 
                           </div>

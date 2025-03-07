@@ -76,7 +76,7 @@
   width: 340px;
   height: 280px;
   background-color: rgba(164, 181, 160, 0.35); 
-  border: 2px solid #4A7C25; 
+  border: 3px solid #4A7C25; 
   color: black; 
   border-radius: 10px;
 }
@@ -100,9 +100,10 @@
   display: grid;
   flex-wrap: wrap;
   grid-template-rows: auto 1fr;
-  overflow: scroll;
+  overflow: auto;
+  scrollbar-width: none;
   column-gap: 25px;
-  max-height: 141px;
+  
 }
 
 .groups-box img{
@@ -202,7 +203,7 @@
   width: 873px;
   height: 189px;
   background-color: rgba(164, 181, 160, 0.35); 
-  border: 2px solid #4A7C25; 
+  border: 3px solid #4A7C25; 
   color: black; 
   border-radius:10px;
 }
