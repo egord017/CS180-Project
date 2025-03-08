@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "./profilePage.css";
@@ -11,6 +11,25 @@ function ProfilePage({}) {
   const [comments, setComments] = useState([]);
   const [followers, setFollowers] = useState([]);
   const [following, setFollowing] = useState([]);
+  const fileInputRef = useRef(null);
+  const [profilePhoto, setProfilePhoto] = useState(null);
+
+  // const setProfilePhoto = ({ imgUrl }) => {
+  //   const [userData.img, setUserProfilePic] = imgUrl;
+  // }
+
+  const handleIconClick = () => {
+    fileInputRef.current.click();
+  
+  };
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const imageURL = URL.createObjectURL(file);
+      setProfilePhoto(imageURL);
+    }
+  };
 
   useEffect(() => {
     async function fetchData() {
@@ -63,7 +82,15 @@ function ProfilePage({}) {
     <div className="profile-page-container-main">
       <div className="profile-page-container">
         <div className="profile-container">
-            <img src={userData.image || "/images/placeholder.jpg"} alt={userData.name} className="avatar-circle" />
+            <button className="avatar-circle" onClick={handleIconClick}>
+              <img src={userData.image || "/images/placeholder.jpg"} alt={userData.name} className="avatar-circle"/>
+            </button>
+            <input
+           type="file"
+           ref={fileInputRef}
+           onChange={handleFileChange}
+           style={{ display: 'none' }}
+         />
           <h2>{userData.username || "N/A"}</h2>
           <h3>About Me</h3>
           <div className="bio-box">
