@@ -117,13 +117,11 @@ function App() {
               path="/channel/:channel_id/submit" 
               element={isAuthenticated ? <ThreadPostForm/> : <Navigate to="/login" />}
             />
-            <Route 
-              path="/profile/:userIid"
-              element={<ProfilePage userId = "24c84380-793f-4235-8099-1996968f0aa2"/>}
-              // I hard coded a user's unique id to test if backend works with frontend. I use daniel
-              // need something to make it dynamic by button. 
-              // to test do curl http://localhost:5000/profile/ to get user userid and paste it above.
-            />
+            <Route path="/profile/:userId" element={<ProfilePage />} />
+            <Route
+              path="/new_group"
+              element={isAuthenticated? <NewGroup /> : <Navigate to="/login" />}
+            />  
           </Routes>
         </div>
       </Router>
