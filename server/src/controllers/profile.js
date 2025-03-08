@@ -1,5 +1,11 @@
 const users_db = require('../db/profile.js');
 
+const express = require("express");
+const app = express();
+
+// Add this middleware to parse JSON bodies
+app.use(express.json());
+
 async function get_users(req, res) {
     const results = await users_db.get_users();
     res.send(results);
@@ -47,26 +53,36 @@ async function get_user_following(req, res) {
 }
 
 async function user_follow(req, res) {
-    const {user_id, follow_id} = req.body;
-    if (!user_id||!follow_id){
-        return res.status(400).json({
-            error: "payload is malformed, should be : user_id, follow_id."
-        });
+    const { user_id, follow_id } = req.body;
+    if (!user_id || !follow_id) {
+      return res.status(400).json({
+        error: "Payload is malformed. Expected keys: user_id, follow_id."
+      });
     }
-    const results = await users_db.user_follow(user_id, follow_id);
-    res.send(results);
-}
-
-async function user_unfollow(req, res) {
-    const {user_id, follow_id} = req.body;
-    if (!user_id||!follow_id){
-        return res.status(400).json({
-            error: "payload is malformed, should be : user_id, follow_id."
-        });
+    try {
+      const results = await users_db.user_follow(user_id, follow_id);
+      return res.json({ success: true, results });
+    } catch (error) {
+      console.error("Error in user_follow:", error);
+      return res.status(500).json({ error: "Internal server error" });
     }
-    const results = await users_db.user_unfollow(user_id, follow_id);
-    res.send(results);
-}
+  }
+  
+  async function user_unfollow(req, res) {
+    const { user_id, follow_id } = req.body;
+    if (!user_id || !follow_id) {
+      return res.status(400).json({
+        error: "Payload is malformed. Expected keys: user_id, follow_id."
+      });
+    }
+    try {
+      const results = await users_db.user_unfollow(user_id, follow_id);
+      return res.json({ success: true, results });
+    } catch (error) {
+      console.error("Error in user_unfollow:", error);
+      return res.status(500).json({ error: "Internal server error" });
+    }
+  }
 
 
 module.exports = {
