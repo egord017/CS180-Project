@@ -71,8 +71,26 @@ async function get_user_following(userID) {
     }
 }
 
+async function user_follow(userID, follower_id) {
+    try {
+        const query = "INSERT INTO users_followers(user_id, follower_id) VALUES ((SELECT userID FROM users WHERE userName = $1), (SELECT userID FROM users WHERE userName = $2))";
+        const results = await pool.query(query, [userID, follower_id]);
+        return results.rows;
+    } catch (err) {
+        console.error(err);
+    }
+}
 
+async function user_unfollow(userID, follower_id) {
+    try {
 
+        const query = "DELETE FROM users_followers WHERE user_id = $1 AND follower_id = $2";
+        const results = await pool.query(query, [userID, follower_id]);
+        return results.rows;
+    } catch (err) {
+        console.error(err);
+    }
+}
 
 
 module.exports = {
@@ -82,5 +100,7 @@ module.exports = {
     get_comments_from_user,
     get_threads_from_user,
     get_user_followers,
-    get_user_following
+    get_user_following,
+    user_follow,
+    user_unfollow
 };

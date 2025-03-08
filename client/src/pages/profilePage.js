@@ -12,6 +12,9 @@ function ProfilePage({}) {
   const [followers, setFollowers] = useState([]);
   const [following, setFollowing] = useState([]);
 
+  const currentUserID = localStorage.userID;
+
+
   useEffect(() => {
     async function fetchData() {
       try {

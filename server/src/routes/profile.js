@@ -24,4 +24,10 @@ router.get("/:user_id/followers", profileController.get_user_followers);
 //GET get all following based on the userID
 router.get("/:user_id/following", profileController.get_user_following);
 
+//POST adds following
+router.post("/follow", profileController.user_follow);
+
+//DELETE delete following
+router.delete("/unfollow", profileController.user_unfollow);
+
 module.exports = router;
