@@ -57,7 +57,6 @@ function App() {
 
   useEffect(() => {
     isAuth();
-    console.log(isAuthenticated)
   });
 
   if (loading) {
@@ -89,6 +88,10 @@ function App() {
               path="/groups" 
               element={isAuthenticated ? <Groups/> : <Navigate to="/login" />}
             />
+            <Route
+              path="groups/new_group"
+              element={isAuthenticated? <NewGroup /> : <Navigate to="/login" />}
+            />  
             <Route 
               path="/group/:group_id" 
               element={isAuthenticated ? <GroupPageTemp/> : <Navigate to="/login" />}

@@ -13,3 +13,23 @@ export const getGroups = async () => {
       return [];
     }
 };
+
+export const newGroup = async (group_name, group_description, user_id) => {
+  try {
+    const body = {group_name, group_description, user_id}
+
+    const response = await fetch("http://localhost:5000/groups/create", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(body)
+    });
+
+    const parseResponse = await response.json();
+    //console.log(parseResponse)
+
+    return parseResponse;
+
+  } catch (error) {
+    console.error("Error creating group:", error);
+  }
+};

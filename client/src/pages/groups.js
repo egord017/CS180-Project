@@ -25,9 +25,11 @@ function Groups() {
       <div className="groups-container">
         <div className="groups-header">
           <h1>Join A Group</h1>
-          <button className="groups-add-button">
-            <span>+</span>
-          </button>
+          <Link to="/groups/new_group">
+            <button className="groups-add-button">
+              <span>+</span>
+            </button>
+          </Link>
         </div>
         <div className="groups-grid">
           {groupsData.map((group) => (
