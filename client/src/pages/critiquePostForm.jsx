@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import useMousePosition from '../hooks/useMousePosition';
 import './critiquePostForm.css';
 
-import {strike, mark} from "../utils/critiquePost.js";
+import {strike, mark} from "../utils/markup.js";
 //title
 //body
 //user_id (supplied innately)
@@ -31,7 +31,6 @@ function CritiquePostForm(){
             const thread_obj = await fetch(`http://localhost:5000/workshop-threads/${workshop_thread_id}`);
             const thread_data = await thread_obj.json();
             setWorkshopThread(thread_data);
-
         }
         getData();
     },[]);
@@ -67,7 +66,6 @@ function CritiquePostForm(){
             console.error(err);
         }
     }
-
 
     async function handleSelection(event){
         //event.stopPropagation();
