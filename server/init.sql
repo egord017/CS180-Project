@@ -98,6 +98,7 @@ CREATE TABLE freeform_critiques (
     opening TEXT,
     body TEXT,
     closing TEXT,
+    edited_passage TEXT,
     time_stamp timestamp DEFAULT NOW(),
     FOREIGN KEY (workshop_thread_id) REFERENCES threads(id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES users(userID) ON DELETE SET NULL

@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {createElement, useEffect, useState} from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import useMousePosition from '../hooks/useMousePosition';
 import './critiquePostForm.css';
@@ -17,6 +17,9 @@ function CritiquePostForm(){
     const {workshop_thread_id} = useParams();
     const [selection, setSelection] = useState(null);
     const [isSelected, setIsSelected] = useState(true);
+    const [editedPassage, setEditedPassage] = useState(null);
+
+    const [coords, setCoords]= useState([0,0]);
 
     const mousePosition = useMousePosition();
     
@@ -38,7 +41,17 @@ function CritiquePostForm(){
 
 
     async function handleSubmit(event){
+
+        //VALIDATE FIRST, then manipulate.
+
         event.preventDefault();
+        console.log("logg:",editedPassage);
+
+        const passage= document.querySelector(".passage-body");
+        const editableElements = passage.querySelectorAll('ins');
+        editableElements.forEach(element => {element.contentEditable = "false";});
+        
+        
         try{
             const res = await fetch("http://localhost:5000/critiques", 
                 {
@@ -49,7 +62,8 @@ function CritiquePostForm(){
                         user_id:"9a80cfb3-5535-4889-8fca-b213ae3607ba",
                         opening,
                         body,
-                        closing
+                        closing,
+                        edited_passage:passage.innerHTML
                     }) //currently using a dummy user_id.                        
                 });
             const data = await res.json();
@@ -61,17 +75,17 @@ function CritiquePostForm(){
         }
     }
 
+
     async function handleSelection(event){
+        //event.stopPropagation();
         //return component.
         const selection =window.getSelection();
         const range = selection.getRangeAt(0);
 
         if (selection.toString().length==0){
-        
             if (event.target.closest('ins')) return;
             if (event.target.closest('mark')) return;
             if (event.target.closest('del')) return;
-
 
             //setIsSelected(false);
             console.log(range);
@@ -81,58 +95,53 @@ function CritiquePostForm(){
             setTimeout(function() { //why did this work....https://stackoverflow.com/questions/2388164/set-focus-on-div-contenteditable-element
                 insert.focus();
             }, 0);
-            
             insert.addEventListener("blur", (event) => {
                 if (insert.innerText.length==0){
                     insert.remove();
                 }
             });
-
-    
-
             insert.addEventListener('keydown', function(e) {
                 if (e.key === 'Enter') {
                     e.preventDefault();
                 }
             });
-           
-
             range.insertNode(insert);
             return;
         }
 
         setSelection(selection);
-        //setIsSelected(true);
-        
-        const rect = range.getBoundingClientRect();
-        
-
-        const coord_x = rect.left+(rect.width/2)+window.scrollX;
-        const coord_y = rect.top+(rect.height/2)+window.scrollY+5;
-        
-        const float_window = document.querySelector(".float");
-        if (float_window) {
-            float_window.style.top = `${coord_y}px`;
-            float_window.style.left = `${coord_x}px`;
-        }
+        setIsSelected(true);
         
         
     }
 
-    // useEffect(() => {
-    //     const checkOutOfBoundsClick = (event) => {
-    //         const float_window = document.querySelector(".float");
-    //         if (float_window && !float_window.contains(event.target)) {
-    //             setIsSelected(false); 
-    //         }
-    //     };
+    useEffect(() => {
+        if (isSelected && selection) {
+          const range = selection.getRangeAt(0);
+          const rect = range.getBoundingClientRect();
+            const coord_x = rect.left+(rect.width/2)+window.scrollX;
+            const coord_y = rect.top+(rect.height/2)+window.scrollY+5;
+        
+            const float_window = document.querySelector(".float");
+            
+            if (float_window) {
+                float_window.style.top = `${coord_y}px`;
+                float_window.style.left = `${coord_x}px`;
+            }
+        }
+      }, [isSelected]);
 
-    //     document.addEventListener('click', checkOutOfBoundsClick);
+    useEffect(() => {
+        const handleClick = (event) => {
+            if (!event.target.closest(".float")){
+                setIsSelected(false);
+            }
+            
 
-    //     return () => {
-    //         document.removeEventListener('click', checkOutOfBoundsClick);
-    //     };
-    // }, []);
+        };
+        document.addEventListener("mousedown", handleClick);
+        return () => document.removeEventListener("mousedown", handleClick);
+    },[]);
 
     async function strike(event){
         event.stopPropagation();
@@ -145,8 +154,41 @@ function CritiquePostForm(){
         const selected_text = selection.toString();
         const range= selection.getRangeAt(0);
 
-        const safari_range = document.createRange();
+        //get fragments and check for any text inserts.
+        const frags = range.extractContents();
+        let hasInserts = false;
+        frags.childNodes.forEach((child)=>{
+            if (child.tagName=="INS"){
+                console.log("run.");
+                hasInserts=true;
+            }
+        })
+        if (hasInserts){
+            frags.childNodes.forEach((child)=>{
+                if (child.tagName=="INS"){
+                 
+                }
+                else if (child.nodeType==Node.TEXT_NODE){
+                    const del = document.createElement("del");
+                    del.innerText = child.nodeValue;
+                    child.parentNode.replaceChild(del, child);
+                }
+                else{
+                    const del = document.createElement("del");
+                    del.innerText = child.innerText;
+                    child.parentNode.replaceChild(del, child);
+
+
+                }
+
+            })
+            console.log(frags);
+            range.insertNode(frags);
+            return;
+            
+        }
         
+
         const parent_anchor = selection.anchorNode.parentNode;
         const parent_focus = selection.focusNode.parentNode;
 
@@ -190,7 +232,6 @@ function CritiquePostForm(){
         }
         else{
             const new_string = document.createElement('del');
-            //new_string.className='strikethrough';
             new_string.innerText = selected_text;
             range.deleteContents();
             range.insertNode(new_string);
@@ -223,9 +264,11 @@ function CritiquePostForm(){
             new_string.innerText = merged_string;
 
         }
+        window.getSelection().removeAllRanges();
     }
 
-
+    //this is a repeat of the previous function, will most likely combine if we have time.
+    //i just didnt because i wanted to do something different with mark at first but maybe not.
     async function mark(event){
         event.stopPropagation();
         const passage = document.querySelector('.passage-body');
@@ -236,13 +279,37 @@ function CritiquePostForm(){
         setSelection();
         const selected_text = selection.toString();
         const range= selection.getRangeAt(0);
+
+
+        const frags = range.extractContents();
+        let hasInserts = false;
+        frags.childNodes.forEach((child)=>{
+            if (child.tagName=="INS"){
+                console.log("run.");
+                hasInserts=true;
+            }
+        })
+        if (hasInserts){
+            frags.childNodes.forEach((child)=>{
+                if (child.tagName=="INS"){}
+                else if (child.nodeType==Node.TEXT_NODE){
+                    const del = document.createElement("mark");
+                    del.innerText = child.nodeValue;
+                    child.parentNode.replaceChild(del, child);
+                }
+                else{
+                    const del = document.createElement("mark");
+                    del.innerText = child.innerText;
+                    child.parentNode.replaceChild(del, child);
+                }
+            })
+            console.log(frags);
+            range.insertNode(frags);
+            return;
+        }
+
         const parent_anchor = selection.anchorNode.parentNode;
         const parent_focus = selection.focusNode.parentNode;
-
-        const anchor = range.startContainer;
-        console.log("anchor:",parent_anchor);
-        console.log("focus:",parent_focus);
-  
 
         if ((parent_anchor.tagName=="DEL" || parent_anchor.tagName=="MARK") && parent_anchor==parent_focus){
             console.log("SPLIT.");
@@ -306,15 +373,12 @@ function CritiquePostForm(){
                     next_element.remove();
                 }
             }
-        
-
             new_string.innerText = merged_string;
 
         }
-
-        
-        
+        window.getSelection().removeAllRanges();
     }
+
 
     return (
         <div className="page">
@@ -344,13 +408,12 @@ function CritiquePostForm(){
                     <button type="submit">Post Thread</button>
                 </form>
             </div>
-            {isSelected ? 
-                (
+            {isSelected && (
                 <div className="float">
                     <button onClick={strike}>---</button>
                     <button onClick={mark}>Highlight</button>
                 </div>
-                ) : <div></div>
+            )
             }
             
         </div>

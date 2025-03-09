@@ -7,15 +7,15 @@ async function get_critique(req, res){
 }
 
 async function post_critique(req, res){
-    const {workshop_thread_id, user_id, opening, body, closing} = req.body;
-    console.log(workshop_thread_id, user_id, opening, body, closing);
+    const {workshop_thread_id, user_id, opening, body, closing, edited_passage} = req.body;
+    console.log("POST CRIT:",workshop_thread_id, user_id, opening, body, closing);
     if (!workshop_thread_id||!body){
         return res.status(400).json({
             error: "payload is malformed, should be : 'thread_id', 'user_id', 'body'."
         });
     }
     console.log(req.body);
-    const results = await critiques_db.post_critique(user_id, workshop_thread_id, opening, body, closing);
+    const results = await critiques_db.post_critique(user_id, workshop_thread_id, opening, body, closing, edited_passage);
     res.send(results);
 }
 

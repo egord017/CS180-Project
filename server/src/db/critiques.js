@@ -10,10 +10,10 @@ async function get_critique(id){
         console.error(err);
     }
 }
-async function post_critique(user_id, workshop_thread_id, opening, body, closing){
+async function post_critique(user_id, workshop_thread_id, opening, body, closing, edited_passage=null){
     try{
-        const query = "INSERT INTO freeform_critiques (user_id, workshop_thread_id, opening,body, closing) VALUES ($1, $2, $3, $4, $5) RETURNING *";
-        const result = await pool.query(query, [user_id, workshop_thread_id, opening,body, closing]);
+        const query = "INSERT INTO freeform_critiques (user_id, workshop_thread_id, opening,body, closing, edited_passage) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *";
+        const result = await pool.query(query, [user_id, workshop_thread_id, opening,body, closing, edited_passage]);
         return (result).rows[0];
     }
     catch (err){

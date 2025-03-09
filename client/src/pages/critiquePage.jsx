@@ -45,6 +45,8 @@ function CritiquePage(){
             <p>{critique?.body}</p>
             <h3>Closing Statements</h3>
             <p>{critique?.closing}</p>
+            <p dangerouslySetInnerHTML={{ __html: critique?.edited_passage }} />
+
         </div>
         
     </div>
