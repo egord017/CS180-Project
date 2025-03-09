@@ -2,6 +2,8 @@ import {createElement, useEffect, useState} from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import useMousePosition from '../hooks/useMousePosition';
 import './critiquePostForm.css';
+
+import {strike, mark} from "../utils/critiquePost.js";
 //title
 //body
 //user_id (supplied innately)
@@ -17,10 +19,6 @@ function CritiquePostForm(){
     const {workshop_thread_id} = useParams();
     const [selection, setSelection] = useState(null);
     const [isSelected, setIsSelected] = useState(true);
-    const [editedPassage, setEditedPassage] = useState(null);
-
-    const [coords, setCoords]= useState([0,0]);
-
     const mousePosition = useMousePosition();
     
 
@@ -35,7 +33,6 @@ function CritiquePostForm(){
             setWorkshopThread(thread_data);
 
         }
-
         getData();
     },[]);
 
@@ -43,14 +40,10 @@ function CritiquePostForm(){
     async function handleSubmit(event){
 
         //VALIDATE FIRST, then manipulate.
-
         event.preventDefault();
-        console.log("logg:",editedPassage);
-
         const passage= document.querySelector(".passage-body");
         const editableElements = passage.querySelectorAll('ins');
         editableElements.forEach(element => {element.contentEditable = "false";});
-        
         
         try{
             const res = await fetch("http://localhost:5000/critiques", 
@@ -108,11 +101,8 @@ function CritiquePostForm(){
             range.insertNode(insert);
             return;
         }
-
         setSelection(selection);
         setIsSelected(true);
-        
-        
     }
 
     useEffect(() => {
@@ -123,7 +113,6 @@ function CritiquePostForm(){
             const coord_y = rect.top+(rect.height/2)+window.scrollY+5;
         
             const float_window = document.querySelector(".float");
-            
             if (float_window) {
                 float_window.style.top = `${coord_y}px`;
                 float_window.style.left = `${coord_x}px`;
@@ -136,248 +125,12 @@ function CritiquePostForm(){
             if (!event.target.closest(".float")){
                 setIsSelected(false);
             }
-            
-
         };
         document.addEventListener("mousedown", handleClick);
         return () => document.removeEventListener("mousedown", handleClick);
     },[]);
 
-    async function strike(event){
-        event.stopPropagation();
-        const passage = document.querySelector('.passage-body');
-        const selection =window.getSelection();
-        if (selection.toString().length==0){
-            return;
-        }
-        setSelection();
-        const selected_text = selection.toString();
-        const range= selection.getRangeAt(0);
 
-        //get fragments and check for any text inserts.
-        const frags = range.extractContents();
-        let hasInserts = false;
-        frags.childNodes.forEach((child)=>{
-            if (child.tagName=="INS"){
-                console.log("run.");
-                hasInserts=true;
-            }
-        })
-        if (hasInserts){
-            frags.childNodes.forEach((child)=>{
-                if (child.tagName=="INS"){
-                 
-                }
-                else if (child.nodeType==Node.TEXT_NODE){
-                    const del = document.createElement("del");
-                    del.innerText = child.nodeValue;
-                    child.parentNode.replaceChild(del, child);
-                }
-                else{
-                    const del = document.createElement("del");
-                    del.innerText = child.innerText;
-                    child.parentNode.replaceChild(del, child);
-
-
-                }
-
-            })
-            console.log(frags);
-            range.insertNode(frags);
-            return;
-            
-        }
-        
-
-        const parent_anchor = selection.anchorNode.parentNode;
-        const parent_focus = selection.focusNode.parentNode;
-
-        const anchor = range.startContainer;
-        console.log("anchor:",parent_anchor);
-        console.log("focus:",parent_focus);
-  
-
-        if ((parent_anchor.tagName=="DEL" || parent_anchor.tagName=="MARK") && parent_anchor==parent_focus){
-            console.log("SPLIT.");
-            let new_string = document.createTextNode(selected_text)
-            let split_type = "del";
-            if (parent_anchor.tagName=="MARK"){
-                split_type = "mark";
-                new_string = document.createElement("del");
-                new_string.innerText = selected_text;
-            }
-            
-            const placeholder = document.createElement("del");
-            placeholder.innerText = selected_text;
-            range.deleteContents();
-            range.insertNode(placeholder);
-
-            const prev = placeholder.previousSibling;
-            const next = placeholder.nextSibling;
-            console.log(prev);
-            console.log(next);
-
-            const split_1 = document.createElement(split_type);
-            const split_2 = document.createElement(split_type);
-            
-            split_1.innerText = prev.nodeValue;
-            parent_anchor.parentNode.insertBefore(split_1, parent_anchor);
-            
-            parent_anchor.parentNode.insertBefore(new_string, parent_anchor);
-
-            split_2.innerText = next.nodeValue;
-            parent_anchor.parentNode.insertBefore(split_2, parent_anchor); 
-
-            parent_anchor.remove();
-        }
-        else{
-            const new_string = document.createElement('del');
-            new_string.innerText = selected_text;
-            range.deleteContents();
-            range.insertNode(new_string);
-
-            const prev = new_string.previousSibling;
-            const next = new_string.nextSibling;
-
-            let merged_string = "";
-            if ((prev.nodeType==Node.TEXT_NODE && prev.nodeValue=="") || prev.tagName=="DEL"){
-                const prev_element = new_string.previousElementSibling;
-                if (prev_element.tagName=="DEL"){
-                    // console.log("Merge before.");
-                    // console.log(prev);
-                    merged_string+=prev_element.innerText;
-                    prev_element.remove();
-                }
-            }
-            merged_string+=new_string.innerText;
-            if ((next.nodeType==Node.TEXT_NODE && next.nodeValue=="") || next.tagName=="DEL"){
-                const next_element = new_string.nextElementSibling;
-                if (next_element.tagName=="DEL"){
-                    // console.log("Please merge after.");
-                    // console.log(next);
-                    merged_string+= next_element.innerText;
-                    next_element.remove();
-                }
-            }
-        
-
-            new_string.innerText = merged_string;
-
-        }
-        window.getSelection().removeAllRanges();
-    }
-
-    //this is a repeat of the previous function, will most likely combine if we have time.
-    //i just didnt because i wanted to do something different with mark at first but maybe not.
-    async function mark(event){
-        event.stopPropagation();
-        const passage = document.querySelector('.passage-body');
-        const selection =window.getSelection();
-        if (selection.toString().length==0){
-            return;
-        }
-        setSelection();
-        const selected_text = selection.toString();
-        const range= selection.getRangeAt(0);
-
-
-        const frags = range.extractContents();
-        let hasInserts = false;
-        frags.childNodes.forEach((child)=>{
-            if (child.tagName=="INS"){
-                console.log("run.");
-                hasInserts=true;
-            }
-        })
-        if (hasInserts){
-            frags.childNodes.forEach((child)=>{
-                if (child.tagName=="INS"){}
-                else if (child.nodeType==Node.TEXT_NODE){
-                    const del = document.createElement("mark");
-                    del.innerText = child.nodeValue;
-                    child.parentNode.replaceChild(del, child);
-                }
-                else{
-                    const del = document.createElement("mark");
-                    del.innerText = child.innerText;
-                    child.parentNode.replaceChild(del, child);
-                }
-            })
-            console.log(frags);
-            range.insertNode(frags);
-            return;
-        }
-
-        const parent_anchor = selection.anchorNode.parentNode;
-        const parent_focus = selection.focusNode.parentNode;
-
-        if ((parent_anchor.tagName=="DEL" || parent_anchor.tagName=="MARK") && parent_anchor==parent_focus){
-            console.log("SPLIT.");
-            
-            let new_string = document.createTextNode(selected_text)
-            let split_type = "mark";
-            if (parent_anchor.tagName=="DEL"){
-                split_type = "del";
-                new_string = document.createElement("mark");
-                new_string.innerText = selected_text;
-            }
-            const placeholder = document.createElement("mark");
-            placeholder.innerText = selected_text;
-            range.deleteContents();
-            range.insertNode(placeholder);
-
-            const prev = placeholder.previousSibling;
-            const next = placeholder.nextSibling;
-            console.log(prev);
-            console.log(next);
-
-            const split_1 = document.createElement(split_type);
-            const split_2 = document.createElement(split_type);
-            
-            split_1.innerText = prev.nodeValue;
-            parent_anchor.parentNode.insertBefore(split_1, parent_anchor); 
-            
-            parent_anchor.parentNode.insertBefore(new_string, parent_anchor);
-
-            split_2.innerText = next.nodeValue;
-            parent_anchor.parentNode.insertBefore(split_2, parent_anchor); 
-
-            parent_anchor.remove();
-        }
-        else{
-            const new_string = document.createElement('mark');
-            new_string.innerText = selected_text;
-            range.deleteContents();
-            range.insertNode(new_string);
-
-            const prev = new_string.previousSibling;
-            const next = new_string.nextSibling;
-
-            let merged_string = "";
-            if ((prev.nodeType==Node.TEXT_NODE && prev.nodeValue=="") || prev.tagName=="MARK"){
-                const prev_element = new_string.previousElementSibling;
-                if (prev_element.tagName=="MARK"){
-                    // console.log("Merge before.");
-                    // console.log(prev);
-                    merged_string+=prev_element.innerText;
-                    prev_element.remove();
-                }
-            }
-            merged_string+=new_string.innerText;
-            if ((next.nodeType==Node.TEXT_NODE && next.nodeValue=="") || next.tagName=="MARK"){
-                const next_element = new_string.nextElementSibling;
-                if (next_element.tagName=="MARK"){
-                    // console.log("Please merge after.");
-                    // console.log(next);
-                    merged_string+= next_element.innerText;
-                    next_element.remove();
-                }
-            }
-            new_string.innerText = merged_string;
-
-        }
-        window.getSelection().removeAllRanges();
-    }
 
 
     return (
