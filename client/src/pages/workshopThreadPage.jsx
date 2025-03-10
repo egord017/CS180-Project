@@ -106,7 +106,7 @@ function WorkshopThreadPage(){
     }
 
     async function deleteComment(comment_id){
-        
+
         try {
             const response = await fetch((`http://localhost:5000/critiques/${comment_id}`),
                 {
@@ -151,7 +151,8 @@ function WorkshopThreadPage(){
                 <div>Critiques</div>
                 {critiques.map((comment)=>(
                     <button key={comment.id} className="comment-container" onClick={()=>{visitCritique(comment.id)}}>
-                        <div>{critics[comment?.user_id]?.username} | {comment?.body}</div>
+                        <div>{critics[comment?.user_id]?.username}'s Critique</div>
+                        <div>{new Date(comment?.time_stamp).toLocaleString('en-US')}</div>
                         <button className="del-btn" onClick={()=>{deleteComment(comment.id)}}>Delete</button>
                     </button>
                 ))}
