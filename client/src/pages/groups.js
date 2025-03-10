@@ -6,6 +6,7 @@ import './threadPage.css';
 import "./groups.css";
 
 import { Link } from "react-router-dom";
+import Header from './Header';
 
 function Groups() {
   const [groupsData, setGroupsData] = useState([]);
@@ -21,10 +22,12 @@ function Groups() {
   }, []);
 
   return (
+    <div><Header/>
     <div className = "background">
       <div className="groups-container">
         <div className="groups-header">
-          <h1>Join A Group</h1>
+          
+          <h1>View Groups</h1>
           <Link to="/groups/new_group">
             <button className="groups-add-button">
               <span>+</span>
@@ -43,6 +46,7 @@ function Groups() {
           ))}
         </div>
       </div>
+    </div>
     </div>
   );
 }
