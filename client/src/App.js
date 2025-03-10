@@ -14,9 +14,18 @@ import GroupPageTemp from './pages/groupTemp';
 import ChannelPage from './pages/channelPage';
 import ThreadPage from './pages/threadPage';
 
+import WorkshopPage from './pages/workshopPage';
+import WorkshopThreadPage from './pages/workshopThreadPage';
+import CritiquePage from './pages/critiquePage';
+
+//submit forms
 import GroupPostForm from './pages/groupPostForm';
 import ChannelPostForm from './pages/channelPostForm';
 import ThreadPostForm from './pages/threadPostForm';
+import CritiquePostForm from './pages/critiquePostForm';
+import WorkshopPostForm from './pages/workshopPostForm';
+import WorkshopThreadPostForm from './pages/workshopThreadPostForm';
+
 
 import ProfilePage from './pages/profilePage';
 
@@ -110,8 +119,12 @@ function App() {
               element={<GroupPostForm/>}
             />
             <Route 
-              path="/group/:group_id/submit" 
+              path="/group/:group_id/channel-submit" 
               element={<ChannelPostForm/>}
+            />
+            <Route 
+            path="/group/:group_id/workshop-submit" 
+            element={<WorkshopPostForm/>}
             />
             <Route 
               path="/channel/:channel_id/submit" 
@@ -122,6 +135,27 @@ function App() {
               path="/new_group"
               element={isAuthenticated? <NewGroup /> : <Navigate to="/login" />}
             />  
+            <Route 
+              path="/workshop/:workshop_id/" 
+              element={isAuthenticated ? <WorkshopPage/> : <Navigate to="/login" />}
+            />
+            <Route 
+              path="/workshop-thread/:workshop_thread_id/" 
+              element={isAuthenticated ? <WorkshopThreadPage/> : <Navigate to="/login" />}
+            />
+            <Route 
+              path="/critique/:critique_id/" 
+              element={isAuthenticated ? <CritiquePage/> : <Navigate to="/login" />}
+            />
+            <Route 
+              path="/workshop/:workshop_id/submit" 
+              element={isAuthenticated ? <WorkshopThreadPostForm/> : <Navigate to="/login" />}
+            />
+            <Route 
+              path="/workshop-thread/:workshop_thread_id/submit" 
+              element={isAuthenticated ? <CritiquePostForm/> : <Navigate to="/login" />}
+            />
+            
           </Routes>
         </div>
       </Router>

@@ -23,6 +23,7 @@ async function post_channel(req, res){
         });
     }
     const results = await channels_db.post_channel(group_id, name, description);
+    console.log(results);
     res.send(results);
 }
 

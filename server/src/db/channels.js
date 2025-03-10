@@ -6,7 +6,6 @@ async function get_channel(id){
         const query = "SELECT * FROM channels WHERE id=$1";
         const results = await pool.query(query, id);
         
-        console.log(results);
         return results.rows[0];
     }
     catch (err){
@@ -31,7 +30,7 @@ async function post_channel(group_id, name, description){
     try{
         const query = "INSERT into channels (group_id, name, description) VALUES ($1, $2, $3) RETURNING *";
         const results = await pool.query(query, [group_id, name, description]);
-        return results.rows;
+        return results.rows[0];
     }
     catch (err){
         console.error(err);

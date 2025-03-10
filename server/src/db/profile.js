@@ -11,11 +11,12 @@ async function get_users() {
     }
 }
 
+//CHANGED: returns object instead of array [single object]
 async function get_user(userID) {
     try {
         const query = "SELECT * FROM users WHERE userID = $1";
         const results = await pool.query(query, userID);
-        return results.rows;
+        return results.rows[0];
     } catch (err) {
         console.error(err);
     }
@@ -71,9 +72,16 @@ async function get_user_following(userID) {
     }
 }
 
-
-
-
+// async function post_user(userName, userEmail, userPassword){
+//     try{
+//         const query = "INSERT INTO users(userName, userEmail, userPassword) VALLUES ($1, $2, $3) RETURN *";
+//         const results = await pool.query(query, [userName, userEmail, userPassword]);
+//         return results.rows[0];
+//     }
+//     catch (err){
+//         console.error(err);
+//     }
+// }
 
 module.exports = {
     get_users,

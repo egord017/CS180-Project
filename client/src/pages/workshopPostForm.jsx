@@ -3,14 +3,6 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Button from '../components/Button';
 
-//NAME
-//DESCRIPTION
-//CHANNELS
-//
-//user_id (supplied innately)
-//channel_id (should be supplied ...in URL?)
-//channel/id/submit ?
-
 
 function ChannelPostForm(){
     const [name, setName] = useState("");
@@ -23,7 +15,7 @@ function ChannelPostForm(){
         console.log(event);
         event.preventDefault();
         try{
-            const res = await fetch("http://localhost:5000/channels", 
+            const res = await fetch("http://localhost:5000/workshops", 
                 {
                     method:"POST",
                     headers: { 'Content-Type': 'application/json' },
@@ -37,7 +29,7 @@ function ChannelPostForm(){
             const data = await res.json();
             console.log(data);
             //navigate if successful
-            navigate(`/channel/${data.id}`)
+            navigate(`/workshop/${data.id}`)
 
         }
         catch (err){
@@ -51,15 +43,15 @@ function ChannelPostForm(){
 
     return (
         <Fragment>
-            <div>Create New Channel</div>
+            <div>Create New Workshop Channel</div>
             <form onSubmit={handleSubmit}>
-                <label for="channel_name" require="true">Channel Name* :</label>
+                <label for="channel_name" require="true">Workshop Name* :</label>
                 <input type="text" id="channel_name" onChange={(e)=>(setName(e.target.value))}></input>
 
-                <label for="description">Channel Description:</label>
+                <label for="description">Workshop Description:</label>
                 <textarea  id="description" onChange={(e)=>{setDescription(e.target.value)}} ></textarea>
 
-                <button type="submit">Create Channel</button>
+                <button type="submit">Create Workshop</button>
             </form>
         </Fragment>
         

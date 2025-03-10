@@ -24,4 +24,12 @@ router.get("/:user_id/followers", profileController.get_user_followers);
 //GET get all following based on the userID
 router.get("/:user_id/following", profileController.get_user_following);
 
+//ADD USER
+router.post("/", profileController.get_user_following);
+
+
+//GET USER_group role with group
+//set users_group with user_id
+
+//set users_group with user_id
 module.exports = router;
