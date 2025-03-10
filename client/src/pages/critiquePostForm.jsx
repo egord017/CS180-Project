@@ -44,7 +44,6 @@ function CritiquePostForm(){
         const editableElements = passage.querySelectorAll('ins');
         editableElements.forEach(element => {element.contentEditable = "false";});
         const user_id = localStorage.getItem("userID");
-        alert(user_id);
         try{
             const res = await fetch("http://localhost:5000/critiques", 
                 {
@@ -64,6 +63,7 @@ function CritiquePostForm(){
 
         }
         catch (err){
+            alert(err);
             console.error(err);
         }
     }
