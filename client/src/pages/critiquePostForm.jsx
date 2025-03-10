@@ -43,7 +43,8 @@ function CritiquePostForm(){
         const passage= document.querySelector(".passage-body");
         const editableElements = passage.querySelectorAll('ins');
         editableElements.forEach(element => {element.contentEditable = "false";});
-        
+        const user_id = localStorage.getItem("userID");
+        alert(user_id);
         try{
             const res = await fetch("http://localhost:5000/critiques", 
                 {
@@ -51,7 +52,7 @@ function CritiquePostForm(){
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         workshop_thread_id: workshop_thread_id,
-                        user_id:"9a80cfb3-5535-4889-8fca-b213ae3607ba",
+                        user_id:user_id,
                         opening,
                         body,
                         closing,

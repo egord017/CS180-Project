@@ -27,7 +27,7 @@ function WorkshopThreadPostForm(){
                     method:"POST",
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        user_id:"9a80cfb3-5535-4889-8fca-b213ae3607ba",
+                        user_id:localStorage.getItem("userID"),
                         workshop_id,
                         title,
                         context,

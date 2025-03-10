@@ -19,7 +19,7 @@ DROP TABLE IF EXISTS embedded_comments CASCADE;
 
 CREATE TABLE users(
     userID uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
-    userName VARCHAR(255) NOT NULL,
+    userName VARCHAR(255) UNIQUE NOT NULL,
     userEmail VARCHAR(255) NOT NULL,
     userPassword VARCHAR(255) NOT NULL,
     userBio VARCHAR(255) NULL

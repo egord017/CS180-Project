@@ -24,7 +24,7 @@ function ThreadPage(){
                     body: JSON.stringify({
                         body:reply,
                         thread_id:thread_id,
-                        user_id:"9a80cfb3-5535-4889-8fca-b213ae3607ba"
+                        user_id:localStorage.getItem("userID")
                     })
                 }
             )

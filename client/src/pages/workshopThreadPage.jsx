@@ -2,6 +2,7 @@ import React,{Fragment, useState, useEffect} from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Button from '../components/Button.jsx';
 import './threadPage.css';
+import * as userClient from "./../utils/user.js";
 
 import {get_groups} from "../api/groupAPI.js"
 
@@ -153,7 +154,8 @@ function WorkshopThreadPage(){
                     <button key={comment.id} className="comment-container" onClick={()=>{visitCritique(comment.id)}}>
                         <div>{critics[comment?.user_id]?.username}'s Critique</div>
                         <div>{new Date(comment?.time_stamp).toLocaleString('en-US')}</div>
-                        <button className="del-btn" onClick={()=>{deleteComment(comment.id)}}>Delete</button>
+                        {console.log("PLEASE CHECK:", userClient.isOwnerOfID(comment.id))}
+                        {userClient.isOwnerOfID(comment.user_id) &&  <button className="del-btn" onClick={()=>{deleteComment(comment.id)}}>Delete</button>}
                     </button>
                 ))}
             </div>

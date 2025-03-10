@@ -72,6 +72,16 @@ async function get_user_following(userID) {
     }
 }
 
+// async function post_user(userName, userEmail, userPassword){
+//     try{
+//         const query = "INSERT INTO users(userName, userEmail, userPassword) VALLUES ($1, $2, $3) RETURN *";
+//         const results = await pool.query(query, [userName, userEmail, userPassword]);
+//         return results.rows[0];
+//     }
+//     catch (err){
+//         console.error(err);
+//     }
+// }
 
 module.exports = {
     get_users,
