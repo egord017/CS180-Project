@@ -12,8 +12,6 @@ DROP TABLE IF EXISTS comments CASCADE;
 DROP TABLE IF EXISTS workshops CASCADE;
 DROP TABLE IF EXISTS workshop_threads CASCADE;
 DROP TABLE IF EXISTS freeform_critiques CASCADE;
-DROP TABLE IF EXISTS embedded_critiques CASCADE;
-DROP TABLE IF EXISTS embedded_comments CASCADE;
 
 
 
@@ -105,27 +103,10 @@ CREATE TABLE freeform_critiques (
     FOREIGN KEY (user_id) REFERENCES users(userID) ON DELETE SET NULL
 );
 
-CREATE TABLE embedded_critiques (
-    id SERIAL PRIMARY KEY,
-    user_id uuid,
-    workshop_thread_id INTEGER,
-    critique_body TEXT,
-    FOREIGN KEY (workshop_thread_id) REFERENCES threads(id) ON DELETE CASCADE,
-    FOREIGN KEY (user_id) REFERENCES users(userID) ON DELETE SET NULL
-);
-CREATE TABLE embedded_comments (
-    id SERIAL PRIMARY KEY,
-    critique_id INTEGER,
-    comment TEXT,
-    index_start INTEGER,
-    index_end INTEGER,
-    FOREIGN KEY (critique_id) REFERENCES embedded_critiques(id) ON DELETE CASCADE
-);
 
 CREATE TABLE comments (
-    id SERIAL PRIMARY KEY,
-    -- user_id uuid,
-    user_id INTEGER,
+    -- id SERIAL PRIMARY KEY,
+    user_id uuid,
     thread_id INTEGER,
     body TEXT,
     FOREIGN KEY (thread_id) REFERENCES threads(id) ON DELETE CASCADE,
