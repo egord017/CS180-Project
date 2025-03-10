@@ -2,6 +2,8 @@ import React,{Fragment, useState, useEffect} from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Button from '../components/Button.jsx';
 import './threadPage.css';
+import * as userClient from "./../utils/user.js";
+
 
 import {get_groups} from "../api/groupAPI.js"
 
@@ -14,7 +16,7 @@ function ThreadPage(){
     }
 
     async function handleCommentSubmit(event){
-        event.preventDefault();
+        //event.preventDefault();
         console.log("HI");
         try{
             const res = await fetch("http://localhost:5000/comments",
@@ -28,8 +30,9 @@ function ThreadPage(){
                     })
                 }
             )
-            const comment = await res.json();
-            setComments((prev) => [...prev, comment]);
+            //const comment = await res.json();
+            //setComments((prev) => [...prev, comment]);
+            setIsCommenting(false);
         }
         catch (err){
             console.error(err);
@@ -152,6 +155,7 @@ function ThreadPage(){
     return (
         <div>
             <Button onClick={()=>{backToChannel(thread?.channel_id)}}>Back</Button>
+            
             <Button className="delete-btn" onClick={()=>{deleteThread()}}>Delete Thread</Button>
             <div>{group?.name}</div>
             <div>{channel?.name}</div>
@@ -169,7 +173,7 @@ function ThreadPage(){
             {isCommenting ? 
                 (<form onSubmit={handleCommentSubmit}>
                     <textarea onChange={(e)=>{setReply(e.target.value)}} name="comment-body" id="comment-body"></textarea>
-                    <button type="submit"></button>
+                    <button type="submit">Post Comment</button>
                 </form>)
                 :
                 null
@@ -180,7 +184,10 @@ function ThreadPage(){
                 {comments.map((comment)=>(
                     <div className="comment-container">
                         <div>{commenters[comment?.user_id]?.username} | {comment?.body}</div>
-                        <button className="del-btn" onClick={()=>{deleteComment(comment.id)}}>Delete</button>
+                        {
+                            userClient.isOwnerOfID(comment.user_id) && <button className="del-btn" onClick={()=>{deleteComment(comment.id)}}>Delete</button>
+                        }
+                        
                     </div>
                 ))}
             </div>

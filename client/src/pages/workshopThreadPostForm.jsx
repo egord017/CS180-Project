@@ -39,11 +39,13 @@ function WorkshopThreadPostForm(){
                     }) //currently using a dummy user_id.                        
                 });
             const data = await res.json();
-            console.log(data);
+       
+            
             navigate(`/workshop-thread/${data.thread.id}`)
 
         }
         catch (err){
+            alert(err);
             console.error(err);
         }
     }

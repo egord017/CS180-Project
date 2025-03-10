@@ -30,11 +30,14 @@ function ThreadPostForm(){
                         user_id:localStorage.getItem("userID")
                     }) //currently using a dummy user_id.                        
                 });
+
+
             const data = await res.json();
             navigate(`/thread/${data.thread.id}`)
 
         }
         catch (err){
+            
             console.error(err);
         }
     }

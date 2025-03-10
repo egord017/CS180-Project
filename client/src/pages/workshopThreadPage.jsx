@@ -57,7 +57,7 @@ function WorkshopThreadPage(){
                 //fetch OP
                 const op_resp = await fetch((`http://localhost:5000/profile/${thread_data.user_id}`));
                 const op_data = await op_resp.json();
-                console.log(op_data);
+                
                 setOp(op_data);
                 //fetch channel info
                 //fetch users for each comment.
@@ -114,7 +114,7 @@ function WorkshopThreadPage(){
                     method:"DELETE"
                 }
             );
-
+            
             window.location.reload();
         }
         catch (err){
@@ -132,7 +132,10 @@ function WorkshopThreadPage(){
     return (
         <div>
             <Button onClick={()=>{backToWorkshop(thread?.workshop_id)}}>Back</Button>
-            <Button className="delete-btn" onClick={()=>{deleteThread()}}>Delete Thread</Button>
+            {
+                userClient.isOwnerOfID(op?.userid) && <Button className="delete-btn" onClick={()=>{deleteThread()}}>Delete Thread</Button>
+            }
+            
             <div>{group?.name}</div>
             <div>{workshop?.name}</div>
             <div className="op-container">
