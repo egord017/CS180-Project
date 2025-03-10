@@ -16,7 +16,7 @@ function GroupPageTemp() {
     const { group_id } = useParams();
     const navigate = useNavigate();
 
-    const handlePostClick = async (body) => {
+    const handlePostClick = async (body, curr_channel) => {
         const enteredTitle = prompt('Enter a title for your post:');
         if (!enteredTitle) return; // Stop if no title is entered
 
@@ -27,11 +27,11 @@ function GroupPageTemp() {
                 body: JSON.stringify({
                     title: enteredTitle,
                     body: body,
-                    channel_id: group_id, 
+                    channel_id: curr_channel, 
                     user_id: '9a80cfb3-5535-4889-8fca-b213ae3607ba' // Dummy user_id
                 })
             });
-
+            console.log("attempting to post: ", body);
             const data = await res.json();
             // navigate(`/thread/${data.thread.id}`);
         } catch (err) {

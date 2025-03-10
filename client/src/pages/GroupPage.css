@@ -80,6 +80,7 @@
 .group-page-title-description-layout {
     display: flex;
     flex-direction: column;
+    color: rgb(107, 107, 107);
     gap: 15%;
 	width: 100%;
     padding-left: 3%;
@@ -214,7 +215,7 @@
         width: 0;
     }
     to {
-        width: 70%;
+        width: 60%;
     }
 }
   .css-1wxkzlj-MuiTabs-flexContainer {

@@ -20,8 +20,14 @@ function ChannelOverview() {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     function visitChannel(channel_id) {
-        setCurrChannel(channel_id);  // Update current channel when a new channel is selected
+        setCurrChannel(channel_id);
     }
+
+    useEffect(() => {
+        console.log("Updated curr_channel:", curr_channel);
+        
+    }, [curr_channel]);
+    
 
     function getChannelInfo(channel_id) {
         const channel = channels.find(c => c.id == channel_id);

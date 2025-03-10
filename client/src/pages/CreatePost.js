@@ -34,7 +34,7 @@ const CreatePost = ({ handlePostClick, curr_channel }) => {
                 <Button
                     className="button-post"
                     id="new-post-title"
-                    onClick={() => handlePostClick(body)}
+                    onClick={() => handlePostClick(body, curr_channel)}
                 >
                     Post
                 </Button>
