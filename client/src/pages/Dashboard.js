@@ -2,6 +2,7 @@ import React, {Fragment, useState, useEffect, useRef, useCallback} from "react";
 import {getUserGroups} from "../api/dashboardAPI";
 import { getFollowingThreads } from "../api/dashboardAPI";
 import { Link } from "react-router-dom";
+import './dashboard.css';
 
 const Dashboard = ({setAuth}) => {
 
@@ -119,45 +120,52 @@ const Dashboard = ({setAuth}) => {
         <Fragment>
             <h1 className="mt-5">{name}'s Dashboard</h1>
             <button onClick={e => logout(e)}>Logout</button>
-
-            {/* Display the user's groups */}
-            <h2>Your Groups</h2>
-            <ul>
-                {groups.length > 0 ? (
-                    groups.map((group) => (
-                        <Link to={`/group/${group.id}`} key={group.id} className="group-card">
-                          <div className="group-card-top"></div>
-                          <div className="group-card-body">
-                            <h2 className="group-title">{group.name}</h2>
-                            <p className="group-subtitle">{group.description}</p>
-                          </div>
-                        </Link>
-                      ))
-                ) : (
-                    <p>You are not a member of any groups.</p>
-                )}
-            </ul>
-
-            <h2>Threads from Users You Follow</h2>
-            <div className="threads-container">
-                {threads.length > 0 ? (
-                    threads.map((thread, index) => (
-                        <div
-                            key={thread.id}
-                            ref={index === threads.length - 1 ? lastThreadRef : null}
-                            className="thread-card"
-                        >
-                            <h3>{thread.title}</h3>
-                            <p>{thread.body}</p>
-                            <small>Posted on: {new Date(thread.time_stamp).toLocaleString()}</small>
-                        </div>
-                    ))
-                ) : (
-                    <p>No threads to display.</p>
-                )}
+    
+            {/* Main Container for Side-by-Side Layout */}
+            <div className="dashboard-container">
+                {/* Left: User's Groups */}
+                <div className="groups-section">
+                    <h2>Your Groups</h2>
+                    <ul>
+                        {groups.length > 0 ? (
+                            groups.map((group) => (
+                                <Link to={`/group/${group.id}`} key={group.id} className="group-card">
+                                    <div className="group-card-top"></div>
+                                    <div className="group-card-body">
+                                        <h2 className="group-title">{group.name}</h2>
+                                        <p className="group-subtitle">{group.description}</p>
+                                    </div>
+                                </Link>
+                            ))
+                        ) : (
+                            <p>You are not a member of any groups.</p>
+                        )}
+                    </ul>
+                </div>
+    
+                {/* Right: Threads from Followed Users */}
+                <div className="threads-section">
+                    <h2>Threads from Users You Follow</h2>
+                    <div className="threads-container">
+                        {threads.length > 0 ? (
+                            threads.map((thread, index) => (
+                                <div
+                                    key={thread.id}
+                                    ref={index === threads.length - 1 ? lastThreadRef : null}
+                                    className="thread-card"
+                                >
+                                    <h3>{thread.title}</h3>
+                                    <p>{thread.body}</p>
+                                    <small>Posted on: {new Date(thread.time_stamp).toLocaleString()}</small>
+                                </div>
+                            ))
+                        ) : (
+                            <p>No threads to display.</p>
+                        )}
+                    </div>
+                    {loading && <p>Loading more threads...</p>}
+                </div>
             </div>
-
-            {loading && <p>Loading more threads...</p>}
         </Fragment>
     );
 };
