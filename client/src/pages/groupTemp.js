@@ -3,7 +3,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Button from '../components/Button';
 import './threadPage.css';
 import Header from './Header';
-import JoinButton from '../features/joinButton.jsx'
 import ChannelOverview from './ChannelOverview';
 import CreatePost from './CreatePost';  // Import CreatePost
 import { Box, Tabs, Tab } from '@mui/material';
@@ -23,8 +22,14 @@ function GroupPageTemp() {
     const navigate = useNavigate();
 
     const handleJoinClick = async ()=> {
+        window.location.reload()
         console.log(userClient.getUserID(), group?.id);
         joinGroup(group?.id,userClient.getUserID())
+    }
+    const handleLeaveClick = async ()=> {
+        window.location.reload()
+        console.log(userClient.getUserID(), group?.id);
+        leaveGroup(group?.id,userClient.getUserID())
     }
     const handlePostClick = async (body, curr_channel) => {
         const enteredTitle = prompt('Enter a title for your post:');
@@ -49,13 +54,15 @@ function GroupPageTemp() {
         }
     };
 
+    // useEffect(()=>{
+            
+
+    // }, []);
+
     useEffect(() => {
         async function fetchGroupData() {
-            const is_mem = await userClient.isMemberOfGroup(group?.id);
-            console.log("mem: ", is_mem);
-            setIsMember(is_mem);
-            //setIsMember(false)
-
+            //check membership
+            setIsMember(await userClient.isMemberOfGroup(group_id));
         
 
             try {
@@ -112,7 +119,7 @@ function GroupPageTemp() {
                     </div>
                     <div className='green-line'></div>
                     <h2 id="description">{group?.description}</h2>
-                    {isMember ? null : <JoinButton onClick={handleJoinClick}></JoinButton>}
+                    {isMember ? <button onClick={handleLeaveClick}>Leave</button> : <button onClick={handleJoinClick}>Join</button>}
                     
                 </div>
 

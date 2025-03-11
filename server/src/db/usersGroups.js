@@ -18,7 +18,11 @@ async function get_member(group_id, user_id){
         const query = "SELECT * FROM users_groups WHERE group_id=$1 AND user_id=$2";
         const results = await pool.query(query, [group_id, user_id]);
         
-        return results.rows;
+        if (results.rows.length ==0){
+            return null;
+        }
+        return results.rows[0];
+        
     }
     catch (err){
         console.error(err);

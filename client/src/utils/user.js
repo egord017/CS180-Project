@@ -16,8 +16,9 @@ export async function isAdminOfGroup(group_id){
 export async function isMemberOfGroup(group_id){
     try{
         const user_id = localStorage.getItem('userID');
+        console.log("groupid:", group_id, user_id);
         const results = await fetch(`http://localhost:5000/usersgroups/${group_id}/get-member?user_id=${user_id}`);
-        console.log("res:", results);
+        const data = await results.json();
         if (results.ok){
             return true;
         }

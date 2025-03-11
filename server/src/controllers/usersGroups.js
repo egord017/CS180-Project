@@ -12,14 +12,14 @@ async function get_members(req, res){
 async function get_member(req, res){
     const group_id = Object.values(req.params)[0];
     const user_id = Object.values(req.query)[0];
-    console.log(user_id, group_id);
-    console.log(user_id, group_id, "AA");
+
     const results = await users_groups_db.get_member(group_id, user_id);
     
     console.log("res:",results);
     
     if (!results){
         res.status(404).json();
+        return;
     }
     res.send(results);
 
