@@ -15,6 +15,7 @@ function GroupPageTemp() {
     const [group, setGroup] = useState(null);
     const [channels, setChannels] = useState([]);
     const [threads, setThreads] = useState({});
+    const [currentChannel, setCurrentChannel] = useState(null); //TODO: instead of 1, get first ID
     const { group_id } = useParams();
     const navigate = useNavigate();
 
@@ -54,6 +55,7 @@ function GroupPageTemp() {
 
                 setGroup(group_data);
                 setChannels(channels_data);
+                setCurrentChannel(channels_data[0].id);
 
                 const threads_data = await Promise.all(channels_data.map(async channel => {
                     const results = await fetch(`http://localhost:5000/channels/${channel.id}/threads`)
@@ -114,12 +116,12 @@ function GroupPageTemp() {
 
             <div className='pannel-containers'>
                 <div className='left-pannel'>
-                    {value === 0 && <CreatePost handlePostClick={handlePostClick} />}
+                    {value === 0 && <CreatePost handlePostClick={handlePostClick} curr_channel={currentChannel} />}
                 </div>
 
                 <div className='right-pannel'>
                     <Box className="tab-content">
-                        {value === 0 && <div>Content for Tab 1<ChannelOverview /> </div>}
+                        {value === 0 && <div>Content for Tab 1<ChannelOverview currentChannel={currentChannel} setCurrentChannel={setCurrentChannel} /> </div>}
                         {value === 1 && <div>Content for Tab 2</div>}
                         {value === 2 && <div>Content for Tab 3</div>}
                     </Box>

@@ -10,23 +10,23 @@ import Post from './Post';
 import './ChannelOverview.css';
 import { red } from '@mui/material/colors';
 
-function ChannelOverview() {
+function ChannelOverview({currentChannel, setCurrentChannel}) {
     const [group, setGroup] = useState(null);
     const [channels, setChannels] = useState([]);
     const [threads, setThreads] = useState({});
     const { group_id } = useParams();
     const navigate = useNavigate();
-    const [curr_channel, setCurrChannel] = useState(1);  // Store the current selected channel's id
+  // Store the current selected channel's id
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     function visitChannel(channel_id) {
-        setCurrChannel(channel_id);
+        setCurrentChannel(channel_id);
     }
 
     useEffect(() => {
-        console.log("Updated curr_channel:", curr_channel);
+        console.log("Updated currentChannel:", currentChannel);
         
-    }, [curr_channel]);
+    }, [currentChannel]);
     
 
     function getChannelInfo(channel_id) {
@@ -87,7 +87,7 @@ function ChannelOverview() {
     const handleCloseModal = () => setIsModalOpen(false);
 
     // Check if the current channel exists and if there are threads for it
-    const currentThreads = threads[curr_channel] || [];
+    const currentThreads = threads[currentChannel] || [];
 
     return (
         <div>
