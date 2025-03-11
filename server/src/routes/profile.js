@@ -6,8 +6,13 @@ const router = express.Router();
 //Get all users user_id for testing
 router.get("/", profileController.get_users);
 
+router.get("/profile", profileController.get_user_by_name);
+
 //GET get user based on user id
 router.get("/:user_id", profileController.get_user);
+
+
+
 
 //GET get all groups based on user id
 router.get("/:user_id/groups", profileController.get_groups_from_user);

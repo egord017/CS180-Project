@@ -130,7 +130,7 @@ function App() {
               path="/channel/:channel_id/submit" 
               element={isAuthenticated ? <ThreadPostForm/> : <Navigate to="/login" />}
             />
-            <Route path="/profile/:userId" element={<ProfilePage />} />
+            <Route path="/profile/:userName" element={<ProfilePage />} />
             <Route
               path="/new_group"
               element={isAuthenticated? <NewGroup /> : <Navigate to="/login" />}

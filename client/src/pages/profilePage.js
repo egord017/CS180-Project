@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "./profilePage.css";
 
 function ProfilePage({}) {
-  const { userId } = useParams();
+  //const {} userId } = useParams();
+  const [search_params] = useSearchParams();
+  const username = search_params.get('username');
+  console.log(username);
   const [userData, setUserData] = useState(null);
   const [groups, setGroups] = useState([]);
   const [threads, setThreads] = useState([]);
@@ -16,33 +19,34 @@ function ProfilePage({}) {
     async function fetchData() {
       try {
         // Fetch user info
-        const userResponse = await fetch(`http://localhost:5000/profile/${userId}`);
+        const userResponse = await fetch(`http://localhost:5000/profile/profile?username=${username}`);
         const userJson = await userResponse.json();
         // Assume the API returns an array and we need the first element
-        setUserData(userJson[0]);
+        setUserData(userJson);
+        console.log(userJson);
 
         // Fetch groups the user has joined
-        const groupsResponse = await fetch(`http://localhost:5000/profile/${userId}/groups`);
+        const groupsResponse = await fetch(`http://localhost:5000/profile/${userJson?.userID}/groups`);
         const groupsJson = await groupsResponse.json();
         setGroups(groupsJson);
 
         // Fetch threads posted by the user
-        const threadsResponse = await fetch(`http://localhost:5000/profile/${userId}/threads`);
+        const threadsResponse = await fetch(`http://localhost:5000/profile/${userJson?.userID}/threads`);
         const threadsJson = await threadsResponse.json();
         setThreads(threadsJson);
 
         // Fetch comments made by the user
-        const commentsResponse = await fetch(`http://localhost:5000/profile/${userId}/comments`);
+        const commentsResponse = await fetch(`http://localhost:5000/profile/${userJson?.userID}/comments`);
         const commentsJson = await commentsResponse.json();
         setComments(commentsJson);
 
         // Fetch followers
-        const followersResponse = await fetch(`http://localhost:5000/profile/${userId}/followers`);
+        const followersResponse = await fetch(`http://localhost:5000/profile/${userJson?.userID}/followers`);
         const followersJson = await followersResponse.json();
         setFollowers(followersJson);
 
         // Fetch following
-        const followingResponse = await fetch(`http://localhost:5000/profile/${userId}/following`);
+        const followingResponse = await fetch(`http://localhost:5000/profile/${userJson?.userID}/following`);
         const followingJson = await followingResponse.json();
         setFollowing(followingJson);
       } catch (error) {
@@ -50,10 +54,10 @@ function ProfilePage({}) {
       }
     }
 
-    if (userId) {
-      fetchData();
-    }
-  }, [userId]);
+    
+    fetchData();
+    
+  }, []);
 
   if (!userData) {
     return <div>Loading profile...</div>;
