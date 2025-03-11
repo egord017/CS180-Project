@@ -44,3 +44,17 @@ export function isOwnerOfID(id){
 export function getUserID(){
     return localStorage.getItem('userID');
 }
+
+export async function getUsername(){
+    const id = localStorage.getItem('userID');
+    console.log("ID:", id);
+    const results = await fetch(`http://localhost:5000/profile/${id}`);
+   
+    if (results.ok){
+        const data = await results.json();
+        console.log("data");
+        return data.username;
+    }
+
+    return null;
+}

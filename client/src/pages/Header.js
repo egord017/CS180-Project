@@ -1,11 +1,19 @@
 import React from "react";
 import { AppBar, Toolbar, Typography, Button, circularProgressClasses } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, UNSAFE_createClientRoutes, useNavigate } from "react-router-dom";
 import "./Header.css"; // Importing CSS file for custom styles
-
+import * as UserClient from "../utils/user";
 
 
 const Header = () => {
+  const navigate = useNavigate();
+
+  async function onProfileClick(){
+    const user_name = await UserClient.getUsername();
+    console.log("username:",user_name);
+
+    navigate(`/profile/profile?username=${user_name}`);
+  }
 	
   return (
     <AppBar position="static" className="header">
@@ -36,7 +44,7 @@ const Header = () => {
           <Button 
             color="inherit" 
             component={Link} 
-            to="/profile" 
+            onClick={()=>{onProfileClick()}} 
             sx={{ textTransform: "none" }}
           >
             <Typography variant="h6">Profile</Typography>
