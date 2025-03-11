@@ -2,6 +2,8 @@ import React, {Fragment, useState, useEffect, useRef, useCallback} from "react";
 import {getUserGroups} from "../api/dashboardAPI";
 import { getFollowingThreads } from "../api/dashboardAPI";
 import { Link } from "react-router-dom";
+import Header from './Header';
+
 import './dashboard.css';
 
 const Dashboard = ({setAuth}) => {
@@ -130,6 +132,7 @@ const Dashboard = ({setAuth}) => {
 
     return (
         <Fragment>
+            <Header />
             <h1 className="mt-5">{name}'s Dashboard</h1>
             <button onClick={e => logout(e)}>Logout</button>
     

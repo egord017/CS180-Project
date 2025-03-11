@@ -51,7 +51,7 @@ function GroupPageTemp() {
 
     useEffect(() => {
         async function fetchGroupData() {
-            const is_mem = userClient.isMemberOfGroup(group?.id);
+            const is_mem = await userClient.isMemberOfGroup(group?.id);
             console.log("mem: ", is_mem);
             setIsMember(is_mem);
             //setIsMember(false)
