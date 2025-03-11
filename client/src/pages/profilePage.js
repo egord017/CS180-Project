@@ -7,7 +7,7 @@ function ProfilePage({}) {
   //const {} userId } = useParams();
   const [search_params] = useSearchParams();
   const username = search_params.get('username');
-  console.log(username);
+  
   const [userData, setUserData] = useState(null);
   const [groups, setGroups] = useState([]);
   const [threads, setThreads] = useState([]);
@@ -23,30 +23,31 @@ function ProfilePage({}) {
         const userJson = await userResponse.json();
         // Assume the API returns an array and we need the first element
         setUserData(userJson);
-        console.log(userJson);
+        
 
         // Fetch groups the user has joined
-        const groupsResponse = await fetch(`http://localhost:5000/profile/${userJson?.userID}/groups`);
+        const groupsResponse = await fetch(`http://localhost:5000/profile/${userJson?.userid}/groups`);
         const groupsJson = await groupsResponse.json();
         setGroups(groupsJson);
 
         // Fetch threads posted by the user
-        const threadsResponse = await fetch(`http://localhost:5000/profile/${userJson?.userID}/threads`);
+        const threadsResponse = await fetch(`http://localhost:5000/profile/${userJson?.userid}/threads`);
         const threadsJson = await threadsResponse.json();
         setThreads(threadsJson);
+        console.log(threadsJson);
 
         // Fetch comments made by the user
-        const commentsResponse = await fetch(`http://localhost:5000/profile/${userJson?.userID}/comments`);
+        const commentsResponse = await fetch(`http://localhost:5000/profile/${userJson?.userid}/comments`);
         const commentsJson = await commentsResponse.json();
         setComments(commentsJson);
 
         // Fetch followers
-        const followersResponse = await fetch(`http://localhost:5000/profile/${userJson?.userID}/followers`);
+        const followersResponse = await fetch(`http://localhost:5000/profile/${userJson?.userid}/followers`);
         const followersJson = await followersResponse.json();
         setFollowers(followersJson);
 
         // Fetch following
-        const followingResponse = await fetch(`http://localhost:5000/profile/${userJson?.userID}/following`);
+        const followingResponse = await fetch(`http://localhost:5000/profile/${userJson?.userid}/following`);
         const followingJson = await followingResponse.json();
         setFollowing(followingJson);
       } catch (error) {
