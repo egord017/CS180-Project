@@ -4,7 +4,8 @@ const pool = require('../../db.js');
 // ex: http://localhost:5000/profile/69193896-ec98-48ba-b06d-2d74407096d1
 async function get_users() { 
     try {
-        const results = await pool.query("SELECT users.userID, users.userName FROM users");
+        const results = await pool.query("SELECT * FROM users");
+        // const results = await pool.query("SELECT users.userID, users.userName FROM users");
         return results.rows;
     } catch (err) {
         console.error(err);

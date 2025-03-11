@@ -126,6 +126,8 @@ INSERT INTO users(userName, userEmail, userPassword, userBio) VALUES ('julian', 
 INSERT INTO users(userID, userName, userEmail, userPassword, userBio) VALUES ('9a80cfb3-5535-4889-8fca-b213ae3607ba', 'dummy', 'dummy@gmail.com','dummy', 'a dummy');
 INSERT INTO users(userID, userName, userEmail, userPassword, userBio) VALUES ('7ce5ee1d-8889-4892-813e-54870e4172c2', 'friend', 'dummy2@gmail.com','friend', 'your friend');
 INSERT INTO users(userID, userName, userEmail, userPassword, userBio) VALUES ('c7e8dea4-5998-47db-9ce6-2f22afb9ffb6', 'elliot', 'robot@gmail.com','elliot', 'my nanme is elliot');
+INSERT INTO users(userID, userName, userEmail, userPassword, userBio) VALUES ('25b36e80-82f0-487a-bb23-602b4d39a93b', 'apple', 'apple@gmail.com','$2b$10$vrhYrjTMSJT4OupbqzgOe.qJZJoWiIDEd0UHrsKtfOAcXYWN7ydH6', 'my nanme is elliot');
+INSERT INTO users(userID, userName, userEmail, userPassword, userBio) VALUES ('6e426c4e-c39f-4f5b-b235-7e471a1f7d46', 'bob', 'bob@gmail.com','$2b$10$qFNcuDvRkHWPciI03UrLg.11zNwc9m0C9jxkZH3G38PdLFW7XCPXy', 'my nanme is bob');
 
 -- without bio
 INSERT INTO users(userName, userEmail, userPassword) VALUES ('billy', 'wiliaim321@gmail.com', 'sand');

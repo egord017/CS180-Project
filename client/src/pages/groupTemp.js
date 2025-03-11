@@ -3,11 +3,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Button from '../components/Button';
 import './threadPage.css';
 import Header from './Header';
+import JoinButton from '../features/joinButton.jsx'
 import ChannelOverview from './ChannelOverview';
 import CreatePost from './CreatePost';  // Import CreatePost
 import { Box, Tabs, Tab } from '@mui/material';
-import { joinGroup } from "../api/groupAPI";
-import { leaveGroup } from "../api/groupAPI";
+import * as userClient from "../utils/user.js"
+import { joinGroup, leaveGroup } from "../api/groupAPI";
 
 import './GroupPage.css';
 
@@ -17,8 +18,14 @@ function GroupPageTemp() {
     const [threads, setThreads] = useState({});
     const [currentChannel, setCurrentChannel] = useState(null); //TODO: instead of 1, get first ID
     const { group_id } = useParams();
+
+    const [isMember, setIsMember] = useState(false);
     const navigate = useNavigate();
 
+    const handleJoinClick = async ()=> {
+        console.log(userClient.getUserID(), group?.id);
+        joinGroup(group?.id,userClient.getUserID())
+    }
     const handlePostClick = async (body, curr_channel) => {
         const enteredTitle = prompt('Enter a title for your post:');
         if (!enteredTitle) return; // Stop if no title is entered
@@ -43,24 +50,22 @@ function GroupPageTemp() {
     };
 
     useEffect(() => {
-        async function fetchUserRoles(){
-            try {
-               
-            }
-            catch (err){}
-        }
-
         async function fetchGroupData() {
+            const is_mem = userClient.isMemberOfGroup(group?.id);
+            console.log("mem: ", is_mem);
+            setIsMember(is_mem);
+            //setIsMember(false)
+
+        
+
             try {
                 const [group_obj, channels_obj] = await Promise.all([
                     fetch(`http://localhost:5000/groups/${group_id}`),
                     fetch(`http://localhost:5000/groups/${group_id}/channels`),
-                    fetch(`http://localhost:5000/groups/${group_id}/workshops`)
                 ]);
 
                 const group_data = await group_obj.json();
                 const channels_data = await channels_obj.json();
-                const workshops_data = await workshops_obj.json();
 
                 setGroup(group_data);
                 setChannels(channels_data);
@@ -70,23 +75,13 @@ function GroupPageTemp() {
                     const results = await fetch(`http://localhost:5000/channels/${channel.id}/threads`)
                     return await results.json();
                 }));
-                const threads_dict = channels_data.reduce((chan, channel, index) => {
-                    chan[channel.id] = threads_data[index];
-                    return chan;
+
+                const threads_dict = channels_data.reduce((acc, channel, index) => {
+                    acc[channel.id] = threads_data[index];
+                    return acc;
                 }, {});
+
                 setThreads(threads_dict);
-
-                const ws_threads_data = await Promise.all(workshops_data.map(async workshop => {
-                    const results = await fetch(`http://localhost:5000/workshops/${workshop.id}/threads`)
-                    return await results.json();    
-                }));
-                const ws_threads_dict = workshops_data.reduce((ws, workshop, index) => {
-                    ws[workshop.id] = ws_threads_data[index];
-                    return ws;
-                }, {});
-                setWorkshopThreads(ws_threads_dict);
-
-
             } catch (error) {
                 console.error("error fetching in group : ", error);
             }
@@ -117,6 +112,8 @@ function GroupPageTemp() {
                     </div>
                     <div className='green-line'></div>
                     <h2 id="description">{group?.description}</h2>
+                    {isMember ? null : <JoinButton onClick={handleJoinClick}></JoinButton>}
+                    
                 </div>
 
                 <Box className="tabs-container">

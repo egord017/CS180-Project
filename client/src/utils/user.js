@@ -14,10 +14,24 @@ export async function isAdminOfGroup(group_id){
 
 //return true or false : 
 export async function isMemberOfGroup(group_id){
+    try{
+        const user_id = localStorage.getItem('userID');
+        const results = await fetch(`http://localhost:5000/usersgroups/${group_id}/get-member?user_id=${user_id}`);
+        console.log("res:", results);
+        if (results.ok){
+            return true;
+        }
+        // if (results.text ==""){
+        //     return false;
+        // }
+        
+        return false;
+    }
     //have to fetch usergroups...
-    const user_id = localStorage.getItem('userID');
-    const results = await fetch(`http://localhost:5000/usersgroups/${group_id}/is-admin?user_id=${user_id}`);
-    return results;
+    catch(err){
+        return false;
+    }
+    
 }
 
 //returns true if user_id matches the given id. 
