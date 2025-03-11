@@ -265,8 +265,8 @@ VALUES ('c7e8dea4-5998-47db-9ce6-2f22afb9ffb6', 1, 'Pretty good, pretty good.', 
 INSERT INTO freeform_critiques (user_id, workshop_thread_id, opening,body, closing)
 VALUES ('c7e8dea4-5998-47db-9ce6-2f22afb9ffb6', 1, 'Pretty good, pretty good.', 'Yeah, real good stuff. ', 'Last paragraph needs work, but overall a great and interesting read.');
 
-INSERT INTO embedded_critiques (user_id, workshop_thread_id, critique_body)
-VALUES ('c7e8dea4-5998-47db-9ce6-2f22afb9ffb6', 1, 'Last paragraph needs work, but overall a great and interesting read.');
+-- INSERT INTO embedded_critiques (user_id, workshop_thread_id, critique_body)
+-- VALUES ('c7e8dea4-5998-47db-9ce6-2f22afb9ffb6', 1, 'Last paragraph needs work, but overall a great and interesting read.');
 
-INSERT INTO embedded_comments (critique_id, comment, index_start, index_end)
-VALUES (1, 'fix this', 0, 5);
+-- INSERT INTO embedded_comments (critique_id, comment, index_start, index_end)
+-- VALUES (1, 'fix this', 0, 5);
