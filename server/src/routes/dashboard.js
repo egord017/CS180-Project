@@ -42,9 +42,13 @@ router.get("/usergroups", authorization, async(req, res) => {
 router.get("/followedthreads", authorization, async(req, res) => {
     try {
         
-        const threads = await pool.query("SELECT t.* FROM threads t JOIN users_followers uf ON t.user_id = uf.follower_id WHERE uf.user_id = $1 ORDER BY t.time_stamp DESC", [req.user]);
+        const limit = parseInt(req.query.limit) || 20
+        const offset = parseInt(req.query.offset) || 0
 
-        res.json({threads});
+        const threads = await pool.query("SELECT t.* FROM threads t JOIN users_followers uf ON t.user_id = uf.follower_id WHERE uf.user_id = $1 ORDER BY t.time_stamp DESC LIMIT $2 OFFSET $3", 
+            [req.user, limit, offset]);
+
+        res.json(threads.rows);
 
     } catch (error) {
         console.error(error);

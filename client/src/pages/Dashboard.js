@@ -22,6 +22,7 @@ const Dashboard = ({setAuth}) => {
     const [loading, setLoading] = useState(false);
     const [hasMore, setHasMore] = useState(true);
     const observer = useRef();
+    const initialFetch = useRef(false);
 
     async function getName() {
         try {
@@ -67,7 +68,9 @@ const Dashboard = ({setAuth}) => {
 
     const LIMIT = 20;
     const getThreads = async () => {
-        if(loading || hasMore) return;
+        if(loading || !hasMore) {
+            return;
+        }
 
         setLoading(true);
 
@@ -87,18 +90,24 @@ const Dashboard = ({setAuth}) => {
         }
     }
 
-    const lastThreadRef = useCallback(node => {
-        if(loading) return;
+    const lastThreadRef = useRef();
+        useEffect(() => {
+            if (loading) return;
+            if (!lastThreadRef.current) return;
 
-        if(observer.current) observer.current.disconnect();
-        observer.current = new IntersectionObserver(entries => {
-            if(entries[0].isIntersecting && hasMore){
-                getThreads();
-            }
-        });
+            const observerCallback = (entries) => {
+                if (entries[0].isIntersecting) {
+                    getThreads();
+                }
+            };
 
-        if(node) observer.current.observe(node);
-    }, [loading, hasMore]);
+            observer.current = new IntersectionObserver(observerCallback);
+            observer.current.observe(lastThreadRef.current);
+
+            return () => {
+                if (observer.current) observer.current.disconnect();
+            };
+    }, [loading]);
     
     const logout = async (e) => {
         try {
@@ -110,10 +119,13 @@ const Dashboard = ({setAuth}) => {
     }
 
     useEffect(() => {
-        getName();
-        getID();
-        getGroups();
-        getThreads();
+        if(!initialFetch.current){
+            getName();
+            getID();
+            getGroups();
+            getThreads();
+            initialFetch.current = true;
+        }
     }, []);
 
     return (

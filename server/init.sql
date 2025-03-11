@@ -154,6 +154,14 @@ VALUES ((SELECT userID FROM users WHERE userName = 'mark'), (SELECT userID FROM 
 INSERT INTO users_followers(user_id, follower_id)
 VALUES ((SELECT userID FROM users WHERE userName = 'hanni'), (SELECT userID FROM users WHERE userName = 'daniel'));
 
+-- bob is following daniel, billy, and fox
+INSERT INTO users_followers(user_id, follower_id)
+VALUES ((SELECT userID FROM users where userName = 'bob'), (SELECT userID FROM users where userName = 'daniel'));
+INSERT INTO users_followers(user_id, follower_id)
+VALUES ((SELECT userID FROM users where userName = 'bob'), (SELECT userID FROM users where userName = 'billy'));
+INSERT INTO users_followers(user_id, follower_id)
+VALUES ((SELECT userID FROM users where userName = 'bob'), (SELECT userID FROM users where userName = 'fox'));
+
 -- GROUPS -------------------------------------------------
 INSERT INTO groups(name, description) VALUES ('Poet''s Society', 'Writing Group for poets'); -- 1
 INSERT INTO groups(name, description) VALUES ('Short Story Group', 'Writing Group for short story writers'); -- 2
@@ -272,9 +280,3 @@ VALUES ('c7e8dea4-5998-47db-9ce6-2f22afb9ffb6', 1, 'Pretty good, pretty good.', 
 
 INSERT INTO freeform_critiques (user_id, workshop_thread_id, opening,body, closing)
 VALUES ('c7e8dea4-5998-47db-9ce6-2f22afb9ffb6', 1, 'Pretty good, pretty good.', 'Yeah, real good stuff. ', 'Last paragraph needs work, but overall a great and interesting read.');
-
-INSERT INTO embedded_critiques (user_id, workshop_thread_id, critique_body)
-VALUES ('c7e8dea4-5998-47db-9ce6-2f22afb9ffb6', 1, 'Last paragraph needs work, but overall a great and interesting read.');
-
-INSERT INTO embedded_comments (critique_id, comment, index_start, index_end)
-VALUES (1, 'fix this', 0, 5);

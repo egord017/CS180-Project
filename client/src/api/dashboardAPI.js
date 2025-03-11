@@ -14,12 +14,14 @@ export const getUserGroups = async () => {
 
 export const getFollowingThreads = async (LIMIT, offset) => {
     try {
-        const response = await fetch("http://localhost:5000/dashboard/followingthreads?limit=${LIMIT}&offset=${offset}", {
+        //console.log("test");
+        const response = await fetch("http://localhost:5000/dashboard/followedthreads?limit=${LIMIT}&offset=${offset}", {
             method: "GET",
             headers: {"Content-Type": "application/json", token: localStorage.token}
         });
 
         const parseResponse = await response.json();
+        console.log(parseResponse);
         return parseResponse;
     } catch (error) {
         console.error(error);
