@@ -28,7 +28,12 @@ async function get_user(userID) {
     try {
         const query = "SELECT * FROM users WHERE userID = $1";
         const results = await pool.query(query, userID);
+
+        if (results.rows.length ==0){
+            return null;
+        }
         return results.rows[0];
+
     } catch (err) {
         console.error(err);
     }

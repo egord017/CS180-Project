@@ -46,15 +46,21 @@ export function getUserID(){
 }
 
 export async function getUsername(){
-    const id = localStorage.getItem('userID');
-    console.log("ID:", id);
-    const results = await fetch(`http://localhost:5000/profile/${id}`);
-   
-    if (results.ok){
-        const data = await results.json();
-        console.log("data");
-        return data.username;
+    try{
+        const id = localStorage.getItem('userID');
+        console.log("ID:", id);
+        const results = await fetch(`http://localhost:5000/profile/${id}`);
+       
+        if (results){
+            const data = await results.json();
+            console.log("data");
+            return data.username;
+        }
+    
+        return null;
     }
-
-    return null;
+    catch (err){
+        console.error(err);
+    }
+    
 }
