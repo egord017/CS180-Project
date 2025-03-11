@@ -27,5 +27,28 @@ router.get("/userid", authorization, async(req, res) => {
     }
 })
 
+//get current user's groups
+router.get("/usergroups", authorization, async(req, res) => {
+    try {
+        const userGroups = await pool.query("SELECT g.* FROM groups G JOIN users_groups ug ON g.id = ug.group_id WHERE ug.user_id = $1", [req.user]);
+
+        res.json({userGroups});
+    } catch (error) {
+        console.error(error);
+    }
+})
+
+//get user's follower's threads
+router.get("/followedthreads", authorization, async(req, res) => {
+    try {
+        
+        const threads = await pool.query("SELECT t.* FROM threads t JOIN users_followers uf ON t.user_id = uf.follower_id WHERE uf.user_id = $1 ORDER BY t.time_stamp DESC", [req.user]);
+
+        res.json({threads});
+
+    } catch (error) {
+        console.error(error);
+    }
+})
 
 module.exports = router;
