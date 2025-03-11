@@ -6,6 +6,8 @@ import Header from './Header';
 import ChannelOverview from './ChannelOverview';
 import CreatePost from './CreatePost';  // Import CreatePost
 import { Box, Tabs, Tab } from '@mui/material';
+import { joinGroup } from "../api/groupAPI";
+import { leaveGroup } from "../api/groupAPI";
 
 import './GroupPage.css';
 
