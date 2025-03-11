@@ -16,6 +16,10 @@ function NewGroup() {
     const onChange = (e) => {
         setInputs({...inputs, [e.target.name] : e.target.value})
     };
+
+    const handleExit = () => {
+        navigate('/groups');
+    }
     
     const userID = localStorage.userID;
 
@@ -44,29 +48,40 @@ function NewGroup() {
     return (
         
         <div className="new-group-page">
-        
+
+            
+
             <form onSubmit={handleSubmit}>
+                
+            <button onClick={handleExit} id="exit">X</button> 
                 {/* placeholder for a group's image */}
                 <div className="firstline-container">
-                <img src={"/images/placeholder.jpg"} alt={"groupimage"} className="image-box" />
-              
-                <input
-                    type="text"
-                    id="groupname"
-                    name="groupName"
-                    placeholder="Group Name..."
-                    value={groupName}
-                    onChange={e => onChange(e)}
-                />
 
-                <select>
-                    <option value="" disabled selected>- Category -</option>
-                    <option value="public">Category 1</option>
-                    <option value="private">Category 2</option>
-                    <option value="hidden">Category 3</option>
-                </select>
+                    
+                    
+                    <img src={"/images/placeholder.jpg"} alt={"groupimage"} className="image-box" />
+                
+                    <input
+                        type="text"
+                        id="groupname"
+                        name="groupName"
+                        placeholder="Group Name..."
+                        value={groupName}
+                        onChange={e => onChange(e)}
+                    />
+
+                    <select>
+                        <option value="" disabled selected>- Category -</option>
+                        <option value="public">Category 1</option>
+                        <option value="private">Category 2</option>
+                        <option value="hidden">Category 3</option>
+                    </select>
+
+                    
                 
                 </div>
+
+                <button id="submit" type="submit">✓</button>
                 {/* text area for group description */}
                
                 <textarea
@@ -77,7 +92,7 @@ function NewGroup() {
                      onChange={e => onChange(e)}
                 />
              
-                <button type="submit">✓</button>
+                
                 
             </form>
         </div>
