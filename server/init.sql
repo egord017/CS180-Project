@@ -177,6 +177,12 @@ VALUES (1, (SELECT userID FROM users WHERE userName = 'faye'), 1);
 INSERT INTO users_groups (group_id, user_id, role_id) 
 VALUES (2, (SELECT userID FROM users WHERE userName = 'faye'), 2);
 
+-- BOB'S GROUPS
+INSERT INTO users_groups (group_id, user_id, role_id) 
+VALUES (1, (SELECT userID FROM users WHERE userName = 'bob'), 0);
+INSERT INTO users_groups (group_id, user_id, role_id) 
+VALUES (2, (SELECT userID FROM users WHERE userName = 'bob'), 1);
+
 -- CHANNELS -----------------------------------------------
 -- 1
 INSERT INTO channels (group_id, name, description)
