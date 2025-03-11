@@ -27,14 +27,17 @@ function ThreadPostForm(){
                         title:title,
                         body:body,
                         channel_id:channel_id,
-                        user_id:"9a80cfb3-5535-4889-8fca-b213ae3607ba"
+                        user_id:localStorage.getItem("userID")
                     }) //currently using a dummy user_id.                        
                 });
+
+
             const data = await res.json();
             navigate(`/thread/${data.thread.id}`)
 
         }
         catch (err){
+            
             console.error(err);
         }
     }

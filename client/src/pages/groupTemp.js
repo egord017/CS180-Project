@@ -43,15 +43,24 @@ function GroupPageTemp() {
     };
 
     useEffect(() => {
+        async function fetchUserRoles(){
+            try {
+               
+            }
+            catch (err){}
+        }
+
         async function fetchGroupData() {
             try {
                 const [group_obj, channels_obj] = await Promise.all([
                     fetch(`http://localhost:5000/groups/${group_id}`),
                     fetch(`http://localhost:5000/groups/${group_id}/channels`),
+                    fetch(`http://localhost:5000/groups/${group_id}/workshops`)
                 ]);
 
                 const group_data = await group_obj.json();
                 const channels_data = await channels_obj.json();
+                const workshops_data = await workshops_obj.json();
 
                 setGroup(group_data);
                 setChannels(channels_data);
@@ -61,13 +70,23 @@ function GroupPageTemp() {
                     const results = await fetch(`http://localhost:5000/channels/${channel.id}/threads`)
                     return await results.json();
                 }));
-
-                const threads_dict = channels_data.reduce((acc, channel, index) => {
-                    acc[channel.id] = threads_data[index];
-                    return acc;
+                const threads_dict = channels_data.reduce((chan, channel, index) => {
+                    chan[channel.id] = threads_data[index];
+                    return chan;
                 }, {});
-
                 setThreads(threads_dict);
+
+                const ws_threads_data = await Promise.all(workshops_data.map(async workshop => {
+                    const results = await fetch(`http://localhost:5000/workshops/${workshop.id}/threads`)
+                    return await results.json();    
+                }));
+                const ws_threads_dict = workshops_data.reduce((ws, workshop, index) => {
+                    ws[workshop.id] = ws_threads_data[index];
+                    return ws;
+                }, {});
+                setWorkshopThreads(ws_threads_dict);
+
+
             } catch (error) {
                 console.error("error fetching in group : ", error);
             }

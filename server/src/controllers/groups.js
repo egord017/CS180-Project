@@ -22,6 +22,11 @@ async function get_channels_from_group(req, res){
     const results = await groups_db.get_channels_from_group(params);
     res.send(results);
 }
+async function get_workshops_from_group(req, res){
+    const params = Object.values(req.params);
+    const results = await groups_db.get_workshops_from_group(params);
+    res.send(results);
+}
 
 async function get_threads_from_group(req, res){
     const params = Object.values(req.params);
@@ -116,6 +121,7 @@ module.exports = {
     get_group,
     get_users_group,
     get_channels_from_group,
+    get_workshops_from_group,
     get_threads_from_group,
     get_threads_from_channel,
     create_new_group,

@@ -11,6 +11,12 @@ async function get_user(req, res) {
     res.send(results);
 }
 
+async function get_user_by_name(req, res){
+    const user_name = Object.values(req.query);
+    console.log("USER:", user_name);
+    const results = await users_db.get_user_by_name(user_name);
+    res.send(results);
+}
 async function get_groups_from_user(req, res) {
     const params = Object.values(req.params);
     const results = await users_db.get_groups_from_user(params);
@@ -49,6 +55,7 @@ async function get_user_following(req, res) {
 module.exports = {
     get_users,
     get_user,
+    get_user_by_name,
     get_groups_from_user,
     get_comments_from_user,
     get_threads_from_user,

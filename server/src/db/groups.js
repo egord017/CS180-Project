@@ -39,6 +39,16 @@ async function get_channels_from_group(group_id){
     }
 }
 
+async function get_workshops_from_group(group_id){
+    const query = 'SELECT * FROM workshops WHERE group_id=$1';
+    try{
+        const result = await pool.query(query, group_id);
+        return result.rows;
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
 //UNUSED
 async function get_channel(channel_id){
     const query = 'SELECT * FROM channels WHERE channels.id=$1';
@@ -203,6 +213,7 @@ module.exports = {
     get_group,
     get_users_group,
     get_channels_from_group,
+    get_workshops_from_group,
     get_channel,
     get_threads_from_group,
     get_threads_from_channel,

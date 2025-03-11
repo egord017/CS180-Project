@@ -1,0 +1,24 @@
+.page {
+    display:flex;
+    justify-content:center;
+}
+
+.strikethrough {
+    text-decoration: line-through;
+}
+
+.float {
+    position: absolute;
+}
+
+
+mark {
+    background-color: hotpink;
+    padding: 0;
+    margin: 0;
+    display: inline;
+}
+ins {
+    padding:5px;
+    background-color: skyblue;
+}

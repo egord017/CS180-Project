@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { useParams, useSearchParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./profilePage.css";
 
-function ProfilePage({ userId }) {
+function ProfilePage({}) {
+  //const {} userId } = useParams();
+  const [search_params] = useSearchParams();
+  const username = search_params.get('username');
+  
   const [userData, setUserData] = useState(null);
   const [groups, setGroups] = useState([]);
   const [threads, setThreads] = useState([]);
@@ -13,33 +19,35 @@ function ProfilePage({ userId }) {
     async function fetchData() {
       try {
         // Fetch user info
-        const userResponse = await fetch(`http://localhost:5000/profile/${userId}`);
+        const userResponse = await fetch(`http://localhost:5000/profile/profile?username=${username}`);
         const userJson = await userResponse.json();
         // Assume the API returns an array and we need the first element
-        setUserData(userJson[0]);
+        setUserData(userJson);
+        
 
         // Fetch groups the user has joined
-        const groupsResponse = await fetch(`http://localhost:5000/profile/${userId}/groups`);
+        const groupsResponse = await fetch(`http://localhost:5000/profile/${userJson?.userid}/groups`);
         const groupsJson = await groupsResponse.json();
         setGroups(groupsJson);
 
         // Fetch threads posted by the user
-        const threadsResponse = await fetch(`http://localhost:5000/profile/${userId}/threads`);
+        const threadsResponse = await fetch(`http://localhost:5000/profile/${userJson?.userid}/threads`);
         const threadsJson = await threadsResponse.json();
         setThreads(threadsJson);
+        console.log(threadsJson);
 
         // Fetch comments made by the user
-        const commentsResponse = await fetch(`http://localhost:5000/profile/${userId}/comments`);
+        const commentsResponse = await fetch(`http://localhost:5000/profile/${userJson?.userid}/comments`);
         const commentsJson = await commentsResponse.json();
         setComments(commentsJson);
 
         // Fetch followers
-        const followersResponse = await fetch(`http://localhost:5000/profile/${userId}/followers`);
+        const followersResponse = await fetch(`http://localhost:5000/profile/${userJson?.userid}/followers`);
         const followersJson = await followersResponse.json();
         setFollowers(followersJson);
 
         // Fetch following
-        const followingResponse = await fetch(`http://localhost:5000/profile/${userId}/following`);
+        const followingResponse = await fetch(`http://localhost:5000/profile/${userJson?.userid}/following`);
         const followingJson = await followingResponse.json();
         setFollowing(followingJson);
       } catch (error) {
@@ -47,120 +55,142 @@ function ProfilePage({ userId }) {
       }
     }
 
-    if (userId) {
-      fetchData();
-    }
-  }, [userId]);
+    
+    fetchData();
+    
+  }, []);
 
   if (!userData) {
     return <div>Loading profile...</div>;
   }
 
   return (
-    <div className="profile-page-container">
-      <div className="profile-header">
-        <div className="avatar-circle">
-          {/* Optionally render an <img> if userData contains an avatar URL */}
-        </div>
-        <div className="profile-summary">
+    <div className="profile-page-container-main">
+      <div className="profile-page-container">
+        <div className="profile-container">
+            <img src={userData.image || "/images/placeholder.jpg"} alt={userData.name} className="avatar-circle" />
           <h2>{userData.username || "N/A"}</h2>
-          <p>{userData.userbio || "No bio available."}</p>
+          <h3>About Me</h3>
+          <div className="bio-box">
+            <p>{userData.userbio || "No bio available."}</p>
+          </div>
         </div>
-      </div>
 
-      {/* i added this to see the unique id of the user. hide this for normal user or make only admins see it */}
-      <div className="small-box">
-        <p>User ID: {userData.userid}</p>
-      </div>
 
-      {/* longer bio can go here if we want */}
-      <div className="large-box">
-        <p>{userData.userbio}</p>
-      </div>
-
-      <div className="sections-container">
-        <div className="section-box">
+        <div className="sections-container">
           <h3>Groups Joined</h3>
-          <ul>
-            {groups.length ? (
-              groups.map((group) => (
-                <li key={group.id}>
-                  <strong>{group.name || "Unnamed Group"}</strong> (Group ID: {group.id})
-                  <p>{group.description}</p>
-                </li>
-              ))
-            ) : (
-              <li>No groups joined.</li>
-            )}
-          </ul>
-        </div>
+          <div className="section-box">
+            <div className="groups-box-container">
+          
+                <div className="sections-container-in-box">
+                    {groups.length ? (
+                      groups.map((group) => (
+                        <div className="groups-box" key={group.id}>
 
-        <div className="section-box">
+                          <div className="groups-box-elem">
+                            <img src={group.image || "/images/placeholder.jpg"} alt={group.name} className="group-box-image" />
+                          </div>
+                          <div className="groups-box-elem">
+                            <h2>{group.category || "No Category"}</h2> 
+                            <Link to={`/group/${group.id}`}>
+                              <h1>{group.name || "Unnamed Group"}</h1>
+                            </Link>
+                            <p>{group.description}</p>
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <h4>No groups joined.</h4>
+                    )}
+                </div>
+            </div>
+          </div>
+
           <h3>Threads Posted</h3>
-          <ul>
-            {threads.length ? (
-              threads.map((thread) => (
-                <li key={thread.id}>
-                  <strong>{thread.title || "Untitled Thread"}</strong> (Thread ID: {thread.id})
-                  <p>{thread.description} {thread.body}</p>
-                </li>
-              ))
-            ) : (
-              <li>No threads posted.</li>
-            )}
-          </ul>
-        </div>
+          <div className="section-box">
+            <div className="groups-box-container">
+          
+                <div className="sections-container-in-box">
+                    {threads.length ? (
+                      threads.map((thread) => (
+                        <div className="threads-box" key={thread.id}>
+                            <Link to={`/thread/${thread.id}`}>
+                              <h1>{thread.title || "Untitled Thread"}</h1>
+                            </Link>
+                            <p>{thread.body}</p>
+                          </div>
+                      
+                      ))
+                    ) : (
+                      <h4>No threads posted.</h4>
+                    )}
+                </div>
+            </div>
+          </div>
 
-        <div className="section-box">
           <h3>Recent Comments</h3>
-          <ul>
-            {comments.length ? (
-              comments.map((comment) => (
-                <li key={comment.id}>
-                  <strong>{comment.body || "No Comment"}</strong>
-                  <p>(Comment ID: {comment.id}) (Thread ID: {comment.thread_id})</p>
-                </li>
-              ))
-            ) : (
-              <li>No comments found.</li>
-            )}
-          </ul>
-        </div>
-
-
-        {/* New section for Followers and Following */}
-      <div className="follow-container">
-        <div className="follow-box">
-          <h3>Followers</h3>
-          <ul>
-            {followers.length ? (
-              followers.map((follower) => (
-                <li key={follower.id}>
-                  <strong>{follower.username || "Unknown"}</strong> (ID: {follower.follower_id})
-                </li>
-              ))
-            ) : (
-              <li>No followers yet.</li>
-            )}
-          </ul>
-        </div>
-        <div className="follow-box">
-          <h3>Following</h3>
-          <ul>
-            {following.length ? (
-              following.map((followed) => (
-                <li key={followed.id}>
-                  <strong>{followed.username || "Unknown"}</strong> (ID: {followed.userid})
-                </li>
-              ))
-            ) : (
-              <li>Not following anyone.</li>
-            )}
-          </ul>
+          <div className="section-box">
+            <div className="groups-box-container">
+          
+                <div className="sections-container-in-box">
+                    {comments.length ? (
+                      comments.map((comment) => (
+                        <div className="comments-box" key={comment.id}>
+                
+                            <h2>{comment.body || "No Comment"}</h2> 
+                            <Link to={`/thread/${comment.thread_id}`}>
+                              <h1>{comment.thread_id || "Untitled Thread"}</h1>
+                            </Link>
+                
+                          </div>
+                        
+                      ))
+                    ) : (
+                      <h4>No Comments Posted.</h4>
+                    )}
+                </div>
+            </div>
+          </div>
         </div>
       </div>
-      </div>
-    </div>
+        <div className="follow-container">
+          <div className="follow-box">
+            <h3>Followers:</h3>
+            <ul>
+              {followers.length ? (
+                followers.map((follower) => (
+                  <li key={follower.id}>
+                    <Link to={`/profile/${follower.userid}`}>
+                      <p>{follower.username || "Unknown"}</p> 
+                    </Link>
+                  </li>
+                ))
+              ) : (
+                <h4>No followers yet.</h4>
+              )}
+            </ul>
+          </div>
+        
+          <div className="follow-box">
+            <h3>Following:</h3>
+            <ul>
+              {following.length ? (
+                following.map((followed) => (
+
+                  <li key={followed.id}>
+                    <Link to={`/profile/${followed.userid}`}>
+                      <p>{followed.username || "Unknown"}</p> 
+                    </Link>
+                  </li>
+                ))
+              ) : (
+                <h4>Not following anyone.</h4>
+              )}
+            </ul>
+          </div>
+        </div> 
+      
+  </div>
   );
 }
 
