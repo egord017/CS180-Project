@@ -1,22 +1,59 @@
-.new-group-container {
-    width: 80%;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    background: #f9f9f9;
+.new-group-page {
+    width: 100%;
+    border: 2px solid #4A7C25;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
 }
 
-input, textarea, select {
-    width: 100%;
+
+ 
+#groupname {
+    width: 611px;
+    height: 40px;
     padding: 10px;
-    margin-top: 10px;
-    border: 1px solid green;
-    border-radius: 5px;
+    margin-top: 60px;
+    border: 2px solid #4A7C25;
+    border-radius: 10px;
+    
 }
+
+#groupdescription {
+    
+    border-radius: 10px;
+    padding: 10px;
+
+    border: 2px solid #4A7C25;
+    width: 1276px;
+    height: 400px;
+}
+
+.image-box {
+    border: 2px solid #4A7C25;
+    padding: 10px;
+    margin-bottom: 37px;
+    width: 320px;
+    height: 162px;
+}
+
+select {
+    border: 2px solid #4A7C25;
+    width: 251px;
+    height: 40px;
+    border-radius: 10px;
+    margin-top: 60px;
+}
+
+.firstline-container {
+    display: flex;
+    column-gap: 47px;
+   
+}
+
 
 button {
-    margin-top: 15px;
+   
     padding: 10px 20px;
     background: green;
     color: white;

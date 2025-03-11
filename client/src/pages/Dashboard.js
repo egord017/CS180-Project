@@ -9,6 +9,20 @@ const Dashboard = ({setAuth}) => {
     //logged in user's id gets set into id (user this id for various fetch requests)
     const [id, setID] = useState("");
 
+    const [groups, setGroups] = useState([]);
+
+    async function getGroups() {
+        try {
+            const groupsResponse = await fetch(`http://localhost:5000/profile/${getID}/groups`);
+            const groupsJson = await groupsResponse.json();
+            setGroups(groupsJson);
+
+        } catch (err) {
+            console.error(err.message);
+        }
+    }
+    
+
     async function getName() {
         try {
             const response = await fetch("http://localhost:5000/dashboard/username", {
@@ -58,13 +72,18 @@ const Dashboard = ({setAuth}) => {
     useEffect(() => {
         getName();
         getID();
+        getGroups();
     }, []);
 
     return (
-        <Fragment>
+        <fragment>
+        <div className="dashboard-page">
             <h1 className="mt-5">{name}'s Dashboard</h1>
             <button onClick={e => logout(e)}>Logout</button>
-        </Fragment>
+
+            
+        </div>
+        </fragment>
     );
 };
 
