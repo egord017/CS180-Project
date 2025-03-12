@@ -9,7 +9,7 @@
 
  
 #groupname {
-    width: 611px;
+    width: 730px;
     height: 40px;
     padding: 10px;
     margin-top: 60px;
@@ -32,8 +32,8 @@
     border: 2px solid #4A7C25;
     padding: 10px;
     margin-bottom: 37px;
-    width: 320px;
-    height: 162px;
+    width: 200px;
+    height: 200px;
 }
 
 select {
