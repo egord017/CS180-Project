@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 //user_id (supplied innately)
 //channel_id (should be supplied ...in URL?)
 //channel/id/submit ?
+import './threadPostForm.css';
 
 
 function ThreadPostForm(){
@@ -41,16 +42,19 @@ function ThreadPostForm(){
 
 
     return (
-        <form onSubmit={handleSubmit}>
-            <label for="title" require="true">Title* :</label>
-            <input type="text" id="title" onChange={(e)=>(setTitle(e.target.value))}></input>
+        <div className="form-container">
+            <h2 className="create-thread"> Create New Thread </h2>
+            <form onSubmit={handleSubmit}>
+                <label htmlFor="title">Title:</label>
+                <input type="text" id="title" onChange={(e) => setTitle(e.target.value)} required />
 
-            <label for="body">Body:</label>
-            <textarea  id="body" onChange={(e)=>{setBody(e.target.value)}} ></textarea>
+                <label htmlFor="body">Body:</label>
+                <textarea id="body" onChange={(e) => setBody(e.target.value)}></textarea>
 
-            <button type="submit">Post Thread</button>
-        </form>
-    )
+                <button type="submit">Post Thread</button>
+            </form>
+        </div>
+    );
 }
 
 export default ThreadPostForm;

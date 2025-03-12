@@ -8,6 +8,7 @@ import CreatePost from './CreatePost';  // Import CreatePost
 import { Box, Tabs, Tab } from '@mui/material';
 
 import './GroupPage.css';
+import UsersInGroup from './UsersInGroup';
 
 function GroupPageTemp() {
     const [group, setGroup] = useState(null);
@@ -17,22 +18,22 @@ function GroupPageTemp() {
     const { group_id } = useParams();
     const navigate = useNavigate();
 
-    const handlePostClick = async (body, curr_channel) => {
-        const enteredTitle = prompt('Enter a title for your post:');
-        if (!enteredTitle) return; // Stop if no title is entered
+    const handlePostClick = async (body, postTitle, curr_channel) => {
+        
+        if (!postTitle) return; // Stop if no title is entered
 
         try {
             const res = await fetch(`http://localhost:5000/threads`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    title: enteredTitle,
+                    title: postTitle,
                     body: body,
                     channel_id: curr_channel, 
                     user_id: '9a80cfb3-5535-4889-8fca-b213ae3607ba' // Dummy user_id
                 })
             });
-            console.log("attempting to post: ", body);
+            console.log("attempting to post: ", postTitle);
             const data = await res.json();
             // navigate(`/thread/${data.thread.id}`);
         } catch (err) {
@@ -119,8 +120,8 @@ function GroupPageTemp() {
 
                 <div className='right-pannel'>
                     <Box className="tab-content">
-                        {value === 0 && <div>Content for Tab 1<ChannelOverview currentChannel={currentChannel} setCurrentChannel={setCurrentChannel} /> </div>}
-                        {value === 1 && <div>Content for Tab 2</div>}
+                        {value === 0 && <div><ChannelOverview currentChannel={currentChannel} setCurrentChannel={setCurrentChannel} /> </div>}
+                        {value === 1 && <div><UsersInGroup/></div>}
                         {value === 2 && <div>Content for Tab 3</div>}
                     </Box>
                 </div>

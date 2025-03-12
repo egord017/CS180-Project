@@ -6,17 +6,22 @@ import Header from './Header';
 import PostPreview from './PostPreview';
 import { Card, Tab, Tabs, Box, CardContent, TextField, Modal, Typography } from '@mui/material';
 import Post from './Post';
+import ThreadPage from './threadPage';
 
 import './ChannelOverview.css';
 import { red } from '@mui/material/colors';
+import ChannelPostForm from './channelPostForm';
 
 function ChannelOverview({currentChannel, setCurrentChannel}) {
     const [group, setGroup] = useState(null);
     const [channels, setChannels] = useState([]);
     const [threads, setThreads] = useState({});
+    const [thread_id, setThreadId] = useState("");
+    const [thread_body, setThreadBody] = useState("");
+    const [thread_title, setThreadTitle] = useState("");
+    const [channelName, setChannelName] = useState("");
     const { group_id } = useParams();
     const navigate = useNavigate();
-  // Store the current selected channel's id
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     function visitChannel(channel_id) {
@@ -25,29 +30,39 @@ function ChannelOverview({currentChannel, setCurrentChannel}) {
 
     useEffect(() => {
         console.log("Updated currentChannel:", currentChannel);
-        
     }, [currentChannel]);
-    
 
-    function getChannelInfo(channel_id) {
-        const channel = channels.find(c => c.id == channel_id);
-        if (!channel) return null;
-        return (
-            <Fragment>
-                <div>{channel.name}</div>
-                <div>{channel.description}</div>
-                <div>-------------</div>
-            </Fragment>
-        );
-    }
-
-    async function deleteChannel(channel_id) {
-        try {
-            // refresh logic if needed
-        } catch (err) {
-            // handle error
+    useEffect(() => {
+        const selectedChannel = channels.find(channel => channel.id === currentChannel);
+        if (selectedChannel) {
+            setChannelName(selectedChannel.name);
+        } else {
+            setChannelName("");
         }
-    }
+    }, [currentChannel, channels]);
+
+    useEffect(() => {
+        async function fetchThreadsForChannel() {
+            if (!currentChannel) return;
+
+            try {
+                const response = await fetch(`http://localhost:5000/channels/${currentChannel}/threads`);
+                const updatedThreads = await response.json();
+
+                setThreads(prevThreads => ({
+                    ...prevThreads,
+                    [currentChannel]: updatedThreads
+                }));
+            } catch (error) {
+                console.error(`Error fetching threads for channel ${currentChannel}: `, error);
+            }
+        }
+
+        fetchThreadsForChannel();
+        const intervalId = setInterval(fetchThreadsForChannel, 1000);
+
+        return () => clearInterval(intervalId);
+    }, [currentChannel]);
 
     useEffect(() => {
         async function fetchGroupData() {
@@ -75,7 +90,6 @@ function ChannelOverview({currentChannel, setCurrentChannel}) {
 
                 setThreads(threads_dict);
                 console.log(threads_dict);
-
             } catch (error) {
                 console.error("Error fetching group data: ", error);
             }
@@ -86,14 +100,17 @@ function ChannelOverview({currentChannel, setCurrentChannel}) {
     const handleOpenModal = () => setIsModalOpen(true);
     const handleCloseModal = () => setIsModalOpen(false);
 
-    // Check if the current channel exists and if there are threads for it
     const currentThreads = threads[currentChannel] || [];
 
     return (
         <div>
+            <div className = "channel-title-layout">
+                <h1>{channelName}</h1>
+            </div>
             <Button onClick={handleOpenModal} className="view-channels-button">
-                View Channels
+                Switch Channel
             </Button>
+            <ChannelPostForm/>
 
             <Modal open={isModalOpen} onClose={handleCloseModal}>
                 <Box className="modal-container">
@@ -118,14 +135,14 @@ function ChannelOverview({currentChannel, setCurrentChannel}) {
                     <Button onClick={handleCloseModal} className="close-button">Close</Button>
                 </Box>
             </Modal>
-
-            {/* Display threads for the current selected channel */}
             {currentThreads.length > 0 ? (
-                currentThreads.map((thread) => (
-                    <div key={thread.id} className="thread-item">
-                        <h3>{thread.title}</h3>
-                        <p>{thread.body?.substr(0, 25)}...</p>
-                    </div>
+                currentThreads.slice().reverse().map((thread) => (
+                    <PostPreview 
+                        key={thread.id} 
+                        thread_id={thread.id} 
+                        thread_title={thread.title} 
+                        thread_body={thread.body}
+                    />
                 ))
             ) : (
                 <Typography>No threads available in this channel.</Typography>
