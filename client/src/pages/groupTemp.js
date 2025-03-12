@@ -6,6 +6,7 @@ import Header from './Header';
 import ChannelOverview from './ChannelOverview';
 import CreatePost from './CreatePost';  // Import CreatePost
 import { Box, Tabs, Tab } from '@mui/material';
+import * as userClient from "../utils/user";
 
 import './GroupPage.css';
 import UsersInGroup from './UsersInGroup';
