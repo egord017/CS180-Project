@@ -63,10 +63,10 @@ const Dashboard = ({setAuth}) => {
         }
     }
 
-    // async function getGroups() {
-    //     const userGroups = await getUserGroups();
-    //     setGroups(userGroups.userGroups.rows)
-    // }
+    async function getGroups() {
+        const userGroups = await getUserGroups();
+        setGroups(userGroups.userGroups.rows)
+    }
 
     const LIMIT = 20;
     const getThreads = async () => {
@@ -115,7 +115,7 @@ const Dashboard = ({setAuth}) => {
         if(!initialFetch.current){
             getName();
             getID();
-            // getGroups();
+            getGroups();
             getThreads();
             initialFetch.current = true;
         }
