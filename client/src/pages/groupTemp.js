@@ -9,6 +9,7 @@ import { Box, Tabs, Tab } from '@mui/material';
 
 import './GroupPage.css';
 import UsersInGroup from './UsersInGroup';
+import Settings from './Settings';
 
 function GroupPageTemp() {
     const [group, setGroup] = useState(null);
@@ -135,7 +136,7 @@ function GroupPageTemp() {
                     <Box className="tab-content">
                         {value === 0 && <div><ChannelOverview currentChannel={currentChannel} setCurrentChannel={setCurrentChannel} /> </div>}
                         {value === 1 && <div><UsersInGroup/></div>}
-                        {value === 2 && <div>Content for Tab 3</div>}
+                        {value === 2 && <div><Settings/></div>}
                     </Box>
                 </div>
             </div>

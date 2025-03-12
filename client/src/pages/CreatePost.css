@@ -88,3 +88,7 @@
 .custom-textfield .MuiOutlinedInput-root:hover fieldset {
     border-color: #85a17d; /* Change this to your preferred hover border color */
 }
+
+.button-post:hover{
+    background-color: #77936f;
+}

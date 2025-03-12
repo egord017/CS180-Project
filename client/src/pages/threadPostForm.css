@@ -17,7 +17,7 @@
 }
 
 
-form {
+.thread-form {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -29,7 +29,7 @@ form {
     box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.659); 
 }
 
-form label {
+.thread-form  label {
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 5px;
@@ -39,7 +39,7 @@ form label {
     width: 100%;
 }
 
-form input, form textarea {
+.thread-form  input, form textarea {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
@@ -49,13 +49,13 @@ form input, form textarea {
     transition: border 0.3s ease-in-out;
 }
 
-form input:focus, form textarea:focus {
+.thread-form input:focus, .thread-form textarea:focus {
     border-color: #4CAF50;
     outline: none;
     box-shadow: 0px 0px 5px rgba(76, 175, 80, 0.5);
 }
 
-form button {
+.thread-form button {
     width: 100%;
     padding: 10px;
     font-size: 16px;
@@ -68,7 +68,7 @@ form button {
     transition: background 0.3s;
 }
 
-form button:hover {
+.thread-form button:hover {
     background-color: #388E3C;
 }
 

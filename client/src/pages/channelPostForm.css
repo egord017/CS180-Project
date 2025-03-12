@@ -6,29 +6,6 @@
     color: #333;
 }
 
-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-    background: #f8f8f8;
-   
-    border-radius: 10px;
-    box-shadow: 1px 4px 10px rgba(0, 0, 0, 0.659);
-}
-
-form label {
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 5px;
-    color: #444;
-    display: block;
-    text-align: left;
-    width: 100%;
-}
-
 form input, form textarea {
     width: 100%;
     padding: 10px;
@@ -40,7 +17,7 @@ form input, form textarea {
 }
 
 form input:focus, form textarea:focus {
-    border-color: #4CAF50;
+    border-color: #77936f;
     outline: none;
     box-shadow: 0px 0px 5px rgba(76, 175, 80, 0.5);
 }
@@ -51,7 +28,7 @@ form button {
     font-size: 16px;
     font-weight: bold;
     color: white;
-    background-color: #4CAF50;
+    background-color: #95b38d;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -59,7 +36,7 @@ form button {
 }
 
 form button:hover {
-    background-color: #388E3C;
+    background-color: #77936f;
 }
 
 label[for="channel_name"]::after {

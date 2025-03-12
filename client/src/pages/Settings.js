@@ -9,21 +9,62 @@ import Post from './Post';
 import ThreadPage from './threadPage';
 import './ChannelOverview.css';
 import ChannelPostForm from './channelPostForm';
+import './Settings.css';
 
-function ChannelOverview({ currentChannel, setCurrentChannel }) {
+function Settings({ currentChannel, setCurrentChannel }) {
     const [group, setGroup] = useState(null);
     const [channels, setChannels] = useState([]);
-    const [threads, setThreads] = useState({});
     const [channelName, setChannelName] = useState("");
     const { group_id } = useParams();
     const navigate = useNavigate();
-    const [isChannelModalOpen, setIsChannelModalOpen] = useState(false);
-    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
+    const [isChannelModalOpen, setIsChannelModalOpen] = useState(false);
+  
     function visitChannel(channel_id) {
         setCurrentChannel(channel_id);
     }
 
+	const deleteChannel = async (channelId) => {
+		try {
+			const response = await fetch(`http://localhost:5000/channels/${channelId}`, {
+				method: 'DELETE',
+			});
+	
+			if (response.ok) {
+				setChannels(channels.filter(channel => channel.id !== channelId));
+				alert("Channel deleted successfully!");
+			} else {
+				alert("Failed to delete channel.");
+			}
+		} catch (error) {
+			console.error("Error deleting channel: ", error);
+			alert("An error occurred while deleting the channel.");
+		}
+	};
+
+	const deleteGroup = async () => {
+		const isConfirmed = window.confirm("Are you sure you want to delete this group? This action cannot be undone.");
+	
+		if (!isConfirmed) return;
+	
+		try {
+			const response = await fetch(`http://localhost:5000/groups/${group_id}`, {
+				method: 'DELETE',
+			});
+	
+			if (response.ok) {
+				alert("Group deleted successfully!");
+				navigate("/groups"); // Redirect to groups page after deletion
+			} else {
+				alert("Failed to delete group.");
+			}
+		} catch (error) {
+			console.error("Error deleting group: ", error);
+			alert("An error occurred while deleting the group.");
+		}
+	};
+	
+	
     useEffect(() => {
         console.log("Updated currentChannel:", currentChannel);
     }, [currentChannel]);
@@ -33,25 +74,7 @@ function ChannelOverview({ currentChannel, setCurrentChannel }) {
         setChannelName(selectedChannel ? selectedChannel.name : "");
     }, [currentChannel, channels]);
 
-    useEffect(() => {
-        async function fetchThreadsForChannel() {
-            if (!currentChannel) return;
-            try {
-                const response = await fetch(`http://localhost:5000/channels/${currentChannel}/threads`);
-                const updatedThreads = await response.json();
-                setThreads(prevThreads => ({
-                    ...prevThreads,
-                    [currentChannel]: updatedThreads
-                }));
-            } catch (error) {
-                console.error(`Error fetching threads for channel ${currentChannel}: `, error);
-            }
-        }
-        fetchThreadsForChannel();
-        const intervalId = setInterval(fetchThreadsForChannel, 1000);
-        return () => clearInterval(intervalId);
-    }, [currentChannel]);
-
+    
     useEffect(() => {
         async function fetchGroupData() {
             try {
@@ -71,7 +94,7 @@ function ChannelOverview({ currentChannel, setCurrentChannel }) {
                     acc[channel.id] = threads_data[index];
                     return acc;
                 }, {});
-                setThreads(threads_dict);
+
                 console.log(threads_dict);
             } catch (error) {
                 console.error("Error fetching group data: ", error);
@@ -84,43 +107,41 @@ function ChannelOverview({ currentChannel, setCurrentChannel }) {
     const handleOpenChannelModal = () => setIsChannelModalOpen(true);
     const handleCloseChannelModal = () => setIsChannelModalOpen(false);
 
-    const handleOpenCreateModal = () => setIsCreateModalOpen(true);
-    const handleCloseCreateModal = () => setIsCreateModalOpen(false);
-
-    const currentThreads = threads[currentChannel] || [];
 
     return (
         <div>
-            <div className="channel-title-layout">
-                <h1 className="curr-channel">Channel: {channelName}</h1>
-                <div className = "channel-button-group">
+        
+                <div className = "settings-button-group">
                     <Button onClick={handleOpenChannelModal} >
-                        Switch Channel
+                        Delete a Channel
                     </Button>
-                    <Button onClick={handleOpenCreateModal}>
-                        Create New
-                    </Button>
+					<Button onClick={deleteGroup} className="delete-group-button">
+					Delete Group
+				</Button>
+
 
                 </div>
-                
-            </div>
-
+        
             <Modal open={isChannelModalOpen} onClose={handleCloseChannelModal}>
                 <Box className="modal-container">
                     <Typography variant="h5">Channels List</Typography>
+                    {/* <Button onClick={handleCloseChannelModal} className="close-button">Close</Button> */}
                     {channels.length > 0 ? (
                         channels.map((channel) => (
                             <div
-                                key={channel.id}
-                                className="channel-item"
-                                onClick={() => {
-                                    visitChannel(channel.id);
-                                    handleCloseChannelModal();
-                                }}
-                            >
-                                <h3>{channel.name}</h3>
-                                <p>{channel.description}</p>
-                            </div>
+								key={channel.id}
+								className="channel-item"
+								onClick={() => {
+									const isConfirmed = window.confirm(`Are you sure you want to delete the channel: ${channel.name}?`);
+									if (isConfirmed) {
+										// Call a function to delete the channel
+										deleteChannel(channel.id);
+									}
+								}}
+							>
+								<h3>{channel.name}</h3>
+								<p>{channel.description}</p>
+							</div>
                         ))
                     ) : (
                         <Typography>No channels available in this group.</Typography>
@@ -129,28 +150,11 @@ function ChannelOverview({ currentChannel, setCurrentChannel }) {
                 </Box>
             </Modal>
 
-            <Modal open={isCreateModalOpen} onClose={handleCloseCreateModal}>
-                <Box className="modal-container">
-                    <Typography variant="h5">Create New Channel</Typography>
-                    <ChannelPostForm />
-                    
-                </Box>
-            </Modal>
+			
 
-            {currentThreads.length > 0 ? (
-                currentThreads.slice().reverse().map((thread) => (
-                    <PostPreview 
-                        key={thread.id} 
-                        thread_id={thread.id} 
-                        thread_title={thread.title} 
-                        thread_body={thread.body}
-                    />
-                ))
-            ) : (
-                <Typography>No threads available in this channel.</Typography>
-            )}
+          
         </div>
     );
 }
 
-export default ChannelOverview;
+export default Settings;
