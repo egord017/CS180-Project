@@ -156,11 +156,11 @@ VALUES ((SELECT userID FROM users WHERE userName = 'hanni'), (SELECT userID FROM
 
 -- bob is following daniel, billy, and fox
 INSERT INTO users_followers(user_id, follower_id)
-VALUES ((SELECT userID FROM users where userName = 'bob'), (SELECT userID FROM users where userName = 'daniel'));
+VALUES ((SELECT userID FROM users where userName = 'daniel'), (SELECT userID FROM users where userName = 'bob'));
 INSERT INTO users_followers(user_id, follower_id)
-VALUES ((SELECT userID FROM users where userName = 'bob'), (SELECT userID FROM users where userName = 'billy'));
+VALUES ((SELECT userID FROM users where userName = 'billy'), (SELECT userID FROM users where userName = 'bob'));
 INSERT INTO users_followers(user_id, follower_id)
-VALUES ((SELECT userID FROM users where userName = 'bob'), (SELECT userID FROM users where userName = 'fox'));
+VALUES ((SELECT userID FROM users where userName = 'fox'), (SELECT userID FROM users where userName = 'bob'));
 
 -- GROUPS -------------------------------------------------
 INSERT INTO groups(name, description) VALUES ('Poet''s Society', 'Writing Group for poets'); -- 1
