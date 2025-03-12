@@ -1,10 +1,42 @@
-.group-page-container{
-    background-color: #fdfdfd;
-    background-image: linear-gradient(white 95%, #d3d3d3 96%);
-    background-size: 100% 28px; 
-    background-position: left top;
-	
+.group-page-container {
+  background-color: #fdfdfd;
+  background-image: linear-gradient(white 95%, #d3d3d3 96%);
+  background-size: 100vh 28px;
+  background-position: left bottom;
+  background-attachment: fixed; /* Ensures lines continue as the page grows */
+  height: 100% !important;
+
 }
+
+.header-button-group {
+  display: flex;
+  gap: 12px; /* Adjust spacing between buttons */
+  align-items: center; /* Align buttons to the bottom */
+  align-content: flex-start;
+  margin-top: -10px;
+}
+
+
+
+
+.header-button-group button {
+  background-color: #95b38d; /* Match other buttons */
+  font-weight: 600;
+  border-radius: 5px;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.header-button-group button:hover {
+  background-color: #77936f; /* Slightly darker on hover */
+}
+
+.header-button-group button:active {
+  background-color: #5f7b5c;
+}
+
 
 .group-page-header {
     padding-left: 0%;
@@ -53,6 +85,11 @@
 #title {
   font-weight: 450 !important;
 	width: 70% !important;
+  margin: 0;
+  font-family: 'Radley', sans-serif !important;
+  color: #000000 !important;
+  line-height: 1.6;
+  letter-spacing: 0.0075em;
 }
 
 .post-card{
@@ -61,6 +98,7 @@
 	height: 100% !important;
 	padding: 1% !important;
 	padding-top: 4% !important;
+  align-content: flex-end;
 }
 #new-post-title{
 	margin-top: -6% !important;
@@ -81,8 +119,8 @@
     display: flex;
     flex-direction: column;
     color: rgb(107, 107, 107);
-    gap: 15%;
-	width: 100%;
+    gap: 20px;
+	  width: 100%;
     padding-left: 3%;
 }
 
@@ -96,7 +134,7 @@
 .left-pannel{
 	background-color: rgba(173, 173, 173, 0);
 	width: 20% !important;
-	height: 100%;
+	height: 100vh ;
 	border-right: 2px solid rgba(255, 0, 0, 0.407);
 }
 
@@ -106,46 +144,10 @@
 		height: 100vh;
 }
 
-.custom-textfield {
-	resize: both;
-	flex-grow: 1;
-	padding: 0;
-  }
-  
-  .custom-textfield .MuiOutlinedInput-root {
-	display: flex;
-	align-items: flex-start;
-	justify-content: flex-start;
-	width: 100%;
-	height: 100%;
-  }
-  
-  .custom-textfield .MuiOutlinedInput-root fieldset {
-	border: solid 1px #95b38d;
-	border-radius: 4px;
-	width: 100%;
-	height: 100%;
-  }
-  
-  .custom-textfield .MuiOutlinedInput-root.Mui-focused fieldset {
-	border-color: #95b38d;
-  }
-  
-  .custom-textfield .MuiInputLabel-root {
-	color: grey;
-  }
-  
-  .custom-textfield .MuiInputLabel-root.Mui-focused {
-	color: #76916f;
-  }
-
-  .custom-textfield .MuiOutlinedInput-root:hover fieldset {
-	border-color: #85a17d;/* Change this to your preferred hover border color */
-  }
   
 
   .tabs-container {
-	width: 100%;
+	  width: 100%;
     display: flex;
 	padding-right: 24px;
     flex-direction: column-reverse;

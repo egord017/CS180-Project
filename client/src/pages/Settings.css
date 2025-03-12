@@ -1,0 +1,49 @@
+
+.delete-channel {
+    background-color: #b05454 !important; /* Match other buttons */
+    font-weight: 600;
+    border-radius: 5px;
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    
+  }
+
+
+
+  .delete-channel:hover {
+    background-color: #532828; /* Slightly darker on hover */
+  }
+
+  .delete-channel:active {
+    background-color: #5f7b5c;
+  }
+  
+
+
+/* Button Styling */
+.settings-button-group {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    padding-right: 10px;
+}
+
+.settings-button-group button {
+    background-color: #95b38d; /* Match button theme */
+    font-weight: 600;
+    border-radius: 5px;
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.settings-button-group button:hover {
+    background-color: #77936f; /* Darker green hover */
+}
+
+.settings-button-group button:active {
+    background-color: #5f7b5c;
+}

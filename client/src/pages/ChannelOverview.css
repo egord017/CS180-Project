@@ -1,28 +1,108 @@
+/* General Styling */
+.channel-title-layout {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: flex-start;
+    background-color: white;
+}
+
+.curr-channel {
+    font-family: 'Radley', sans-serif !important;
+    color: #000000 !important;
+    line-height: 1.6;
+    letter-spacing: 0.0075em;
+}
+
+/* Button Styling */
+.channel-button-group {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    padding-right: 10px;
+}
+
+.channel-button-group button {
+    background-color: #95b38d; /* Match button theme */
+    font-weight: 600;
+    border-radius: 5px;
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.channel-button-group button:hover {
+    background-color: #77936f; /* Darker green hover */
+}
+
+.channel-button-group button:active {
+    background-color: #5f7b5c;
+}
+
+/* Modal Styling */
 .modal-container {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 400px;
-    background-color: #fff;
-    border: 2px solid #4CAF50;
+    max-height: 500px;
+    background-color: #f7f9f5; /* Light greenish background */
+    border: 2px solid #95b38d; /* Match button color */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     border-radius: 12px;
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
 }
 
-.channel-item {
-    padding: 10px 0;
-    cursor: pointer;
-    border-bottom: 1px solid #e0e0e0;
-    transition: background 0.3s ease-in-out;
-}
-
-.channel-item:hover {
-    background-color: #f0f0f0;
+.modal-title {
+    font-size: 18px;
+    font-weight: bold;
     color: #4CAF50;
 }
 
+.modal-content {
+    flex-grow: 1;
+    padding: 10px;
+    color: #333; /* Ensures good readability */
+}
+
+/* Close Button */
+.close-button {
+    margin-top: 10px;
+    background-color: #95b38d; /* Match button color */
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease;
+    width: fit-content;
+    align-self: flex-end;
+}
+
+.close-button:hover {
+    background-color: #77936f;
+}
+
+/* Channel List Items */
+.channel-item {
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #ddd;
+    transition: background 0.3s ease-in-out;
+    border-radius: 6px;
+}
+
+.channel-item:hover {
+    background-color: #e6ede1;
+    color: #4CAF50;
+}
+
+/* View Channels Button */
 .view-channels-button {
     background-color: #4CAF50;
     color: #fff;
@@ -37,16 +117,20 @@
     background-color: #45a049;
 }
 
-.close-button {
-    margin-top: 10px;
-    background-color: #f44336;
-    color: #fff;
-    padding: 6px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    border: none;
+/* Delete Confirmation */
+.delete-confirmation {
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-.close-button:hover {
-    background-color: #e53935;
+.delete-confirmation h3 {
+    color: #d32f2f;
+    margin-bottom: 15px;
+}
+
+.delete-confirmation button {
+    margin: 5px;
 }

@@ -8,9 +8,9 @@
 	display: flex;
 	flex-direction: column;
 	/* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.559); */
+	
   }
-
-
+  
   .logo {
 	flex-grow: 1; /* Pushes navigation links to the right */
   }

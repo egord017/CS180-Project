@@ -2,6 +2,7 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Button from '../components/Button';
+import './channelPostForm.css';
 
 //NAME
 //DESCRIPTION
@@ -30,14 +31,15 @@ function ChannelPostForm(){
                     body: JSON.stringify({
                         name:name,
                         description:description,
+                        channel_id:1,
                         group_id:group_id
                     }) //currently using a dummy user_id.                        
                 });
-            
             const data = await res.json();
-            console.log(data);
+
+            console.log(data.thread);
             //navigate if successful
-            navigate(`/channel/${data.id}`)
+            navigate(`/thread/${data.thread.id}`)
 
         }
         catch (err){
@@ -50,20 +52,16 @@ function ChannelPostForm(){
 
 
     return (
-        <Fragment>
-            <div>Create New Channel</div>
+        <div className="form-container">
             <form onSubmit={handleSubmit}>
-                <label for="channel_name" require="true">Channel Name* :</label>
-                <input type="text" id="channel_name" onChange={(e)=>(setName(e.target.value))}></input>
-
-                <label for="description">Channel Description:</label>
-                <textarea  id="description" onChange={(e)=>{setDescription(e.target.value)}} ></textarea>
-
+                <label htmlFor="channel_name">Channel Name: </label>
+                <input type="text" id="channel_name" value={name} onChange={(e) => setName(e.target.value)} required />
+                <label htmlFor="description">Channel Description:</label>
+                <textarea id="description" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
                 <button type="submit">Create Channel</button>
             </form>
-        </Fragment>
-        
-    )
+        </div>
+    );
 }
 
 export default ChannelPostForm;

@@ -6,12 +6,12 @@ import Header from './Header';
 import ChannelOverview from './ChannelOverview';
 import CreatePost from './CreatePost';  // Import CreatePost
 import { Box, Tabs, Tab } from '@mui/material';
-import * as userClient from "../utils/user.js"
-import { joinGroup, leaveGroup } from "../api/groupAPI";
 
 import './GroupPage.css';
+import UsersInGroup from './UsersInGroup';
+import Settings from './Settings';
 
-function GroupPageTemp({setAuth}) {
+function GroupPageTemp() {
     const [group, setGroup] = useState(null);
     const [channels, setChannels] = useState([]);
     const [threads, setThreads] = useState({});
@@ -21,43 +21,28 @@ function GroupPageTemp({setAuth}) {
     const [isMember, setIsMember] = useState(false);
     const navigate = useNavigate();
 
-    const handleJoinClick = async ()=> {
-        window.location.reload()
-        console.log(userClient.getUserID(), group?.id);
-        joinGroup(group?.id,userClient.getUserID())
-    }
-    const handleLeaveClick = async ()=> {
-        window.location.reload()
-        console.log(userClient.getUserID(), group?.id);
-        leaveGroup(group?.id,userClient.getUserID())
-    }
-    const handlePostClick = async (body, curr_channel) => {
-        const enteredTitle = prompt('Enter a title for your post:');
-        if (!enteredTitle) return; // Stop if no title is entered
+    const handlePostClick = async (body, postTitle, curr_channel) => {
+        
+        if (!postTitle) return; // Stop if no title is entered
 
         try {
             const res = await fetch(`http://localhost:5000/threads`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    title: enteredTitle,
+                    title: postTitle,
                     body: body,
                     channel_id: curr_channel, 
                     user_id: '9a80cfb3-5535-4889-8fca-b213ae3607ba' // Dummy user_id
                 })
             });
-            console.log("attempting to post: ", body);
+            console.log("attempting to post: ", postTitle);
             const data = await res.json();
             // navigate(`/thread/${data.thread.id}`);
         } catch (err) {
             console.error('Error posting thread:', err);
         }
     };
-
-    // useEffect(()=>{
-            
-
-    // }, []);
 
     useEffect(() => {
         async function fetchGroupData() {
@@ -102,10 +87,15 @@ function GroupPageTemp({setAuth}) {
         setValue(newValue);
     };
 
+    function goToWorkshop(group_id){
+        if (group_id) navigate(`/workshop/${group_id}`);
+    }
+    
+
     return (
         <div className='group-page-container'>
-            <Header setAuth = {setAuth}/>
-
+            <Header />
+            
             <div className='group-page-header'>
                 <img
                     src="https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM="
@@ -118,8 +108,14 @@ function GroupPageTemp({setAuth}) {
                         <h1 id='title'>{group?.name}</h1>
                     </div>
                     <div className='green-line'></div>
+                    <div className = "header-button-group">
+                    <Button onClick={() => goToWorkshop(group_id)}> Workshop </Button>
+                    <Button> Join Group </Button>
+                        <Button> Leave Group </Button>
+                     </div>
                     <h2 id="description">{group?.description}</h2>
-                    {isMember ? <button onClick={handleLeaveClick}>Leave</button> : <button onClick={handleJoinClick}>Join</button>}
+                    
+                    
                     
                 </div>
 
@@ -144,9 +140,9 @@ function GroupPageTemp({setAuth}) {
 
                 <div className='right-pannel'>
                     <Box className="tab-content">
-                        {value === 0 && <div>Content for Tab 1<ChannelOverview currentChannel={currentChannel} setCurrentChannel={setCurrentChannel} /> </div>}
-                        {value === 1 && <div>Content for Tab 2</div>}
-                        {value === 2 && <div>Content for Tab 3</div>}
+                        {value === 0 && <div><ChannelOverview currentChannel={currentChannel} setCurrentChannel={setCurrentChannel} /> </div>}
+                        {value === 1 && <div><UsersInGroup/></div>}
+                        {value === 2 && <div><Settings/></div>}
                     </Box>
                 </div>
             </div>
