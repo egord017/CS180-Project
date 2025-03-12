@@ -6,7 +6,7 @@ import Header from './Header';
 import PostPreview from './PostPreview';
 import { Card, Tab, Tabs, Box, CardContent, TextField, Modal, Typography } from '@mui/material';
 import Post from './Post';
-import ThreadPage from './threadPage';
+import ThreadPage from './threadPage'; 
 import './ChannelOverview.css';
 import ChannelPostForm from './channelPostForm';
 
