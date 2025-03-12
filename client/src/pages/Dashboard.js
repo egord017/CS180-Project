@@ -2,7 +2,7 @@ import React, {Fragment, useState, useEffect, useRef, useCallback} from "react";
 import {getUserGroups} from "../api/dashboardAPI";
 import { getFollowingThreads } from "../api/dashboardAPI";
 import { Link } from "react-router-dom";
-import Header from './Header';
+import HeaderDash from './HeaderDash';
 
 import './dashboard.css';
 
@@ -114,6 +114,7 @@ const Dashboard = ({setAuth}) => {
     const logout = async (e) => {
         try {
             localStorage.removeItem("token");
+            localStorage.removeItem("userID");
             setAuth(false);
         } catch (err) {
             console.error(err.message);            
@@ -132,9 +133,8 @@ const Dashboard = ({setAuth}) => {
 
     return (
         <Fragment>
-            <Header />
+            <HeaderDash setAuth={setAuth}/>
             <h1 className="mt-5">{name}'s Dashboard</h1>
-            <button onClick={e => logout(e)}>Logout</button>
     
             {/* Main Container for Side-by-Side Layout */}
             <div className="dashboard-container">
