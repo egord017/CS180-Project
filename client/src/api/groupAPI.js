@@ -7,7 +7,7 @@ export const getGroups = async () => {
         throw new Error("Failed to fetch groups");
       }
       const groups = await response.json();
-      return groups; 
+      return groups || []; 
     } catch (error) {
       console.error("Error fetching groups:", error);
       return [];
