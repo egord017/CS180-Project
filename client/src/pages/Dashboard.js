@@ -164,15 +164,17 @@ const Dashboard = ({setAuth}) => {
                     <div className="threads-container">
                         {threads.length > 0 ? (
                             threads.map((thread, index) => (
-                                <div
+                                <Link
+                                    to={`/thread/${thread.id}`}
                                     key={thread.id}
                                     ref={index === threads.length - 1 ? lastThreadRef : null}
                                     className="thread-card"
+                                    style={{ textDecoration: "none", color: "inherit" }}
                                 >
                                     <h3>{thread.title}</h3>
                                     <p>{thread.body}</p>
                                     <small>Posted on: {new Date(thread.time_stamp).toLocaleString()}</small>
-                                </div>
+                                </Link>
                             ))
                         ) : (
                             <p>No threads to display.</p>
