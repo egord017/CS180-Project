@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "./profilePage.css";
+import Header from './Header';
 
-function ProfilePage({}) {
+function ProfilePage({setAuth}) {
   //const {} userId } = useParams();
   const [search_params] = useSearchParams();
   const username = search_params.get('username');
@@ -65,6 +66,7 @@ function ProfilePage({}) {
   }
 
   return (
+    <div><Header setAuth={setAuth}/>
     <div className="profile-page-container-main">
       <div className="profile-page-container">
         <div className="profile-container">
@@ -190,6 +192,7 @@ function ProfilePage({}) {
           </div>
         </div> 
       
+  </div>
   </div>
   );
 }

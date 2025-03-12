@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import "./newGroup.css";
 import {newGroup} from "../api/groupAPI";
 import { useNavigate } from 'react-router-dom';
+import Header from './Header';
 
-function NewGroup() {
+function NewGroup({setAuth}) {
     const [inputs, setInputs] = useState({
         groupName: "",
         description: ""
@@ -46,11 +47,9 @@ function NewGroup() {
     };
     
     return (
-        
-        <div className="new-group-page">
-
-            
-
+        <div>
+            <Header setAuth={setAuth}/>
+            <h2>New Group</h2>
             <form onSubmit={handleSubmit}>
                 
             <button onClick={handleExit} id="exit">X</button> 

@@ -8,6 +8,12 @@ async function get_users(req, res) {
 async function get_user(req, res) {
     const params = Object.values(req.params);
     const results = await users_db.get_user(params);
+    console.log(results);
+    
+    if (!results){
+        res.status(200).json(null);
+        return;
+    }
     res.send(results);
 }
 

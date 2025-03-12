@@ -1,0 +1,34 @@
+.header {
+	background-color: #A4B5A0 !important; /* Custom Material-UI blue */
+	width: 100%;
+	position: sticky !important;
+	top:0;
+	color: black !important;
+	z-index: 100;
+	display: flex;
+	flex-direction: column;
+	/* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.559); */
+  }
+
+
+  .logo {
+	flex-grow: 1; /* Pushes navigation links to the right */
+  }
+  
+  .css-1miy0lu-MuiTypography-root {
+    margin: 0;
+    font-family: 'Radley', sans-serif !important;
+    font-weight: 500;
+    font-size: 1.25rem;
+	color: #585351 !important;
+    line-height: 1.6;
+    letter-spacing: 0.0075em;
+}
+  .logo-img {
+  width: 60px;        /* Maintain desired size */
+  height: 60px;       /* Ensure the aspect ratio is maintained */
+  object-fit: cover;  /* Ensures the image fills the container */
+  object-position: center; /* Focus on the center of the image */
+  opacity: 1;       /* Adjust transparency (1 = fully opaque, 0 = fully transparent) */
+}
+  

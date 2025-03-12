@@ -126,6 +126,8 @@ INSERT INTO users(userName, userEmail, userPassword, userBio) VALUES ('julian', 
 INSERT INTO users(userID, userName, userEmail, userPassword, userBio) VALUES ('9a80cfb3-5535-4889-8fca-b213ae3607ba', 'dummy', 'dummy@gmail.com','dummy', 'a dummy');
 INSERT INTO users(userID, userName, userEmail, userPassword, userBio) VALUES ('7ce5ee1d-8889-4892-813e-54870e4172c2', 'friend', 'dummy2@gmail.com','friend', 'your friend');
 INSERT INTO users(userID, userName, userEmail, userPassword, userBio) VALUES ('c7e8dea4-5998-47db-9ce6-2f22afb9ffb6', 'elliot', 'robot@gmail.com','elliot', 'my nanme is elliot');
+INSERT INTO users(userID, userName, userEmail, userPassword, userBio) VALUES ('25b36e80-82f0-487a-bb23-602b4d39a93b', 'apple', 'apple@gmail.com','$2b$10$vrhYrjTMSJT4OupbqzgOe.qJZJoWiIDEd0UHrsKtfOAcXYWN7ydH6', 'my nanme is elliot');
+INSERT INTO users(userID, userName, userEmail, userPassword, userBio) VALUES ('6e426c4e-c39f-4f5b-b235-7e471a1f7d46', 'bob', 'bob@gmail.com','$2b$10$qFNcuDvRkHWPciI03UrLg.11zNwc9m0C9jxkZH3G38PdLFW7XCPXy', 'my nanme is bob');
 
 -- without bio
 INSERT INTO users(userName, userEmail, userPassword) VALUES ('billy', 'wiliaim321@gmail.com', 'sand');
@@ -152,6 +154,14 @@ VALUES ((SELECT userID FROM users WHERE userName = 'mark'), (SELECT userID FROM 
 INSERT INTO users_followers(user_id, follower_id)
 VALUES ((SELECT userID FROM users WHERE userName = 'hanni'), (SELECT userID FROM users WHERE userName = 'daniel'));
 
+-- bob is following daniel, billy, and fox
+INSERT INTO users_followers(user_id, follower_id)
+VALUES ((SELECT userID FROM users where userName = 'daniel'), (SELECT userID FROM users where userName = 'bob'));
+INSERT INTO users_followers(user_id, follower_id)
+VALUES ((SELECT userID FROM users where userName = 'billy'), (SELECT userID FROM users where userName = 'bob'));
+INSERT INTO users_followers(user_id, follower_id)
+VALUES ((SELECT userID FROM users where userName = 'fox'), (SELECT userID FROM users where userName = 'bob'));
+
 -- GROUPS -------------------------------------------------
 INSERT INTO groups(name, description) VALUES ('Poet''s Society', 'Writing Group for poets'); -- 1
 INSERT INTO groups(name, description) VALUES ('Short Story Group', 'Writing Group for short story writers'); -- 2
@@ -174,6 +184,12 @@ VALUES (1, (SELECT userID FROM users WHERE userName = 'faye'), 1);
 
 INSERT INTO users_groups (group_id, user_id, role_id) 
 VALUES (2, (SELECT userID FROM users WHERE userName = 'faye'), 2);
+
+-- BOB'S GROUPS
+INSERT INTO users_groups (group_id, user_id, role_id) 
+VALUES (1, (SELECT userID FROM users WHERE userName = 'bob'), 0);
+INSERT INTO users_groups (group_id, user_id, role_id) 
+VALUES (2, (SELECT userID FROM users WHERE userName = 'bob'), 1);
 
 -- CHANNELS -----------------------------------------------
 -- 1
@@ -264,9 +280,3 @@ VALUES ('c7e8dea4-5998-47db-9ce6-2f22afb9ffb6', 1, 'Pretty good, pretty good.', 
 
 INSERT INTO freeform_critiques (user_id, workshop_thread_id, opening,body, closing)
 VALUES ('c7e8dea4-5998-47db-9ce6-2f22afb9ffb6', 1, 'Pretty good, pretty good.', 'Yeah, real good stuff. ', 'Last paragraph needs work, but overall a great and interesting read.');
-
--- INSERT INTO embedded_critiques (user_id, workshop_thread_id, critique_body)
--- VALUES ('c7e8dea4-5998-47db-9ce6-2f22afb9ffb6', 1, 'Last paragraph needs work, but overall a great and interesting read.');
-
--- INSERT INTO embedded_comments (critique_id, comment, index_start, index_end)
--- VALUES (1, 'fix this', 0, 5);

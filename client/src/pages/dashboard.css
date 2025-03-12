@@ -1,0 +1,96 @@
+.threads-container {
+    margin-top: 20px;
+}
+
+h1 {
+   text-align: center;
+    width: 100%;
+    font-size: 35px;
+    margin-top: 30px;
+    
+}
+
+.thread-card {
+    background-color: #f5f5f5;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.thread-card h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.thread-card p {
+    font-size: 14px;
+    color: #666;
+}
+
+.thread-card small {
+    font-size: 12px;
+    color: #999;
+    display: block;
+    margin-top: 5px;
+    text-align: right;
+}
+
+p {
+    text-align: center;
+    font-size: 16px;
+    color: #666;
+}
+
+.dashboard-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Left Section - Groups */
+.groups-section {
+    flex: 1; /* Takes 1 part of the available space */
+    max-width: 30%; /* Limits width */
+}
+
+/* Right Section - Threads */
+.threads-section {
+    flex: 2; /* Takes 2 parts of the available space */
+    max-width: 65%;
+}
+
+/* Group Card Styling */
+.group-card {
+    display: block;
+    background-color: #f5f5f5;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: black;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.group-card:hover {
+    background-color: #e0e0e0;
+}
+
+/* Thread Card Styling */
+.threads-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.thread-card {
+    background-color: #f5f5f5;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}

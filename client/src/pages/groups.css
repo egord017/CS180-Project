@@ -16,6 +16,7 @@
   .groups-header {
     display: flex;
     justify-content: space-between;
+    font-family: 'Radley', sans-serif !important;
     align-items: center;
     width: 100%;
     max-width: 1200px;
@@ -37,7 +38,7 @@
   }
   
   .groups-add-button:hover {
-    background-color: #61a861;
+    background-color: #A4B5A0;
   }
   
   .groups-grid {
@@ -46,18 +47,19 @@
     gap: 50px 85px; /* column x row spacing */
     justify-content: center;
     margin-top: 10px;
-    max-width: 1400px;
+    max-width: 100%;
   }
   
   .group-card {
     width: 250px;
     height: 320px;
     justify-content: flex-center;
-    background-color: #A4B5A0;
+    background-color:#A4B5A0;
+    color: white !important;
     border-radius: 4px;
     overflow: hidden;
     align-items: left;
-    box-shadow: 4px 8px 5px rgba(43, 41, 41, 0.48);
+    /* box-shadow: 4px 8px 5px rgba(43, 41, 41, 0.48); */
   }
   
   .group-card-top {
@@ -66,7 +68,7 @@
   }
   
   .group-card-body {
-    padding: 10px;
+    padding: 0%;
   }
   
   .group-category {
@@ -75,7 +77,9 @@
   }
   
   .group-title {
-    font-size: 28px;
+    font-size: 20px;
+    background-color: rgba(33, 76, 35, 0.435);
+    padding: 3%;
     font-weight: bold;
   }
 
@@ -87,10 +91,17 @@
 .groups-grid a:hover { /*gets rid of the blue text from </link>*/
     text-decoration: none;
     color: inherit;
+    
 }
 
   .group-subtitle {
     font-size: 16px;
-    color: #555;
+    color: rgba(255, 255, 255, 0.878);
+    padding: 3%;
+  }
+
+  .group-card:hover{
+    background-color: #8ba485 !important;
+    box-shadow: 8px 12px 10px rgba(43, 41, 41, 0.338) !important;
   }
   

@@ -70,6 +70,7 @@ const Register = ({setAuth}) => {
                 <input type="password" name="password" className = "form-control my-3" value={password} onChange={e => onChange(e)}/>   
             <button className= "btn btn-success w-100"><h2>SUBMIT</h2></button>
         </form>
+        <h2 id = "already-have-account">Already have an account? <a href="/login">Return to Login</a></h2>
         </div>
       
         

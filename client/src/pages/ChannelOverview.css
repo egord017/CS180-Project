@@ -1,0 +1,52 @@
+.modal-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    background-color: #fff;
+    border: 2px solid #4CAF50;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.channel-item {
+    padding: 10px 0;
+    cursor: pointer;
+    border-bottom: 1px solid #e0e0e0;
+    transition: background 0.3s ease-in-out;
+}
+
+.channel-item:hover {
+    background-color: #f0f0f0;
+    color: #4CAF50;
+}
+
+.view-channels-button {
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    border: none;
+    transition: background 0.3s ease-in-out;
+}
+
+.view-channels-button:hover {
+    background-color: #45a049;
+}
+
+.close-button {
+    margin-top: 10px;
+    background-color: #f44336;
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    border: none;
+}
+
+.close-button:hover {
+    background-color: #e53935;
+}

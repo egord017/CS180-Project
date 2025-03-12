@@ -7,7 +7,7 @@ export const getGroups = async () => {
         throw new Error("Failed to fetch groups");
       }
       const groups = await response.json();
-      return groups; 
+      return groups || []; 
     } catch (error) {
       console.error("Error fetching groups:", error);
       return [];
@@ -31,5 +31,43 @@ export const newGroup = async (group_name, group_description, user_id) => {
 
   } catch (error) {
     console.error("Error creating group:", error);
+  }
+};
+
+export const joinGroup = async (group_id, user_id) => {
+  try {
+    const body = {group_id, user_id}
+
+    const response = await fetch("http://localhost:5000/groups/join", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(body)
+    });
+
+    const parseResponse = await response.json();
+
+    return parseResponse;
+
+  } catch (error) {
+    console.error("Error joining grouop", error);
+  }
+};
+
+export const leaveGroup = async (group_id, user_id) => {
+  try {
+    const body = {group_id, user_id}
+
+    const response = await fetch("http://localhost:5000/groups/leave", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(body)
+    });
+
+    const parseResponse = await response.json();
+
+    return parseResponse;
+
+  } catch (error) {
+    console.error("Error joining grouop", error);
   }
 };

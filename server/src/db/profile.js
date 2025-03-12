@@ -4,7 +4,8 @@ const pool = require('../../db.js');
 // ex: http://localhost:5000/profile/69193896-ec98-48ba-b06d-2d74407096d1
 async function get_users() { 
     try {
-        const results = await pool.query("SELECT users.userID, users.userName FROM users");
+        const results = await pool.query("SELECT * FROM users");
+        // const results = await pool.query("SELECT users.userID, users.userName FROM users");
         return results.rows;
     } catch (err) {
         console.error(err);
@@ -27,7 +28,12 @@ async function get_user(userID) {
     try {
         const query = "SELECT * FROM users WHERE userID = $1";
         const results = await pool.query(query, userID);
+
+        if (results.rows.length ==0){
+            return null;
+        }
         return results.rows[0];
+
     } catch (err) {
         console.error(err);
     }
