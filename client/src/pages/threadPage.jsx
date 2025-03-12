@@ -3,11 +3,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Button from '../components/Button.jsx';
 import './threadPage.css';
 import * as userClient from "./../utils/user.js";
+import Header from './Header';
 
 
 import {get_groups} from "../api/groupAPI.js"
 
-function ThreadPage(){
+function ThreadPage({setAuth}){
     let is_error = false;
     const navigate = useNavigate();
 
@@ -153,6 +154,7 @@ function ThreadPage(){
     }
     //somehow put data into the return ina nice way. maybe ill create a commentssection component and threadview component
     return (
+        <div><Header setAuth={setAuth}/>
         <div>
             <Button onClick={()=>{backToChannel(thread?.channel_id)}}>Back</Button>
             
@@ -191,6 +193,7 @@ function ThreadPage(){
                     </div>
                 ))}
             </div>
+        </div>
         </div>
     );
 }

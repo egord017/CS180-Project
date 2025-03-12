@@ -2,7 +2,7 @@ import React, {Fragment, useState, useEffect, useRef, useCallback} from "react";
 import {getUserGroups} from "../api/dashboardAPI";
 import { getFollowingThreads } from "../api/dashboardAPI";
 import { Link } from "react-router-dom";
-import HeaderDash from './HeaderDash';
+import Header from './Header';
 
 import './dashboard.css';
 
@@ -110,16 +110,6 @@ const Dashboard = ({setAuth}) => {
                 if (observer.current) observer.current.disconnect();
             };
     }, [loading]);
-    
-    const logout = async (e) => {
-        try {
-            localStorage.removeItem("token");
-            localStorage.removeItem("userID");
-            setAuth(false);
-        } catch (err) {
-            console.error(err.message);            
-        }
-    }
 
     useEffect(() => {
         if(!initialFetch.current){
@@ -133,7 +123,7 @@ const Dashboard = ({setAuth}) => {
 
     return (
         <Fragment>
-            <HeaderDash setAuth={setAuth}/>
+            <Header setAuth={setAuth}/>
             <h1 className="mt-5">{name}'s Dashboard</h1>
     
             {/* Main Container for Side-by-Side Layout */}

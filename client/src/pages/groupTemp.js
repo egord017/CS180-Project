@@ -11,7 +11,7 @@ import { joinGroup, leaveGroup } from "../api/groupAPI";
 
 import './GroupPage.css';
 
-function GroupPageTemp() {
+function GroupPageTemp({setAuth}) {
     const [group, setGroup] = useState(null);
     const [channels, setChannels] = useState([]);
     const [threads, setThreads] = useState({});
@@ -104,7 +104,7 @@ function GroupPageTemp() {
 
     return (
         <div className='group-page-container'>
-            <Header />
+            <Header setAuth = {setAuth}/>
 
             <div className='group-page-header'>
                 <img

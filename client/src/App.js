@@ -95,15 +95,15 @@ function App() {
             />
             <Route 
               path="/groups" 
-              element={isAuthenticated ? <Groups/> : <Navigate to="/login" />}
+              element={isAuthenticated ? <Groups setAuth={setAuth}/> : <Navigate to="/login" />}
             />
             <Route
               path="groups/new_group"
-              element={isAuthenticated? <NewGroup /> : <Navigate to="/login" />}
+              element={isAuthenticated? <NewGroup setAuth={setAuth} /> : <Navigate to="/login" />}
             />  
             <Route 
               path="/group/:group_id" 
-              element={isAuthenticated ? <GroupPageTemp/> : <Navigate to="/login" />}
+              element={isAuthenticated ? <GroupPageTemp setAuth={setAuth} /> : <Navigate to="/login" />}
             />
             
             <Route 
@@ -112,7 +112,7 @@ function App() {
             />
             <Route 
               path="/thread/:thread_id" 
-              element={isAuthenticated ? <ThreadPage/> : <Navigate to="/login" />}
+              element={isAuthenticated ? <ThreadPage setAuth={setAuth}/> : <Navigate to="/login" />}
             />
             <Route 
               path="/group/submit" 
@@ -130,7 +130,10 @@ function App() {
               path="/channel/:channel_id/submit" 
               element={isAuthenticated ? <ThreadPostForm/> : <Navigate to="/login" />}
             />
-            <Route path="/profile/:userName" element={<ProfilePage />} />
+            <Route 
+              path="/profile/:userName" 
+              element={isAuthenticated ? <ProfilePage setAuth = {setAuth}/> : <Navigate to="/login" />} 
+            />
             <Route
               path="/new_group"
               element={isAuthenticated? <NewGroup /> : <Navigate to="/login" />}

@@ -8,7 +8,7 @@ import "./groups.css";
 import { Link } from "react-router-dom";
 import Header from './Header';
 
-function Groups() {
+function Groups({setAuth}) {
   const [groupsData, setGroupsData] = useState([]);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ function Groups() {
   }, []);
 
   return (
-    <div><Header/>
+    <div><Header setAuth={setAuth}/>
     <div className = "background">
       <div className="groups-container">
         <div className="groups-header">
