@@ -28,6 +28,7 @@ import WorkshopThreadPostForm from './pages/workshopThreadPostForm';
 
 
 import ProfilePage from './pages/profilePage';
+import FollowersPage from './pages/followersPage';
 
 import NewGroup from './pages/newGroup';
 
@@ -131,6 +132,9 @@ function App() {
               element={isAuthenticated ? <ThreadPostForm/> : <Navigate to="/login" />}
             />
             <Route path="/profile/:userName" element={<ProfilePage />} />
+
+            <Route path="/profile/:userName/followers" element={<FollowersPage />} />
+
             <Route
               path="/new_group"
               element={isAuthenticated? <NewGroup /> : <Navigate to="/login" />}
