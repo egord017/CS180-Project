@@ -6,8 +6,10 @@ import Header from './Header';
 
 function ProfilePage({setAuth}) {
   //const {} userId } = useParams();
-  const [search_params] = useSearchParams();
-  const username = search_params.get('username');
+  const username= Object.values(useParams())[0];
+  console.log(username);
+  //const [search_params] = useSearchParams();
+  //const username = search_params.get('username');
   
   const [userData, setUserData] = useState(null);
   const [groups, setGroups] = useState([]);
