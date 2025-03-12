@@ -2,6 +2,7 @@ import React,{Fragment, useState, useEffect} from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Button from '../components/Button.jsx';
 import './threadPage.css';
+import { Link } from "react-router-dom";
 
 import {get_groups} from "../api/groupAPI.js"
 
@@ -40,7 +41,7 @@ function ThreadPage(){
         navigate('/');
     }
     function backToChannel(channel_id){
-        if (channel_id) navigate(`/channel/${channel_id}`);
+        if (channel_id) navigate(-1);
     }
 
     //fetch thread object using my url param thread/:thread_id
@@ -118,12 +119,12 @@ function ThreadPage(){
     async function deleteThread(){
         const req = await fetch((`http://localhost:5000/threads/${thread_id[0]}`),
         {
-            method:"DELETE"
+            method:"DELETE" 
         }
         );
 
 
-        navigate(`/channel/${channel?.id}`)
+        navigate(-1);
 
     }
 
@@ -151,21 +152,30 @@ function ThreadPage(){
     //somehow put data into the return ina nice way. maybe ill create a commentssection component and threadview component
     return (
         <div>
-            <Button onClick={()=>{backToChannel(thread?.channel_id)}}>Back</Button>
-            <Button className="delete-btn" onClick={()=>{deleteThread()}}>Delete Thread</Button>
-            <div>{group?.name}</div>
-            <div>{channel?.name}</div>
-            <div className="op-container">
-                <div className="op">
-                    <p>{op?.username}</p>
-                </div>
-                <div>
-                    <p>{thread?.title}</p>
-                    <p>{thread?.body}</p>
-                </div>
-                
+            <Button className="back-btn" onClick={() => backToChannel(thread?.channel_id)}>Back</Button>
+
+            <Button className="delete-btn" onClick={() => deleteThread()}>
+                Delete Thread
+            </Button>
+
+            <div className = "info-container">
+                <p className="group-name">{group?.name}</p>
+                <p className="channel-name">{channel?.name}</p>
             </div>
-            <button onClick={()=>{onCreateCommentPress()}}>Reply</button>
+
+            <div className="op-container">
+            <Link to={`/profile/${op?.userid}`} className="op-username"> 
+                {op?.username}
+            </Link>
+                <p className="op-username"></p> 
+                <p className="op-title">{thread?.title}</p>  
+                <p className="op-body">{thread?.body}</p> 
+            </div>
+
+            <button className="reply-button" onClick={() => onCreateCommentPress()}>
+                Reply
+            </button>
+
             {isCommenting ? 
                 (<form onSubmit={handleCommentSubmit}>
                     <textarea onChange={(e)=>{setReply(e.target.value)}} name="comment-body" id="comment-body"></textarea>
@@ -175,12 +185,13 @@ function ThreadPage(){
                 null
                 }
             
-            <div>
-                <div>Comments</div>
-                {comments.map((comment)=>(
-                    <div className="comment-container">
-                        <div>{commenters[comment?.user_id]?.username} | {comment?.body}</div>
-                        <button className="del-btn" onClick={()=>{deleteComment(comment.id)}}>Delete</button>
+            <div className="comments-section">
+                <h3>Comments</h3>
+                {comments.map((comment) => (
+                    <div key={comment.id} className="comment-container">
+                        <p className="username">{commenters[comment?.user_id]?.username}</p>
+                        <p className="comment-text">{comment?.body}</p>
+                        <button className="del-btn" onClick={() => deleteComment(comment.id)}>Delete</button>
                     </div>
                 ))}
             </div>

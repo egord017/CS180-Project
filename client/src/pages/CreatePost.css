@@ -1,0 +1,90 @@
+.custom-textfield-title {
+    width: 100%; /* Ensure full width for the text field */
+    height: 90px;  /* Set a fixed height */
+    padding: 8px;  /* Add some padding for better text alignment */
+    box-sizing: border-box;
+}
+
+.custom-textfield-title .MuiOutlinedInput-root {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+    height: 100%;
+}
+
+.custom-textfield-title .MuiOutlinedInput-root fieldset {
+    border: solid 1px #95b38d;
+    border-radius: 4px;
+    width: 100%;
+    height: 100%;
+}
+
+.custom-textfield-title .MuiOutlinedInput-root.Mui-focused fieldset {
+    border-color: #95b38d;
+}
+
+.custom-textfield-title .MuiInputLabel-root {
+    color: grey;
+}
+
+.custom-textfield-title .MuiInputLabel-root.Mui-focused {
+    color: #76916f;
+}
+
+.custom-textfield-title .MuiOutlinedInput-root:hover fieldset {
+    border-color: #85a17d; /* Change this to your preferred hover border color */
+}
+
+/* Input field for the body of the post */
+.custom-textfield {
+    resize: none; /* Disable resizing for a consistent user experience */
+    height: 100%;
+    flex-grow: 1;
+    padding: 8px;  /* Padding inside the text area */
+    box-sizing: border-box;
+    overflow-y: visible scroll;  /* Enable vertical scrolling */
+}
+
+.custom-textfield .MuiOutlinedInput-root {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+    height: 95%;
+}
+
+.css-w4nesw-MuiInputBase-input-MuiOutlinedInput-input {
+    height: 100% !important; /* Ensure input height is set */
+    overflow-y: scroll;        /* Allow vertical scrolling */
+    resize: none;            /* Prevent manual resizing */
+    white-space: pre-wrap;   /* Ensure the text wraps within the container */
+    word-wrap: break-word;   /* Prevent long words from overflowing */
+    max-height: 100%;        /* Limit the height to the parent container */
+}
+
+.custom-textfield .MuiOutlinedInput-root fieldset {
+    border: solid 1px #95b38d;
+    border-radius: 4px;
+    width: 100%;
+    height: 99%;
+	margin-top: 10px !important;
+	margin-bottom: 10px !important;
+}
+
+.custom-textfield .MuiOutlinedInput-root.Mui-focused fieldset {
+    border-color: #95b38d;
+}
+
+.custom-textfield .MuiInputLabel-root {
+    color: grey;
+	margin-top: 10px !important;
+}
+
+.custom-textfield .MuiInputLabel-root.Mui-focused {
+    color: #76916f;
+}
+
+.custom-textfield .MuiOutlinedInput-root:hover fieldset {
+    border-color: #85a17d; /* Change this to your preferred hover border color */
+}

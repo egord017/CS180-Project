@@ -1,0 +1,132 @@
+.modal-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    background-color: #fff;
+    border: 2px solid #4CAF50;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    padding: 20px;
+    overflow: scroll
+}
+
+
+.channel-button-group{
+    display: flex; 
+    flex-direction: row;
+    gap: 10px;
+    padding-right: 10px;
+}
+.channel-button-group button {
+    background-color: #95b38d; /* Match other buttons */
+    font-weight: 600;
+    border-radius: 5px;
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    
+  }
+
+
+
+  .channel-button-group button:hover {
+    background-color: #77936f; /* Slightly darker on hover */
+  }
+  
+  .channel-button-group button:active {
+    background-color: #5f7b5c;
+  }
+  
+
+.channel-title-layout {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: flex-start;
+    background-color: white;
+}
+.curr-channel{
+    font-family: 'Radley', sans-serif !important;
+    color: #000000 !important;
+    line-height: 1.6;
+    letter-spacing: 0.0075em;
+  }
+
+.channel-item {
+    padding: 10px 0;
+    cursor: pointer;
+    border-bottom: 1px solid #e0e0e0;
+    transition: background 0.3s ease-in-out;
+}
+
+.channel-item:hover {
+    background-color: #f0f0f0;
+    color: #4CAF50;
+}
+
+.view-channels-button {
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    border: none;
+    transition: background 0.3s ease-in-out;
+}
+
+.view-channels-button:hover {
+    background-color: #45a049;
+}
+
+.close-button {
+    margin-top: 10px;
+    background-color: #f44336;
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    border: none;
+    width: 70px;
+}
+
+.close-button:hover {
+    background-color: #e53935;
+}
+
+.modal-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: 500px;
+    background-color: #fff;
+    border: 2px solid #4CAF50;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-content {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding-right: 10px;
+    margin-top: 10px;
+}
+
+.modal-close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    color: #f44336;
+}
+
+.modal-close-btn:hover {
+    color: #d32f2f;
+}

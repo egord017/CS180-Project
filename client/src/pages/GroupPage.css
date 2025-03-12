@@ -1,0 +1,231 @@
+.group-page-container {
+  background-color: #fdfdfd;
+  background-image: linear-gradient(white 95%, #d3d3d3 96%);
+  background-size: 100vh 28px;
+  background-position: left bottom;
+  background-attachment: fixed; /* Ensures lines continue as the page grows */
+  height: 100% !important;
+
+}
+
+.header-button-group {
+  display: flex;
+  gap: 12px; /* Adjust spacing between buttons */
+  align-items: center; /* Align buttons to the bottom */
+  align-content: flex-start;
+  margin-top: -10px;
+}
+
+
+
+
+.header-button-group button {
+  background-color: #95b38d; /* Match other buttons */
+  font-weight: 600;
+  border-radius: 5px;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.header-button-group button:hover {
+  background-color: #77936f; /* Slightly darker on hover */
+}
+
+.header-button-group button:active {
+  background-color: #5f7b5c;
+}
+
+
+.group-page-header {
+    padding-left: 0%;
+	padding-right: 0%;
+	padding-top: 28px;
+    width: 100% !important;
+    margin: 0 auto 3%;
+    margin-top: 0%;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    padding-bottom: 0%;
+    margin-bottom: 0px;
+    background: rgba(255, 255, 255, 0.8);
+	justify-content: space-between !important;
+}
+
+
+#image-container {
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  border: 2px solid #333; /* Optional for styling */
+  border-radius: 8px;     /* Optional for rounded corners */
+}
+
+.cropped-image {
+  width: 200px;
+  height: 100%;
+  object-fit: cover; /* Ensures the image fills the 200x200 space without stretching */
+  padding-bottom: 2%;
+  padding-left: 28px;
+}
+
+.group-page-title {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Radley', sans-serif !important;
+    color: black;
+    width: 100%;
+	
+}
+
+/* #description{
+	color: #A4B5A0;
+} */
+
+#title {
+  font-weight: 450 !important;
+	width: 70% !important;
+  margin: 0;
+  font-family: 'Radley', sans-serif !important;
+  color: #000000 !important;
+  line-height: 1.6;
+  letter-spacing: 0.0075em;
+}
+
+.post-card{
+	display: flex;
+	flex-direction: column;
+	height: 100% !important;
+	padding: 1% !important;
+	padding-top: 4% !important;
+  align-content: flex-end;
+}
+#new-post-title{
+	margin-top: -6% !important;
+	border-radius: 10%;
+	font-weight: 550 !important;
+	color: #95b38d !important;
+	border-bottom: solid #95b38d00;
+}
+
+.button-post{
+	background-color: #95b38d;
+	font-weight: 600 !important;
+	width: 100px;
+	border-radius: 5px;
+	padding: 2%;
+}
+.group-page-title-description-layout {
+    display: flex;
+    flex-direction: column;
+    color: rgb(107, 107, 107);
+    gap: 20px;
+	  width: 100%;
+    padding-left: 3%;
+}
+
+#content {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+.left-pannel{
+	background-color: rgba(173, 173, 173, 0);
+	width: 20% !important;
+	height: 100vh ;
+	border-right: 2px solid rgba(255, 0, 0, 0.407);
+}
+
+.group-page-container{
+		display: flex;
+		flex-direction: column;
+		height: 100vh;
+}
+
+  
+
+  .tabs-container {
+	  width: 100%;
+    display: flex;
+	padding-right: 24px;
+    flex-direction: column-reverse;
+    align-content: center;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: flex-start;
+
+  }
+  
+  .tabs {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+  }
+  
+  .tab-content {
+	padding: 16px;
+	width: 100%; 
+	height: 100%;
+  }
+
+  .conent-below-header{
+	display: flex;
+	flex-direction: column;
+  }
+
+  .right-pannel{
+	padding-right: 24px;
+	width: 100%; 
+	height: 100%;
+  }
+  .pannel-containers{
+	display: flex;
+	flex-direction: row;
+	gap: 0;
+	height: 100%;
+  }
+
+
+  .tabs .MuiTab-root {
+	color: #95b38d;/* Default inactive color */
+  }
+  
+  .tabs .MuiTab-root.Mui-selected {
+	color:#77936f;/* Selected tab color */
+  }
+  
+  .tabs .MuiTab-root:hover {
+	color: #738a6c; /* Hover color */
+  }
+  
+  .tabs .MuiTabs-indicator {
+	background-color: #77936f;/* Green underline when tab is selected */
+  }
+
+  .green-line {
+    width: 0;
+    height: 3px;
+    background-color:#A4B5A0 ;
+    margin-top: -25px;         
+    animation: revealLine 1.5s ease-out forwards;
+}
+
+@keyframes revealLine {
+    from {
+        width: 0;
+    }
+    to {
+        width: 60%;
+    }
+}
+  .css-1wxkzlj-MuiTabs-flexContainer {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex
+;
+    justify-content: flex-end;
+}

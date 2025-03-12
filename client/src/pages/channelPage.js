@@ -1,7 +1,7 @@
 import React,{Fragment, useState, useEffect} from 'react';
-import {useNavigate, useParams, Link} from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Button from '../components/Button';
-import './channelPage.css';
+import './threadPage.css';
 
 
 function ChannelPage(){
@@ -53,14 +53,12 @@ function ChannelPage(){
             <div>{group?.name}</div>
             <div>{channel?.name}</div>
             <div>{channel?.description}</div>
-            <div className="threads-container">
+            <div>
                {threads.map((thread)=>{
                     return (
                         <Button key={thread.id} onClick={()=>{visitThread(thread.id)}}>
-                            {/* <Link to={`/profile/${user id here}`}></Link>  */}
                             <p>{thread.title}</p>
                             <p>{thread.body}</p>
-                            
                         </Button>
                         
                     )
