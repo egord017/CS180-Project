@@ -3,11 +3,13 @@
 
 //checks if its admin for the group theyre in?
 export async function isAdminOfGroup(group_id){
-    //gotta fetch lol
     const user_id = localStorage.getItem('userID');
     const results = await fetch(`http://localhost:5000/usersgroups/${group_id}/get-member?user_id=${user_id}`);
-    const data = await results.json();
 
+    if(!results.ok){
+        return false;
+    }
+    const data = await results.json();
     if (data.role_id === 1){
         return true;
     }
@@ -18,7 +20,7 @@ export async function isAdminOfGroup(group_id){
 export async function isMemberOfGroup(group_id){
     try{
         const user_id = localStorage.getItem('userID');
-        console.log("groupid:", group_id, user_id);
+        //console.log("groupid:", group_id, user_id);
         const results = await fetch(`http://localhost:5000/usersgroups/${group_id}/get-member?user_id=${user_id}`);
         const data = await results.json();
         if (results.ok){

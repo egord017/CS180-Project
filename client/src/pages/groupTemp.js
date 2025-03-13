@@ -13,7 +13,7 @@ import './GroupPage.css';
 import UsersInGroup from './UsersInGroup';
 import Settings from './Settings';
 
-function GroupPageTemp() {
+function GroupPageTemp({setAuth}) {
     const [group, setGroup] = useState(null);
     const [channels, setChannels] = useState([]);
     const [threads, setThreads] = useState({});
@@ -103,6 +103,8 @@ function GroupPageTemp() {
         checkMemberPerms();
     }, [group_id]);
 
+
+
     const [value, setValue] = useState(0);
 
     const handleChange = (event, newValue) => {
@@ -116,7 +118,7 @@ function GroupPageTemp() {
 
     return (
         <div className='group-page-container'>
-            <Header />
+            <Header setAuth = {setAuth}/>
             
             <div className='group-page-header'>
                 <img

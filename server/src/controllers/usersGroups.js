@@ -15,13 +15,12 @@ async function get_member(req, res){
 
     const results = await users_groups_db.get_member(group_id, user_id);
     
-    console.log("res:",results);
-    
     if (!results){
-        res.status(404).json();
+        res.status(404).json({ error: "User not found in group" });
         return;
     }
-    res.send(results);
+
+    res.status(200).json(results);
 
 }
 

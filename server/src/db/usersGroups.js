@@ -5,6 +5,10 @@ async function get_members(group_id){
     try{
         const query = "SELECT * FROM users_groups WHERE group_id=$1";
         const results = await pool.query(query, group_id);
+        console.log(results);
+        if (results.rows.length ==0){
+            return null;
+        }
         return results.rows;
     }
     catch (err){
