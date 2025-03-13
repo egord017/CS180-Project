@@ -1,6 +1,5 @@
 import {useState} from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import Header from './Header';
 //title
 //body
 //user_id (supplied innately)
@@ -53,33 +52,29 @@ function WorkshopThreadPostForm(){
 
 
     return (
-        <div>
-            <Header/>
-            <div className="page">
-        
-        <form onSubmit={handleSubmit}>
-            <label for="title" require="true">Title :</label>
-            <input type="text" id="title" onChange={(e)=>(setTitle(e.target.value))}></input>
+        <div className="page">
 
-            <label for="context">
-                Context For Work:
-                <p>Any context needed going into the passage/chapter. Historical facts/information from previous chapters, etc</p>
-            </label>
-            <textarea  id="context" onChange={(e)=>{setContext(e.target.value)}} ></textarea>
+            <form onSubmit={handleSubmit}>
+                <label for="title" require="true">Title :</label>
+                <input type="text" id="title" onChange={(e)=>(setTitle(e.target.value))}></input>
 
-            <label for="preference">Critique Guidance:</label>
-            <textarea  id="preference" onChange={(e)=>{setPreference(e.target.value)}} ></textarea>
-            <label for="post_body">Post Body/Author's Notes:</label>
-            <textarea  id="post_body" onChange={(e)=>{setPostBody(e.target.value)}} ></textarea>
-            <label for="passage_body">Your Work/Passage:</label>
-            <textarea  id="passage_body" onChange={(e)=>{setPassageBody(e.target.value)}} ></textarea>
+                <label for="context">
+                    Context For Work:
+                    <p>Any context needed going into the passage/chapter. Historical facts/information from previous chapters, etc</p>
+                </label>
+                <textarea  id="context" onChange={(e)=>{setContext(e.target.value)}} ></textarea>
 
-            
-            <button type="submit">Post Thread</button>
-        </form>
-    </div>
+                <label for="preference">Critique Guidance:</label>
+                <textarea  id="preference" onChange={(e)=>{setPreference(e.target.value)}} ></textarea>
+                <label for="post_body">Post Body/Author's Notes:</label>
+                <textarea  id="post_body" onChange={(e)=>{setPostBody(e.target.value)}} ></textarea>
+                <label for="passage_body">Your Work/Passage:</label>
+                <textarea  id="passage_body" onChange={(e)=>{setPassageBody(e.target.value)}} ></textarea>
+
+                
+                <button type="submit">Post Thread</button>
+            </form>
         </div>
-        
 
     )
 }

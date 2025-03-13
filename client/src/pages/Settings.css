@@ -1,6 +1,7 @@
 
 .delete-channel {
     background-color: #b05454 !important; /* Match other buttons */
+    font-weight: 600;
     border-radius: 5px;
     padding: 8px 16px;
     border: none;
@@ -31,6 +32,7 @@
 
 .settings-button-group button {
     background-color: #95b38d; /* Match button theme */
+    font-weight: 600;
     border-radius: 5px;
     padding: 8px 16px;
     border: none;
