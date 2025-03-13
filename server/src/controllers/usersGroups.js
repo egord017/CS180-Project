@@ -25,6 +25,20 @@ async function get_member(req, res){
 
 }
 
+async function get_admin(req, res){
+    const group_id = Object.values(req.params)[0];
+    const user_id = Object.values(req.query)[0];
+
+    const results = await users_groups_db.get_admin(group_id, user_id);
+
+    console.log("Res:", results);
+    if (!results){
+        res.status(404).json();
+        return;
+    }
+    res.send(results);
+}
+
 async function post_member(req, res){
 
 }
@@ -39,6 +53,7 @@ async function delete_member(req,res){
 module.exports = {
     get_members,
     get_member,
+    get_admin,
     post_member,
     delete_member
 

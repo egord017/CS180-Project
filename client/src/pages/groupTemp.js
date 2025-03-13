@@ -7,7 +7,7 @@ import ChannelOverview from './ChannelOverview';
 import CreatePost from './CreatePost';  // Import CreatePost
 import { Box, Tabs, Tab } from '@mui/material';
 import * as userClient from "../utils/user";
-import { joinGroup, leaveGroup } from "../api/groupAPI";
+import { joinGroup, leaveGroup, getMember } from "../api/groupAPI";
 
 import './GroupPage.css';
 import UsersInGroup from './UsersInGroup';
@@ -21,6 +21,7 @@ function GroupPageTemp() {
     const { group_id } = useParams();
 
     const [isMember, setIsMember] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
     const navigate = useNavigate();
 
     const handleJoinClick = async ()=> {
@@ -32,6 +33,12 @@ function GroupPageTemp() {
         console.log(userClient.getUserID(), group?.id);
         leaveGroup(group?.id, userClient.getUserID())
         window.location.reload()
+    }
+
+    const checkMemberPerms = async () => {
+        const status = await userClient.isAdminOfGroup(group_id);
+        console.log("Admin Status:", status);
+        setIsAdmin(status);
     }
 
     const handlePostClick = async (body, postTitle, curr_channel) => {
@@ -92,6 +99,7 @@ function GroupPageTemp() {
             }
         }
         fetchGroupData();
+        checkMemberPerms();
     }, [group_id]);
 
     const [value, setValue] = useState(0);
@@ -140,7 +148,7 @@ function GroupPageTemp() {
                     >
                         <Tab label="Channels" />
                         <Tab label="Group Members" />
-                        <Tab label="Settings" />
+                        {isAdmin && <Tab label="Settings" />}
                     </Tabs>
                 </Box>
             </div>

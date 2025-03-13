@@ -29,6 +29,21 @@ async function get_member(group_id, user_id){
     }
 }
 
+async function get_admin(group_id, user_id){
+    try {
+        const query = "SELECT role_id FROM users_groups WHERE group_id=$1 AND user_id=$2";
+        const results = await pool.query(query, [group_id, user_id]);
+        console.log(results.rows);
+
+        if (results.rows.length ==0){
+            return null;
+        }
+        return results;
+    } catch (err) {
+        console.error(err);
+    }
+}
+
 async function post_member(group_id, user_id, role_id){
     try{
         const query = "INSERT INTO users_groups(group_id, user_id, role_id) VALUES ($1, $2, $3) RETURNING *";
@@ -54,6 +69,7 @@ async function delete_member(group_id, user_id){
 module.exports = {
     get_members,
     get_member,
+    get_admin,
     post_member,
     delete_member
 }

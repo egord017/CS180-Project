@@ -36,7 +36,7 @@ export const newGroup = async (group_name, group_description, user_id) => {
 
 export const joinGroup = async (group_id, user_id) => {
   try {
-    const body = {group_id, user_id}
+    const body = {group_id, user_id};
 
     const response = await fetch("http://localhost:5000/groups/join", {
       method: "POST",
@@ -56,7 +56,7 @@ export const joinGroup = async (group_id, user_id) => {
 
 export const leaveGroup = async (group_id, user_id) => {
   try {
-    const body = {group_id, user_id}
+    const body = {group_id, user_id};
 
     const response = await fetch("http://localhost:5000/groups/leave", {
       method: "DELETE",

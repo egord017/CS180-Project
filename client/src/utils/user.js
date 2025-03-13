@@ -5,8 +5,13 @@
 export async function isAdminOfGroup(group_id){
     //gotta fetch lol
     const user_id = localStorage.getItem('userID');
-    const results = await fetch(`http://localhost:5000/usersgroups/${group_id}/is-admin?user_id=${user_id}`);
-    if (results?.role_id==1){
+    const results = await fetch(`http://localhost:5000/usersgroups/${group_id}/get-member?user_id=${user_id}`);
+        //method: "GET",
+        //headers: {"Content-Type": "application/json"},
+    const data = await results.json();
+    console.log("Results: ", data.role_id);
+
+    if (data.role_id === 1){
         return true;
     }
     return false;
