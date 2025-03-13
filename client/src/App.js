@@ -70,7 +70,7 @@ function App() {
   });
 
   if (loading) {
-    return <div>Loading...</div>; // Prevents incorrect redirects
+    return <div>Loading...</div>; // Prevents incorrect redirectsheade
   }
 
   return (
@@ -116,10 +116,6 @@ function App() {
               element={isAuthenticated ? <ThreadPage setAuth={setAuth}/> : <Navigate to="/login" />}
             />
             <Route 
-              path="/group/submit" 
-              element={<GroupPostForm/>}
-            />
-            <Route 
               path="/group/:group_id/channel-submit" 
               element={<ChannelPostForm/>}
             />
@@ -136,8 +132,10 @@ function App() {
               element={isAuthenticated ? <ProfilePage setAuth = {setAuth}/> : <Navigate to="/login" />} 
             />
 
-            <Route path="/profile/:userName/followers" element={<FollowersPage />} />
-
+            <Route path="/profile/:userName/followers" 
+            element={isAuthenticated ? <FollowersPage setAuth={setAuth}/>: <Navigate to="/login" />}
+            
+           />
             <Route
               path="/new_group"
               element={isAuthenticated? <NewGroup /> : <Navigate to="/login" />}

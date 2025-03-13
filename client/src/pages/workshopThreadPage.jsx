@@ -7,7 +7,7 @@ import * as userClient from "./../utils/user.js";
 
 import {get_groups} from "../api/groupAPI.js"
 
-function WorkshopThreadPage(){
+function WorkshopThreadPage({setAuth}){
     const [isAdmin, setIsAdmin] = useState(false);
     
 

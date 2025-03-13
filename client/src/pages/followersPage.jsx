@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-function FollowersPage() {
+function FollowersPage({setAuth}) {
     const username = Object.values(useParams())[0];
     const [user, setUser] = useState(null);
     const [followers, setFollowers] = useState([]);
