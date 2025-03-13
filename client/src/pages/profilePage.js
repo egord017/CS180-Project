@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useParams, useSearchParams,  } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./profilePage.css";
 import Header from './Header';
 
@@ -17,6 +17,11 @@ function ProfilePage({setAuth}) {
   const [comments, setComments] = useState([]);
   const [followers, setFollowers] = useState([]);
   const [following, setFollowing] = useState([]);
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/profile/${username}/followers`);
+  };
 
 
   useEffect(() => {
@@ -75,6 +80,11 @@ function ProfilePage({setAuth}) {
         <div className="profile-container">
             <img src={userData.image || "/images/placeholder.jpg"} alt={userData.name} className="avatar-circle" />
           <h2>{userData.username || "N/A"}</h2>
+
+          <div className="followers-container">
+            <button onClick={handleClick} id="followers"> <b>{followers.length}</b> followers</button>
+            <button onClick={handleClick} id="followers"> <b>{following.length}</b> following</button>
+          </div>
           <h3>About Me</h3>
           <div className="bio-box">
             <p>{userData.userbio || "No bio available."}</p>
@@ -158,42 +168,7 @@ function ProfilePage({setAuth}) {
           </div>
         </div>
       </div>
-        <div className="follow-container">
-          <div className="follow-box">
-            <h3>Followers:</h3>
-            <ul>
-              {followers.length ? (
-                followers.map((follower) => (
-                  <li key={follower.id}>
-                    <Link to={`/profile/${follower.userid}`}>
-                      <p>{follower.username || "Unknown"}</p> 
-                    </Link>
-                  </li>
-                ))
-              ) : (
-                <h4>No followers yet.</h4>
-              )}
-            </ul>
-          </div>
         
-          <div className="follow-box">
-            <h3>Following:</h3>
-            <ul>
-              {following.length ? (
-                following.map((followed) => (
-
-                  <li key={followed.id}>
-                    <Link to={`/profile/${followed.username}`}>
-                      <p>{followed.username || "Unknown"}</p> 
-                    </Link>
-                  </li>
-                ))
-              ) : (
-                <h4>Not following anyone.</h4>
-              )}
-            </ul>
-          </div>
-        </div> 
       
   </div>
   </div>
