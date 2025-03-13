@@ -13,7 +13,7 @@ import './GroupPage.css';
 import UsersInGroup from './UsersInGroup';
 import Settings from './Settings';
 
-function GroupPageTemp() {
+function GroupPageTemp({setAuth}) {
     const [group, setGroup] = useState(null);
     const [channels, setChannels] = useState([]);
     const [threads, setThreads] = useState({});
@@ -21,6 +21,7 @@ function GroupPageTemp() {
     const { group_id } = useParams();
 
     const [isMember, setIsMember] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
     const navigate = useNavigate();
 
     const handleJoinClick = async ()=> {
@@ -35,6 +36,12 @@ function GroupPageTemp() {
     }
     const [hasTitle, setHasTitle] = useState(true)
 
+    const checkMemberPerms = async () => {
+        const status = await userClient.isAdminOfGroup(group_id);
+        console.log("Admin Status:", status);
+        setIsAdmin(status);
+    }
+
     const handlePostClick = async (body, postTitle, curr_channel) => {
         
         if (!postTitle) {
@@ -44,8 +51,7 @@ function GroupPageTemp() {
         setHasTitle(true);
 
         try {
-            
-
+            const ID = localStorage.getItem('userID');
             const res = await fetch(`http://localhost:5000/threads`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -53,7 +59,7 @@ function GroupPageTemp() {
                     title: postTitle,
                     body: body,
                     channel_id: curr_channel, 
-                    user_id: localStorage.getItem("userID") // Dummy user_id
+                    user_id: ID //'6e426c4e-c39f-4f5b-b235-7e471a1f7d46'
                 })
             });
             console.log("attempting to post: ", postTitle);
@@ -99,7 +105,10 @@ function GroupPageTemp() {
             }
         }
         fetchGroupData();
+        checkMemberPerms();
     }, [group_id]);
+
+
 
     const [value, setValue] = useState(0);
 
@@ -114,7 +123,7 @@ function GroupPageTemp() {
 
     return (
         <div className='group-page-container'>
-            <Header />
+            <Header setAuth = {setAuth}/>
             
             <div className='group-page-header'>
                 <img
@@ -148,7 +157,7 @@ function GroupPageTemp() {
                         <Tab label="Channels" />
                         <Tab label="Workshops" />
                         <Tab label="Group Members" />
-                        <Tab label="Settings" />
+                        {isAdmin && <Tab label="Settings" />}
                     </Tabs>
                 </Box>
             </div>

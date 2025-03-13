@@ -4,6 +4,7 @@ import Button from '../components/Button.jsx';
 import './threadPage.css';
 import Header from './Header.js';
 import { Link } from "react-router-dom";
+import * as userClient from "../utils/user";
 
 function ThreadPage({ setAuth }) {
   let is_error = false;
