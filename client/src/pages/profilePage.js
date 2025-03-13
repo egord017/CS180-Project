@@ -7,7 +7,7 @@ import Header from './Header';
 function ProfilePage({setAuth}) {
   //const {} userId } = useParams();
   const username= Object.values(useParams())[0];
-  console.log(username);
+  
   //const [search_params] = useSearchParams();
   //const username = search_params.get('username');
   
@@ -17,6 +17,7 @@ function ProfilePage({setAuth}) {
   const [comments, setComments] = useState([]);
   const [followers, setFollowers] = useState([]);
   const [following, setFollowing] = useState([]);
+
 
   useEffect(() => {
     async function fetchData() {
@@ -182,7 +183,7 @@ function ProfilePage({setAuth}) {
                 following.map((followed) => (
 
                   <li key={followed.id}>
-                    <Link to={`/profile/${followed.userid}`}>
+                    <Link to={`/profile/${followed.username}`}>
                       <p>{followed.username || "Unknown"}</p> 
                     </Link>
                   </li>
