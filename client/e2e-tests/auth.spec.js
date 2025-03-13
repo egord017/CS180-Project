@@ -1,6 +1,5 @@
 import { test, expect, describe } from '@playwright/test';
 
-
 describe('Successful Registration Workflow', ()=>{
   test('user goes to register page', async ({page})=>{
     await page.goto('http://localhost:3000/login');
@@ -21,24 +20,29 @@ describe('Successful Registration Workflow', ()=>{
 
 
 describe('Successful Login Workflow', ()=>{
+  
   test('user logins to writers block', async ({page})=>{
     await page.goto('http://localhost:3000/login');
-    await page.locator('.login-container button').click();
+    await page.locator('input[name="email"]').fill('bob@gmail.com');
+    await page.locator('input[name="password"]').fill('bob');
+    await page.locator('.btn.btn-success.w-100').click();
     await expect(page).toHaveURL('http://localhost:3000/dashboard');
-  })
-    
+  });
 });
-// login
-// describe('Authentication', ()=>{
-//     test('user logs in', async ({ page }) => {
-//         await page.goto('http://localhost:3000/login');
-//         await page.fill('input[name="email"]', 'testuser@example.com');
-//         await page.fill('input[name="password"]', 'password123');
-//         await page.click('button[type="submit"]');
-//         await expect(page).toHaveURL('http://localhost:3000/dashboard');
-//       });
 
-// });
+describe('User makes a post', ()=>{
+  test('user goes to their group', async ({page})=>{
+    await page.goto('http://localhost:3000/login');
+    await page.locator('input[name="email"]').fill('bob@gmail.com');
+    await page.locator('input[name="password"]').fill('bob');
+    await page.locator('.btn.btn-success.w-100').click();
+    await expect(page).toHaveURL('http://localhost:3000/dashboard');
+    
+    await page.locator('.group-card').first().click();
+    await expect(page).toHaveURL('http://localhost:3000/group/1');
+  });
+})
+
 
 //logout
 
