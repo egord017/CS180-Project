@@ -50,10 +50,11 @@ function NewGroup() {
         <div className="new-group-page">
 
             
-
+            <button onClick={handleExit} id="exit">X</button> 
+            
             <form onSubmit={handleSubmit}>
                 
-            <button onClick={handleExit} id="exit">X</button> 
+            
                 {/* placeholder for a group's image */}
                 <div className="firstline-container">
 

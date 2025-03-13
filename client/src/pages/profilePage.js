@@ -82,8 +82,8 @@ function ProfilePage({setAuth}) {
           <h2>{userData.username || "N/A"}</h2>
 
           <div className="followers-container">
-            <button onClick={handleClick} id="followers"> <b>{followers.length}</b> followers</button>
-            <button onClick={handleClick} id="followers"> <b>{following.length}</b> following</button>
+            <button onClick={handleClick} id="followers-text"> <b>{followers.length}</b> followers</button>
+            <button onClick={handleClick} id="followers-text"> <b>{following.length}</b> following</button>
           </div>
           <h3>About Me</h3>
           <div className="bio-box">
