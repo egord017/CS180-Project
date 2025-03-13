@@ -3,6 +3,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Button from '../components/Button';
 
+import Header from './Header.js';
 
 function ChannelPostForm(){
     const [name, setName] = useState("");
@@ -42,7 +43,9 @@ function ChannelPostForm(){
 
 
     return (
-        <Fragment>
+        <div>
+            <Fragment>
+            <Header/>
             <div>Create New Workshop Channel</div>
             <form onSubmit={handleSubmit}>
                 <label for="channel_name" require="true">Workshop Name* :</label>
@@ -54,6 +57,9 @@ function ChannelPostForm(){
                 <button type="submit">Create Workshop</button>
             </form>
         </Fragment>
+        </div>
+            
+            
         
     )
 }
