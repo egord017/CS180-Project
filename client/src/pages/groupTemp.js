@@ -156,7 +156,7 @@ function GroupPageTemp() {
                 <div className='left-pannel'>
                     
                     {value === 0 && <CreatePost handlePostClick={handlePostClick} curr_channel={currentChannel} hasTitle={hasTitle}/>}
-                    {!hasTitle && <p>Need a title</p>}
+                    
                 </div>
 
                 <div className='right-pannel'>

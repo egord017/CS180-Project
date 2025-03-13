@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./newGroup.css";
 import {newGroup} from "../api/groupAPI";
 import { useNavigate } from 'react-router-dom';
-
+import Header from "./Header";
 function NewGroup({setAuth}) {
     const [submitErrors, setSubmitErrors] = useState({
         "group_name":"",
