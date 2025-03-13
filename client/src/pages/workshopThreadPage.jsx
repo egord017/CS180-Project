@@ -138,7 +138,7 @@ function WorkshopThreadPage({setAuth}){
     //somehow put data into the return ina nice way. maybe ill create a commentssection component and threadview component
     return (
         <div>
-            <Header/>
+            <Header setAuth = {setAuth}/>
             <Button onClick={()=>{backToWorkshop(thread?.workshop_id)}}>Back</Button>
             {
                 (isAdmin ||userClient.isOwnerOfID(op?.userid)) && <Button className="delete-btn" onClick={()=>{deleteThread()}}>Delete Thread</Button>
