@@ -1,8 +1,17 @@
 .page {
     display:flex;
     justify-content:center;
-}
+    width: 100%;
+    gap:5rem;
+    padding:3rem;
 
+}
+.right-container {
+    flex:1;
+}
+.passage {
+    flex:1;
+}
 .strikethrough {
     text-decoration: line-through;
 }
