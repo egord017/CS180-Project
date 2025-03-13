@@ -2,7 +2,7 @@ import React,{Fragment, useState, useEffect} from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Button from '../components/Button.jsx';
 import './threadPage.css';
-
+import Header from './Header.js';
 import {get_groups} from "../api/groupAPI.js"
 
 function CritiquePage(){
@@ -39,6 +39,7 @@ function CritiquePage(){
    return (
 
     <div>
+        <Header/>
         <button className="back-to-thread-btn" onClick={()=>{backToThread()}}>Back</button>
         <div className="critique-container">
             <h1>Critique by {critic?.username}</h1>

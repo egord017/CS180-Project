@@ -8,7 +8,7 @@ import CreatePost from './CreatePost';  // Import CreatePost
 import { Box, Tabs, Tab } from '@mui/material';
 import * as userClient from "../utils/user";
 import { joinGroup, leaveGroup } from "../api/groupAPI";
-
+import WorkshopOverview from './WorkshopOverview';
 import './GroupPage.css';
 import UsersInGroup from './UsersInGroup';
 import Settings from './Settings';
@@ -146,6 +146,7 @@ function GroupPageTemp() {
                         className="tabs"
                     >
                         <Tab label="Channels" />
+                        <Tab label="Workshops" />
                         <Tab label="Group Members" />
                         <Tab label="Settings" />
                     </Tabs>
@@ -162,8 +163,9 @@ function GroupPageTemp() {
                 <div className='right-pannel'>
                     <Box className="tab-content">
                         {value === 0 && <div><ChannelOverview currentChannel={currentChannel} setCurrentChannel={setCurrentChannel} /> </div>}
-                        {value === 1 && <div><UsersInGroup/></div>}
-                        {value === 2 && <div><Settings/></div>}
+                        {value === 1 && <div><WorkshopOverview/></div>}
+                        {value === 2 && <div><UsersInGroup/></div>}
+                        {value === 3 && <div><Settings/></div>}
                     </Box>
                 </div>
             </div>

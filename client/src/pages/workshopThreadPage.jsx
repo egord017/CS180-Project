@@ -2,6 +2,7 @@ import React,{Fragment, useState, useEffect} from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Button from '../components/Button.jsx';
 import './threadPage.css';
+import Header from './Header.js';
 import * as userClient from "./../utils/user.js";
 
 import {get_groups} from "../api/groupAPI.js"
@@ -131,6 +132,7 @@ function WorkshopThreadPage(){
     //somehow put data into the return ina nice way. maybe ill create a commentssection component and threadview component
     return (
         <div>
+            <Header/>
             <Button onClick={()=>{backToWorkshop(thread?.workshop_id)}}>Back</Button>
             {
                 userClient.isOwnerOfID(op?.userid) && <Button className="delete-btn" onClick={()=>{deleteThread()}}>Delete Thread</Button>
