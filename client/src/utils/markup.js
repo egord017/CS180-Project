@@ -13,9 +13,11 @@ export async function strike(event){
     const parent_anchor = selection.anchorNode.parentNode;
     const parent_focus = selection.focusNode.parentNode;
     
-    if (!parent_anchor?.classList.contains("passage-body")){
-        return;
+    let outOfBounds=true;
+    if (parent_anchor?.classList.contains("passage-body") || parent_anchor?.tagName==="DEL" || parent_anchor?.tagName==="MARK"){
+        outOfBounds = false;
     }
+    if (outOfBounds)return;
 
     //get fragments and check for any text inserts.
     const frags = range.extractContents();
@@ -132,9 +134,16 @@ export async function mark(event){
     const parent_anchor = selection.anchorNode.parentNode;
     const parent_focus = selection.focusNode.parentNode;
     
-    if (!parent_anchor?.classList.contains("passage-body")){
+    let outOfBounds=true;
+    if (parent_anchor?.classList.contains("passage-body") || parent_anchor?.tagName==="DEL" || parent_anchor?.tagName==="MARK"){
+        outOfBounds = false;
+    }
+    if (outOfBounds){
+        console.log("eee");
         return;
     }
+        
+   
     const frags = range.extractContents();
     let hasInserts = false;
     frags.childNodes.forEach((child)=>{

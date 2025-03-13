@@ -78,7 +78,7 @@ function CritiquePostForm(){
             if (event.target.closest('ins')) return;
             if (event.target.closest('mark')) return;
             if (event.target.closest('del')) return;
-
+            if (selection.focusNode.parentNode?.tagName==="DEL") return;
             //setIsSelected(false);
             console.log(range);
             const insert = document.createElement('ins');
