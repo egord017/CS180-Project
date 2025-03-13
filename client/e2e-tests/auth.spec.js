@@ -20,11 +20,15 @@ describe('Successful Registration Workflow', ()=>{
 });
 
 
-describe('Successful Login Workflow', ({page})=>{
-
+describe('Successful Login Workflow', ()=>{
+  test('user logins to writers block', async ({page})=>{
+    await page.goto('http://localhost:3000/login');
+    await page.locator('.login-container button').click();
+    await expect(page).toHaveURL('http://localhost:3000/dashboard');
+  })
     
 });
-//login
+// login
 // describe('Authentication', ()=>{
 //     test('user logs in', async ({ page }) => {
 //         await page.goto('http://localhost:3000/login');
