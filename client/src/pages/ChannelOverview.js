@@ -132,7 +132,7 @@ function ChannelOverview({ currentChannel, setCurrentChannel }) {
             <Modal open={isCreateModalOpen} onClose={handleCloseCreateModal}>
                 <Box className="modal-container">
                     <Typography variant="h5">Create New Channel</Typography>
-                    <ChannelPostForm />
+                    <ChannelPostForm handleCloseChannelModal={handleCloseChannelModal} setCurrentChannel={setCurrentChannel}/>
                     
                 </Box>
             </Modal>

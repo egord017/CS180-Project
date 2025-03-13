@@ -23,6 +23,28 @@ const Register = ({setAuth}) => {
 
             const body = {username, email, password};
 
+            //clientside validation
+            if (username.length===0){
+                console.log("Cannot be empty");
+                return;
+            }
+            if (username.length<3){
+                console.log("Username is too short (min:3)");
+                return;
+            }
+            if (username.length>15){
+                console.log("Username is too long (max:15)");
+                return;
+            }
+            if (password.length ===0){
+                console.log();
+                return;
+            }
+            if (password.length <3){
+                return;
+            }
+            
+
             const response = await fetch("http://localhost:5000/auth/register", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
@@ -63,12 +85,12 @@ const Register = ({setAuth}) => {
         <h1  id = "login-header">Register</h1>
         <form onSubmit = {onSubmitForm}>
             <h2>USERNAME</h2>
-                <input type="text" name="username" className = "form-control my-3" value={username} onChange={e => onChange(e)}/> 
+                <input type="text" name="username" className = "form-control my-3" value={username} onChange={e => onChange(e)} required/> 
             <h2>EMAIL</h2>
-                <input type="email" name="email" className = "form-control my-3" value={email} onChange={e => onChange(e)}/>
+                <input type="email" name="email" className = "form-control my-3" value={email} onChange={e => onChange(e)} required/>
             <h2>PASSWORD</h2>
-                <input type="password" name="password" className = "form-control my-3" value={password} onChange={e => onChange(e)}/>   
-            <button className= "btn btn-success w-100"><h2>SUBMIT</h2></button>
+                <input type="password" name="password" className = "form-control my-3" value={password} onChange={e => onChange(e)} required/>   
+            <button className= "btn btn-success w-100"><h2>SUBMIT</h2></button>""
         </form>
         <h2 id = "already-have-account">Already have an account? <a href="/login">Return to Login</a></h2>
         </div>
