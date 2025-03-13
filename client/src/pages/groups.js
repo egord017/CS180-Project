@@ -28,25 +28,24 @@ function Groups({setAuth}) {
 
   return (
     <div className="background">
+    <Header/>
     <div className="groups-container">
-      <div className="groups-header">
-        <h1>Join A Group</h1>
+    <div className="groups-header">
+      <h1>Join A Group</h1>
 
-        {/* Search Bar */}
-        <input
-          type="text"
-          placeholder="Search for a group..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="groups-search-bar"
-        />
+      <input
+        type="text"
+        placeholder="Search for a group..."
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        className="groups-search-bar"
+      />
 
-        <Link to="/groups/new_group">
-          <button className="groups-add-button">
-            <span>+</span>
-          </button>
-        </Link>
-      </div>
+    <Link to="/groups/new_group" style={{ textDecoration: 'none' }}>
+        <button className="groups-add-button">+</button>
+      </Link>
+    </div>
+
 
       <div className="groups-grid">
         {filteredGroups.length > 0 ? (
