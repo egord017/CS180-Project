@@ -4,6 +4,8 @@ import Button from '../components/Button.jsx';
 import './threadPage.css';
 import Header from './Header.js';
 import { Link } from "react-router-dom";
+import OriginalPost from '../components/OriginalPost.jsx';
+import CommentList from '../components/CommentList.jsx';
 
 function ThreadPage({ setAuth }) {
   let is_error = false;
@@ -138,18 +140,7 @@ function ThreadPage({ setAuth }) {
           <p className="channel-name">{channel?.name}</p>
         </div>
 
-        <div className="op-container">
-          <p className="op-username"></p>
-          <p className="op-title">{thread?.title}</p>
-          <Link to={`/profile/${op?.username}`} className="op-username">
-             {op?.username}
-          </Link>
-          <p className="op-body">{thread?.body}</p>
-
-          <button className="reply-button" onClick={onCreateCommentPress}>
-            Reply
-          </button>
-        </div>
+        <OriginalPost op={op} thread={thread} onCreateCommentPress={onCreateCommentPress}/>
 
         {isCommenting ? (
           <form onSubmit={handleCommentSubmit}>
@@ -166,23 +157,7 @@ function ThreadPage({ setAuth }) {
 
         <div className="comments-section">
           <h3>Comments</h3>
-          {comments.map((comment) => (
-            <div key={comment.id} className="comment-container">
-              {/* 
-                Wrap the username & text in a 'comment-content' div 
-                so the delete button can flex to the right 
-              */}
-              <div className="comment-content">
-                <Link to={`/profile/${commenters[comment?.user_id]?.username}`} className="username">
-                    {commenters[comment?.user_id]?.username}
-                </Link>
-                <p className="comment-text">{comment?.body}</p>
-              </div>
-              <button className="del-btn" onClick={() => deleteComment(comment.id)}>
-                Delete
-              </button>
-            </div>
-          ))}
+          <CommentList comments={comments} commenters={commenters} deleteComment={deleteComment}/>
         </div>
         
       </div>
