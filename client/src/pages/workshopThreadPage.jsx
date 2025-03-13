@@ -2,11 +2,15 @@ import React,{Fragment, useState, useEffect} from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Button from '../components/Button.jsx';
 import './threadPage.css';
+import Header from './Header.js';
 import * as userClient from "./../utils/user.js";
 
 import {get_groups} from "../api/groupAPI.js"
 
 function WorkshopThreadPage(){
+    const [isAdmin, setIsAdmin] = useState(false);
+    
+
     let is_error = false;
     const navigate = useNavigate();
 
@@ -14,7 +18,6 @@ function WorkshopThreadPage(){
     function onClickGoHome(){
         navigate('/');
     }
-
 
     function backToWorkshop(workshop_id){
         if (workshop_id) navigate(`/workshop/${workshop_id}`);
@@ -84,7 +87,10 @@ function WorkshopThreadPage(){
                 //fetch group info
                 const groupObj = await fetch(`http://localhost:5000/groups/${new_channel.group_id}`);
                 setWorkshop(new_channel);
-                setGroup(await groupObj.json());
+                const group_data = await groupObj.json();
+                setGroup(group_data);
+                setIsAdmin(await userClient.isAdminOfGroup(group_data?.id));
+                
    
             }
             catch (err){
@@ -106,8 +112,9 @@ function WorkshopThreadPage(){
         navigate(`/workshop/${workshop?.id}`)
     }
 
-    async function deleteComment(comment_id){
-
+    async function deleteComment(e,comment_id){
+        e.preventDefault();
+        e.stopPropagation();
         try {
             const response = await fetch((`http://localhost:5000/critiques/${comment_id}`),
                 {
@@ -131,9 +138,10 @@ function WorkshopThreadPage(){
     //somehow put data into the return ina nice way. maybe ill create a commentssection component and threadview component
     return (
         <div>
+            <Header/>
             <Button onClick={()=>{backToWorkshop(thread?.workshop_id)}}>Back</Button>
             {
-                userClient.isOwnerOfID(op?.userid) && <Button className="delete-btn" onClick={()=>{deleteThread()}}>Delete Thread</Button>
+                (isAdmin ||userClient.isOwnerOfID(op?.userid)) && <Button className="delete-btn" onClick={()=>{deleteThread()}}>Delete Thread</Button>
             }
             
             <div>{group?.name}</div>
@@ -158,7 +166,7 @@ function WorkshopThreadPage(){
                         <div>{critics[comment?.user_id]?.username}'s Critique</div>
                         <div>{new Date(comment?.time_stamp).toLocaleString('en-US')}</div>
                         {console.log("PLEASE CHECK:", userClient.isOwnerOfID(comment.id))}
-                        {userClient.isOwnerOfID(comment.user_id) &&  <button className="del-btn" onClick={()=>{deleteComment(comment.id)}}>Delete</button>}
+                        {(isAdmin || userClient.isOwnerOfID(comment.user_id) )&&  <button className="del-btn" onClick={(e)=>{deleteComment(e,comment.id)}}>Delete</button>}
                     </button>
                 ))}
             </div>

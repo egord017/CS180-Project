@@ -2,7 +2,7 @@ import {createElement, useEffect, useState} from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import useMousePosition from '../hooks/useMousePosition';
 import './critiquePostForm.css';
-
+import Header from './Header.js';
 import {strike, mark} from "../utils/markup.js";
 //title
 //body
@@ -18,7 +18,7 @@ function CritiquePostForm(){
     const [workshopThread, setWorkshopThread] = useState("");
     const {workshop_thread_id} = useParams();
     const [selection, setSelection] = useState(null);
-    const [isSelected, setIsSelected] = useState(true);
+    const [isSelected, setIsSelected] = useState(false);
     const mousePosition = useMousePosition();
     
 
@@ -133,7 +133,9 @@ function CritiquePostForm(){
 
 
     return (
-        <div className="page">
+        <div>
+          <Header/>
+          <div className="page">
             <div className="passage">
                 <h3>Author's Notes</h3>
                 <p>{workshopThread?.post_body}</p>
@@ -152,7 +154,7 @@ function CritiquePostForm(){
                     <textarea type="text" id="opening" onChange={(e)=>(setOpening(e.target.value))}></textarea>
 
                     <label for="body">Main Critique:</label>
-                    <textarea  id="body" onChange={(e)=>{setBody(e.target.value)}} ></textarea>
+                    <textarea  id="body" onChange={(e)=>{setBody(e.target.value)}} required ></textarea>
 
                     <label for="closing">Closing Statements:</label>
                     <textarea  id="closing" onChange={(e)=>{setClosing(e.target.value)}} ></textarea>
@@ -169,6 +171,8 @@ function CritiquePostForm(){
             }
             
         </div>
+        </div>
+       
         
         
     )

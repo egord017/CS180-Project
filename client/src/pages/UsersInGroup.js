@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 function UsersInGroup() {
     const [users, setUsers] = useState([]);
@@ -10,13 +11,7 @@ function UsersInGroup() {
     useEffect(() => {
         async function fetchUsers() {
             try {
-                const response = await fetch('http://localhost:5000/groups/users', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ group_id: group_id }), // Send group_id in the body
-                });
+                const response = await fetch(`http://localhost:5000/groups/${group_id}/users`);
 
                 if (response.ok) {
                     const data = await response.json();
@@ -39,7 +34,9 @@ function UsersInGroup() {
                 {users.length > 0 ? (
                     users.map(user => (
                         <li key={user.id}>
-                            {user.name} ({user.email})
+                        <Link to={`/profile/${user.username}`}>
+                            {user.username}
+                        </Link>
                         </li>
                     ))
                 ) : (

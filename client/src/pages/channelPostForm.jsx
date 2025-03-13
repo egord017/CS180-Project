@@ -13,17 +13,19 @@ import './channelPostForm.css';
 //channel/id/submit ?
 
 
-function ChannelPostForm(){
+function ChannelPostForm({handleCloseChannelModal, setCurrentChannel}){
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const {group_id} = useParams();
 
     const navigate = useNavigate();
-
+    {}
     async function handleSubmit(event){
         console.log(event);
         event.preventDefault();
         try{
+
+
             const res = await fetch("http://localhost:5000/channels", 
                 {
                     method:"POST",
@@ -31,15 +33,17 @@ function ChannelPostForm(){
                     body: JSON.stringify({
                         name:name,
                         description:description,
-                        channel_id:1,
                         group_id:group_id
                     }) //currently using a dummy user_id.                        
                 });
             const data = await res.json();
-
-            console.log(data.thread);
+            
+            console.log(data);
+            setCurrentChannel(data?.id);
+            handleCloseChannelModal();
+            window.location.reload();
             //navigate if successful
-            navigate(`/thread/${data.thread.id}`)
+            //navigate(`/thread/${data.thread.id}`)
 
         }
         catch (err){

@@ -14,12 +14,18 @@ router.post("/register", async (req, res) => {
         const {username, email, password} = req.body;
 
         //check if user already exists
-        const user = await pool.query("SELECT * FROM users WHERE useremail = $1", [
+        const user = await pool.query("SELECT * FROM users WHERE LOWER(useremail) = LOWER($1)", [
             email
         ]);
 
         if(user.rows.length !== 0){
-            return res.status(401).json("User already exists");
+            return res.status(401).json("Email already exists");
+        }
+        const checkDuplicateUsername = await pool.query("SELECT * FROM users WHERE LOWER(username) = LOWER($1)", [
+            username
+        ]);
+        if (checkDuplicateUsername.rows.length !==0){
+            return res.status(401).json("Username is taken");
         }
 
         //encrypt user password

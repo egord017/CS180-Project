@@ -1,206 +1,217 @@
-import React,{Fragment, useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Button from '../components/Button.jsx';
 import './threadPage.css';
 import Header from './Header.js';
 import { Link } from "react-router-dom";
+import * as userClient from "../utils/user";
 
-import {get_groups} from "../api/groupAPI.js"
+function ThreadPage({ setAuth }) {
+  let is_error = false;
+  const navigate = useNavigate();
 
-function ThreadPage({setAuth}){
-    let is_error = false;
-    const navigate = useNavigate();
+  function onCreateCommentPress() {
+    setIsCommenting(true);
+  }
 
-    function onCreateCommentPress(){
-        setIsCommenting(true);
+  async function handleCommentSubmit(event) {
+    event.preventDefault();
+    console.log("HI");
+    try {
+      const res = await fetch("http://localhost:5000/comments", {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          body: reply,
+          thread_id: thread_id,
+          user_id: localStorage.getItem("userID")
+        })
+      });
+      setIsCommenting(false);
+      window.location.reload();
+    } catch (err) {
+      console.error(err);
     }
+  }
 
-    async function handleCommentSubmit(event){
-        //event.preventDefault();
-        console.log("HI");
-        try{
-            const res = await fetch("http://localhost:5000/comments",
-                {
-                    method:"POST",
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        body:reply,
-                        thread_id:thread_id,
-                        user_id:localStorage.getItem("userID")
-                    })
-                }
-            )
-            //const comment = await res.json();
-            //setComments((prev) => [...prev, comment]);
-            setIsCommenting(false);
-        }
-        catch (err){
-            console.error(err);
-        }
+  function backToChannel(channel_id) {
+    if (channel_id) navigate(-1);
+  }
+
+  async function deleteThread(event) {
+    event.preventDefault();
+    const req = await fetch(`http://localhost:5000/threads/${thread_id}`, {
+      method: "DELETE"
+    });
+
+    navigate(`/group/${group?.id}`);
+  }
+
+  async function deleteComment(event, comment_id) {
+    try {
+    event.preventDefault();
+
+      const response = await fetch(`http://localhost:5000/comments/${comment_id}`, {
+        method: "DELETE"
+      });
+      window.location.reload();
+    } catch (err) {
+      console.error(err);
     }
+  }
 
-    function onClickGoHome(){
-        navigate('/');
-    }
-    function backToChannel(channel_id){
-        if (channel_id) navigate(-1);
-    }
+  // Route param: /threads/:thread_id
+  const thread_id = Object.values(useParams())[0];
 
-    //fetch thread object using my url param thread/:thread_id
-    const thread_id = Object.values(useParams())[0];
-    const [thread, setThreadData] = useState(null);
-    const [comments, setComments] = useState([]);
-    const [group, setGroup] = useState(null);
-    const [channel, setChannel] = useState(null);
-    const [isCommenting, setIsCommenting] = useState(false);
-    const [commenters, setCommenters] = useState({}); //map with key being user_id 
-    const [op, setOp] = useState(null);
+  const [thread, setThreadData] = useState(null);
+  const [comments, setComments] = useState([]);
+  const [group, setGroup] = useState(null);
+  const [channel, setChannel] = useState(null);
+  const [isCommenting, setIsCommenting] = useState(false);
+  const [commenters, setCommenters] = useState({});
+  const [op, setOp] = useState(null);
+  const [reply, setReply] = useState("");
 
-    const [reply, setReply] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isThreadOwner, setIsThreadOwner] = useState(false);
 
-    //TODO: the useffects are fucked up, mush into one or something idk.
-    useEffect(()=>{
-        async function fetchThreadAndComments(){
-            try{
-                //fetch threads
-                const thread_obj = await fetch((`http://localhost:5000/threads/${thread_id}`));
-                const thread_data = await thread_obj.json();
-                setThreadData(thread_data);
-                console.log("HreL:");
-                
-                //fetch comments
-                const comments_obj = await fetch((`http://localhost:5000/threads/${thread_id}/comments`));
-                const comments_data = await comments_obj.json();
-                setComments(comments_data);
+  useEffect(() => {
+    async function fetchThreadAndComments() {
+      try {
 
 
-                //USERS
-                //fetch OP
-                const op_resp = await fetch((`http://localhost:5000/profile/${thread_data.user_id}`));
-                const op_data = await op_resp.json();
-                console.log(op_data);
-                setOp(op_data);
-                //fetch channel info
-                //fetch users for each comment.
+        // Fetch thread
+        const thread_obj = await fetch(`http://localhost:5000/threads/${thread_id}`);
+        const thread_data = await thread_obj.json();
+        setThreadData(thread_data);
 
-                const commenters_data = await Promise.all(comments_data.map(async comment => {
-                    const results = await fetch(`http://localhost:5000/profile/${comment.user_id}`)
-                    return await results.json();    
-                }));
+        // Fetch comments
+        const comments_obj = await fetch(`http://localhost:5000/threads/${thread_id}/comments`);
+        const comments_data = await comments_obj.json();
+        setComments(comments_data);
 
-                const users_dict = {};
-                for (const i in commenters_data){
-                    
-                    console.log(commenters_data[i]);
-                    users_dict[commenters_data[i].userid] = commenters_data[i];
-                }
-                console.log(users_dict);
-                setCommenters(users_dict);
-                
-                
-                //fetch channel info
-                const channelObj = await fetch(`http://localhost:5000/channels/${thread_data.channel_id}`);
-                const new_channel = await channelObj.json();
-            
-                //fetch group info
-                const groupObj = await fetch(`http://localhost:5000/groups/${new_channel.group_id}`);
-                setChannel(new_channel);
-                setGroup(await groupObj.json());
-   
-            }
-            catch (err){
-                console.error(err);
-                is_error=true;
-            }
-            
-        }
-        fetchThreadAndComments();
-    }, []); 
+        // Fetch OP (original poster)
+        const op_resp = await fetch(`http://localhost:5000/profile/${thread_data.user_id}`);
+        const op_data = await op_resp.json();
+        setOp(op_data);
+
+        setIsThreadOwner(userClient.isOwnerOfID(op_data?.userid));
         
-   
-    async function deleteThread(){
-        const req = await fetch((`http://localhost:5000/threads/${thread_id[0]}`),
-        {
-            method:"DELETE" 
-        }
+
+        // Fetch channel info
+        const channelObj = await fetch(`http://localhost:5000/channels/${thread_data.channel_id}`);
+        const new_channel = await channelObj.json();
+        setChannel(new_channel);
+
+        // Fetch group info
+        const groupObj = await fetch(`http://localhost:5000/groups/${new_channel.group_id}`);
+        const group_data = await groupObj.json();
+        setGroup(group_data);
+
+        //check ownership
+        setIsAdmin(await userClient.isAdminOfGroup(group_data?.id));
+
+
+        // Fetch each commenter’s profile
+        const commenters_data = await Promise.all(
+          comments_data.map(async (comment) => {
+            const results = await fetch(`http://localhost:5000/profile/${comment.user_id}`);
+            return results.json();
+          })
         );
 
-
-        navigate(-1);
-
-    }
-
-    async function deleteComment(comment_id){
-        try {
-            const response = await fetch((`http://localhost:5000/comments/${comment_id}`),
-                {
-                    method:"DELETE"
-                }
-            );
-
-            window.location.reload();
+        // Create a lookup for user info by user_id
+        const users_dict = {};
+        for (const user of commenters_data) {
+          users_dict[user.userid] = user;
         }
-        catch (err){
-            console.error(err);
-        }
+        setCommenters(users_dict);
+      } catch (err) {
+        console.error(err);
+        is_error = true;
+      }
     }
+    fetchThreadAndComments();
+  }, []);
 
+  if (is_error === true) {
+    return <div>Page not found.</div>;
+  }
 
-    if (is_error==true){
-        return (
-            <div>Page not found.</div>
-        )
-    }
-    //somehow put data into the return ina nice way. maybe ill create a commentssection component and threadview component
-    return (
-        <div><Header setAuth={setAuth}/>
-        <div>
-            <Button className="back-btn" onClick={() => backToChannel(thread?.channel_id)}>Back</Button>
-
-            <Button className="delete-btn" onClick={() => deleteThread()}>
-                Delete Thread
-            </Button>
-
-            <div className = "info-container">
-                <p className="group-name">{group?.name}</p>
-                <p className="channel-name">{channel?.name}</p>
-            </div>
-
-            <div className="op-container">
-            <Link to={`/profile/${op?.username}`} className="op-username"> 
-                {op?.username}
-            </Link>
-                <p className="op-username"></p> 
-                <p className="op-title">{thread?.title}</p>  
-                <p className="op-body">{thread?.body}</p> 
-            </div>
-
-            <button className="reply-button" onClick={() => onCreateCommentPress()}>
-                Reply
-            </button>
-
-            {isCommenting ? 
-                (<form onSubmit={handleCommentSubmit}>
-                    <textarea onChange={(e)=>{setReply(e.target.value)}} name="comment-body" id="comment-body"></textarea>
-                    <button type="submit">Post Comment</button>
-                </form>)
-                :
-                null
-                }
-            
-            <div className="comments-section">
-                <h3>Comments</h3>
-                {comments.map((comment) => (
-                    <div key={comment.id} className="comment-container">
-                        <p className="username">{commenters[comment?.user_id]?.username}</p>
-                        <p className="comment-text">{comment?.body}</p>
-                        <button className="del-btn" onClick={() => deleteComment(comment.id)}>Delete</button>
-                    </div>
-                ))}
-            </div>
+  return (
+    <div>
+      <Header setAuth={setAuth} />
+        
+      <div>
+        <Button className="back-btn" onClick={() => backToChannel(thread?.channel_id)}>
+          Back
+        </Button>
+      {(isAdmin || isThreadOwner)&&
+      <Button className="delete-btn" onClick={(event) => deleteThread(event)}>
+      Delete Thread
+    </Button>
+      
+      }
+        
+        
+        
+        <div className="info-container">
+          <p className="group-name">{group?.name}</p>
+          <p className="channel-name">{channel?.name}</p>
         </div>
+
+        <div className="op-container">
+          <p className="op-username"></p>
+          <p className="op-title">{thread?.title}</p>
+          <Link to={`/profile/${op?.username}`} className="op-username">
+             {op?.username}
+          </Link>
+          <p className="op-body">{thread?.body}</p>
+
+          <button className="reply-button" onClick={onCreateCommentPress}>
+            Reply
+          </button>
         </div>
-    );
+
+        {isCommenting ? (
+          <form onSubmit={handleCommentSubmit}>
+            <textarea
+              onChange={(e) => {
+                setReply(e.target.value);
+              }}
+              name="comment-body"
+              id="comment-body"
+            ></textarea>
+            <button type="submit">Post Comment</button>
+          </form>
+        ) : null}
+
+        <div className="comments-section">
+          <h3>Comments</h3>
+          {comments.map((comment) => (
+            <div key={comment.id} className="comment-container">
+              {/* 
+                Wrap the username & text in a 'comment-content' div 
+                so the delete button can flex to the right 
+              */}
+              <div className="comment-content">
+                <Link to={`/profile/${commenters[comment?.user_id]?.username}`} className="username">
+                    {commenters[comment?.user_id]?.username}
+                </Link>
+                <p className="comment-text">{comment?.body}</p>
+              </div>
+              {(isAdmin || userClient.isOwnerOfID(comment?.user_id)) && <button className="del-btn" onClick={(e) => deleteComment(e,comment.id)}>
+                Delete
+              </button>}
+              
+            </div>
+          ))}
+        </div>
+        
+      </div>
+      
+    </div>
+  );
 }
 
 export default ThreadPage;

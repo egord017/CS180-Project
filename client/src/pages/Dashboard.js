@@ -77,8 +77,8 @@ const Dashboard = ({setAuth}) => {
     }
 
     async function getGroups() {
-        const userGroups = await getUserGroups();
-        setGroups(userGroups.userGroups.rows)
+        const data = await getUserGroups();
+        setGroups(data.userGroups.rows);
     }
 
     const LIMIT = 20;

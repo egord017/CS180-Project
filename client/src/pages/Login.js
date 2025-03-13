@@ -9,7 +9,7 @@ import Container from '@mui/material/Container';
 import Header from "./Header";
 
 const Login = ({setAuth}) => {
-
+    const [loginIsInvalid, setLoginIsInvalid] = useState(false);
     const [inputs, setInputs] = useState({
         email: "",
         password: ""
@@ -36,18 +36,20 @@ const Login = ({setAuth}) => {
 
             const parseResponse = await response.json();
 
-            //console.log(parseResponse);
+            
 
             if(parseResponse.token){
                 localStorage.setItem("token", parseResponse.token);
                 setAuth(true);
             }
             else{
+                setLoginIsInvalid(true);
                 setAuth(false);
             }
 
         } catch (err) {
             console.log(err.message);
+          
         }
     }
 
@@ -60,11 +62,14 @@ const Login = ({setAuth}) => {
             <h1 id = "login-header">Log In</h1>
             <form onSubmit = {onSubmitForm}>
             <h2>EMAIL</h2>
-                <input type="email" name ="email" placeholder= "" className="form-control my-3" value={email} onChange={e => onChange(e)}/>
+                <input type="email" name ="email" placeholder= "" className="form-control my-3" value={email} onChange={e => onChange(e)} required/>
             <h2>PASSWORD</h2>
-                <input type="password" name ="password" placeholder= "" className="form-control my-3" value={password} onChange={e => onChange(e)}/>
+                <input type="password" name ="password" placeholder= "" className="form-control my-3" value={password} onChange={e => onChange(e)} required/>
+                {loginIsInvalid && <p class="error-message">Invalid email or password.</p>}
+                
                 <button className= "btn btn-success w-100"><h2>SUBMIT</h2></button>
             </form>
+            
 
           
             

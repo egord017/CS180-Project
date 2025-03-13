@@ -16,14 +16,14 @@ async function get_threads_from_channel(req, res){
 
 async function post_channel(req, res){
     const {group_id, name, description} = req.body;
-
-    if (!group_id || !name || !description) {
+    
+    if (!group_id || !name) {
         return res.status(400).json({
             error: "payload is malformed, should be : 'group_id', 'name', 'description'."
         });
     }
     const results = await channels_db.post_channel(group_id, name, description);
-    console.log(results);
+    
     res.send(results);
 }
 

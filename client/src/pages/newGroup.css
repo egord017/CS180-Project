@@ -7,6 +7,9 @@
 }
 
 
+.group-form {
+    margin-top:12px;
+}
  
 #groupname {
     width: 730px;
@@ -46,6 +49,7 @@ select {
 
 .firstline-container {
     display: flex;
+    align-items: center;
     column-gap: 47px;
     margin-top: 50px;
    
@@ -73,12 +77,11 @@ select {
    
     color: black;
     border: none;
-    background-color: white;
+    /* background-color: w; */
     cursor: pointer;
-    position: fixed;
+    
     width: 48px;
     height: 48px;
-    top: 0;
-    right: 0;
+    
     font-size: 20px;
 }

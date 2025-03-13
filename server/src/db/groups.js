@@ -18,7 +18,7 @@ async function get_group(group_id){
 
 async function get_users_group(group_id){
     try {
-        const users = await pool.query("SELECT users.username FROM users JOIN user_groups on users.userid = user_groups.user_id WHERE user_groups.group_id = $1", 
+        const users = await pool.query("SELECT users.username FROM users JOIN users_groups on users.userid = users_groups.user_id WHERE users_groups.group_id = $1", 
             [group_id]);
 
         return users.rows;
@@ -133,7 +133,7 @@ async function leave_group(params){
         const {group_id, user_id} = params;
 
         //check if user is in group
-        const leaveGroup = await pool.query("DELETE FROM user_groups WHERE group_id = $1 AND user_id = $2 RETURNING *", [group_id, user_id]);
+        const leaveGroup = await pool.query("DELETE FROM users_groups WHERE group_id = $1 AND user_id = $2 RETURNING *", [group_id, user_id]);
         if(leaveGroup.rowCount === 0){
             return "not-in-group";
         }

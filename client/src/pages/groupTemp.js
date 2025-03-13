@@ -7,12 +7,13 @@ import ChannelOverview from './ChannelOverview';
 import CreatePost from './CreatePost';  // Import CreatePost
 import { Box, Tabs, Tab } from '@mui/material';
 import * as userClient from "../utils/user";
-
+import { joinGroup, leaveGroup } from "../api/groupAPI";
+import WorkshopOverview from './WorkshopOverview';
 import './GroupPage.css';
 import UsersInGroup from './UsersInGroup';
 import Settings from './Settings';
 
-function GroupPageTemp() {
+function GroupPageTemp({setAuth}) {
     const [group, setGroup] = useState(null);
     const [channels, setChannels] = useState([]);
     const [threads, setThreads] = useState({});
@@ -20,13 +21,40 @@ function GroupPageTemp() {
     const { group_id } = useParams();
 
     const [isMember, setIsMember] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
     const navigate = useNavigate();
+
+    const handleJoinClick = async (e)=> {
+        e.preventDefault();
+        console.log(userClient.getUserID(), group?.id);
+        joinGroup(group?.id, userClient.getUserID())
+        window.location.reload()
+    }
+    const handleLeaveClick = async (e)=> {
+        e.preventDefault();
+
+        console.log(userClient.getUserID(), group?.id);
+        leaveGroup(group?.id, userClient.getUserID())
+        window.location.reload()
+    }
+    const [hasTitle, setHasTitle] = useState(true)
+
+    const checkMemberPerms = async () => {
+        const status = await userClient.isAdminOfGroup(group_id);
+        console.log("Admin Status:", status);
+        setIsAdmin(status);
+    }
 
     const handlePostClick = async (body, postTitle, curr_channel) => {
         
-        if (!postTitle) return; // Stop if no title is entered
+        if (!postTitle) {
+                setHasTitle(false);
+                return;
+        } // Stop if no title is entered
+        setHasTitle(true);
 
         try {
+            const ID = localStorage.getItem('userID');
             const res = await fetch(`http://localhost:5000/threads`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -34,7 +62,7 @@ function GroupPageTemp() {
                     title: postTitle,
                     body: body,
                     channel_id: curr_channel, 
-                    user_id: '9a80cfb3-5535-4889-8fca-b213ae3607ba' // Dummy user_id
+                    user_id: ID //'6e426c4e-c39f-4f5b-b235-7e471a1f7d46'
                 })
             });
             console.log("attempting to post: ", postTitle);
@@ -80,7 +108,10 @@ function GroupPageTemp() {
             }
         }
         fetchGroupData();
+        checkMemberPerms();
     }, [group_id]);
+
+
 
     const [value, setValue] = useState(0);
 
@@ -95,7 +126,7 @@ function GroupPageTemp() {
 
     return (
         <div className='group-page-container'>
-            <Header />
+            <Header setAuth = {setAuth}/>
             
             <div className='group-page-header'>
                 <img
@@ -111,8 +142,7 @@ function GroupPageTemp() {
                     <div className='green-line'></div>
                     <div className = "header-button-group">
                     <Button onClick={() => goToWorkshop(group_id)}> Workshop </Button>
-                    <Button> Join Group </Button>
-                        <Button> Leave Group </Button>
+                    {isMember ? <button onClick={handleLeaveClick}>Leave</button> : <button onClick={handleJoinClick}>Join</button>}
                      </div>
                     <h2 id="description">{group?.description}</h2>
                     
@@ -128,22 +158,26 @@ function GroupPageTemp() {
                         className="tabs"
                     >
                         <Tab label="Channels" />
+                        <Tab label="Workshops" />
                         <Tab label="Group Members" />
-                        <Tab label="Settings" />
+                        {isAdmin && <Tab label="Settings" />}
                     </Tabs>
                 </Box>
             </div>
 
             <div className='pannel-containers'>
                 <div className='left-pannel'>
-                    {value === 0 && <CreatePost handlePostClick={handlePostClick} curr_channel={currentChannel} />}
+                    
+                    {value === 0 && <CreatePost handlePostClick={handlePostClick} curr_channel={currentChannel} hasTitle={hasTitle}/>}
+                    
                 </div>
 
                 <div className='right-pannel'>
                     <Box className="tab-content">
                         {value === 0 && <div><ChannelOverview currentChannel={currentChannel} setCurrentChannel={setCurrentChannel} /> </div>}
-                        {value === 1 && <div><UsersInGroup/></div>}
-                        {value === 2 && <div><Settings/></div>}
+                        {value === 1 && <div><WorkshopOverview/></div>}
+                        {value === 2 && <div><UsersInGroup/></div>}
+                        {value === 3 && <div><Settings/></div>}
                     </Box>
                 </div>
             </div>

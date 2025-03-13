@@ -51,7 +51,7 @@ CREATE TABLE channels (
     id SERIAL PRIMARY KEY,
     group_id INTEGER,
     name TEXT NOT NULL,
-    description TEXT NOT NULL,
+    description TEXT,
     FOREIGN KEY (group_id) REFERENCES groups(id) ON DELETE CASCADE
 );
 
@@ -105,7 +105,7 @@ CREATE TABLE freeform_critiques (
 
 
 CREATE TABLE comments (
-    -- id SERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     user_id uuid,
     thread_id INTEGER,
     body TEXT,
@@ -187,7 +187,7 @@ VALUES (2, (SELECT userID FROM users WHERE userName = 'faye'), 2);
 
 -- BOB'S GROUPS
 INSERT INTO users_groups (group_id, user_id, role_id) 
-VALUES (1, (SELECT userID FROM users WHERE userName = 'bob'), 0);
+VALUES (1, (SELECT userID FROM users WHERE userName = 'bob'), 1);
 INSERT INTO users_groups (group_id, user_id, role_id) 
 VALUES (2, (SELECT userID FROM users WHERE userName = 'bob'), 1);
 

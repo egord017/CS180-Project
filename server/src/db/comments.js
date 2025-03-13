@@ -28,8 +28,10 @@ async function patch_comment(id, body){
 
 async function delete_comment(id){
     try{
+        console.log("Id to delete", id)
         const query = "DELETE FROM comments WHERE id=$1 RETURNING *";
         const result = await pool.query(query, id);
+        console.log(result.rows);
         return result.rows;
     }
     catch (err){
