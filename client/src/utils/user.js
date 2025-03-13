@@ -6,10 +6,7 @@ export async function isAdminOfGroup(group_id){
     //gotta fetch lol
     const user_id = localStorage.getItem('userID');
     const results = await fetch(`http://localhost:5000/usersgroups/${group_id}/get-member?user_id=${user_id}`);
-        //method: "GET",
-        //headers: {"Content-Type": "application/json"},
     const data = await results.json();
-    console.log("Results: ", data.role_id);
 
     if (data.role_id === 1){
         return true;
@@ -43,7 +40,11 @@ export async function isMemberOfGroup(group_id){
 //returns true if user_id matches the given id. 
 export function isOwnerOfID(id){
     const user_id = localStorage.getItem('userID');
-    return (user_id==id);
+    if (user_id === id){
+        return true;
+    } else {
+        return false;
+    };
 }
 
 export function getUserID(){

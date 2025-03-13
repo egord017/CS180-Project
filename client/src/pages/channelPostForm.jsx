@@ -31,7 +31,6 @@ function ChannelPostForm(){
                     body: JSON.stringify({
                         name:name,
                         description:description,
-                        channel_id:1,
                         group_id:group_id
                     }) //currently using a dummy user_id.                        
                 });

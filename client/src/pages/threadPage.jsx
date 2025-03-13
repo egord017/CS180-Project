@@ -4,6 +4,7 @@ import Button from '../components/Button.jsx';
 import './threadPage.css';
 import Header from './Header.js';
 import { Link } from "react-router-dom";
+import * as userClient from "../utils/user";
 
 import {get_groups} from "../api/groupAPI.js"
 
@@ -55,8 +56,14 @@ function ThreadPage({setAuth}){
     const [isCommenting, setIsCommenting] = useState(false);
     const [commenters, setCommenters] = useState({}); //map with key being user_id 
     const [op, setOp] = useState(null);
-
     const [reply, setReply] = useState("");
+
+
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [isThreadOwner, setIsThreadOwner] = useState(false);
+    const [canDeleteThread, setCanDeleteThread] = useState(false);
+
+
 
     //TODO: the useffects are fucked up, mush into one or something idk.
     useEffect(()=>{
@@ -66,7 +73,7 @@ function ThreadPage({setAuth}){
                 const thread_obj = await fetch((`http://localhost:5000/threads/${thread_id}`));
                 const thread_data = await thread_obj.json();
                 setThreadData(thread_data);
-                console.log("HreL:");
+                //console.log("HreL:");
                 
                 //fetch comments
                 const comments_obj = await fetch((`http://localhost:5000/threads/${thread_id}/comments`));
@@ -78,7 +85,7 @@ function ThreadPage({setAuth}){
                 //fetch OP
                 const op_resp = await fetch((`http://localhost:5000/profile/${thread_data.user_id}`));
                 const op_data = await op_resp.json();
-                console.log(op_data);
+                //console.log(op_data);
                 setOp(op_data);
                 //fetch channel info
                 //fetch users for each comment.
@@ -94,7 +101,7 @@ function ThreadPage({setAuth}){
                     console.log(commenters_data[i]);
                     users_dict[commenters_data[i].userid] = commenters_data[i];
                 }
-                console.log(users_dict);
+                //console.log(users_dict);
                 setCommenters(users_dict);
                 
                 
@@ -106,6 +113,7 @@ function ThreadPage({setAuth}){
                 const groupObj = await fetch(`http://localhost:5000/groups/${new_channel.group_id}`);
                 setChannel(new_channel);
                 setGroup(await groupObj.json());
+
    
             }
             catch (err){
@@ -115,8 +123,46 @@ function ThreadPage({setAuth}){
             
         }
         fetchThreadAndComments();
+        
+        
     }, []); 
         
+
+    useEffect(() => {
+        const checkIfAdmin = async () => {
+            if (group) {
+                const status = await userClient.isAdminOfGroup(group.id);
+                console.log("Admin Status:", status);
+                setIsAdmin(status);
+            }
+        };
+    
+        checkIfAdmin();
+    }, [group]);
+    
+    useEffect(() => {
+        const checkIfThreadOwner = async () => {
+            if (op) {
+                const isOwner = userClient.isOwnerOfID(op.userid);
+                console.log("Thread Owner Status:", isOwner);
+                setIsThreadOwner(isOwner);
+            }
+        };
+    
+        checkIfThreadOwner();
+    }, [op]);
+
+    useEffect(() => {
+        const canDeleteThread = async () => {
+            if(isAdmin || isThreadOwner){
+                const canDelete = true;
+                console.log("Can Delete: ", canDelete);
+                setCanDeleteThread(canDelete);
+            }
+        }
+    
+        canDeleteThread();
+    });
    
     async function deleteThread(){
         const req = await fetch((`http://localhost:5000/threads/${thread_id[0]}`),
@@ -157,9 +203,12 @@ function ThreadPage({setAuth}){
         <div>
             <Button className="back-btn" onClick={() => backToChannel(thread?.channel_id)}>Back</Button>
 
-            <Button className="delete-btn" onClick={() => deleteThread()}>
+            {canDeleteThread && (
+            <Button className="delete-btn" onClick={deleteThread}>
                 Delete Thread
             </Button>
+            )}
+
 
             <div className = "info-container">
                 <p className="group-name">{group?.name}</p>

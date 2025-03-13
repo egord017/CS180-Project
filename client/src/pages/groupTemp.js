@@ -46,6 +46,7 @@ function GroupPageTemp() {
         if (!postTitle) return; // Stop if no title is entered
 
         try {
+            const ID = localStorage.getItem('userID');
             const res = await fetch(`http://localhost:5000/threads`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -53,7 +54,7 @@ function GroupPageTemp() {
                     title: postTitle,
                     body: body,
                     channel_id: curr_channel, 
-                    user_id: '9a80cfb3-5535-4889-8fca-b213ae3607ba' // Dummy user_id
+                    user_id: ID //'6e426c4e-c39f-4f5b-b235-7e471a1f7d46'
                 })
             });
             console.log("attempting to post: ", postTitle);
