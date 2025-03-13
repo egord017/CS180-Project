@@ -1,8 +1,8 @@
 import {useState} from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Header from './Header';
-//title
-//body
+//title : 
+//body : 
 //user_id (supplied innately)
 //channel_id (should be supplied ...in URL?)
 //channel/id/submit ?
@@ -59,20 +59,20 @@ function WorkshopThreadPostForm(){
         
         <form onSubmit={handleSubmit}>
             <label for="title" require="true">Title :</label>
-            <input type="text" id="title" onChange={(e)=>(setTitle(e.target.value))}></input>
+            <input type="text" id="title" onChange={(e)=>(setTitle(e.target.value))} required></input>
 
             <label for="context">
                 Context For Work:
                 <p>Any context needed going into the passage/chapter. Historical facts/information from previous chapters, etc</p>
             </label>
-            <textarea  id="context" onChange={(e)=>{setContext(e.target.value)}} ></textarea>
+            <textarea  id="context" onChange={(e)=>{setContext(e.target.value)}}></textarea>
 
             <label for="preference">Critique Guidance:</label>
-            <textarea  id="preference" onChange={(e)=>{setPreference(e.target.value)}} ></textarea>
+            <textarea  id="preference" onChange={(e)=>{setPreference(e.target.value)}}></textarea>
             <label for="post_body">Post Body/Author's Notes:</label>
             <textarea  id="post_body" onChange={(e)=>{setPostBody(e.target.value)}} ></textarea>
             <label for="passage_body">Your Work/Passage:</label>
-            <textarea  id="passage_body" onChange={(e)=>{setPassageBody(e.target.value)}} ></textarea>
+            <textarea  id="passage_body" onChange={(e)=>{setPassageBody(e.target.value)}} required></textarea>
 
             
             <button type="submit">Post Thread</button>

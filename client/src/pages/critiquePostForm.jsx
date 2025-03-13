@@ -18,7 +18,7 @@ function CritiquePostForm(){
     const [workshopThread, setWorkshopThread] = useState("");
     const {workshop_thread_id} = useParams();
     const [selection, setSelection] = useState(null);
-    const [isSelected, setIsSelected] = useState(true);
+    const [isSelected, setIsSelected] = useState(false);
     const mousePosition = useMousePosition();
     
 
@@ -154,7 +154,7 @@ function CritiquePostForm(){
                     <textarea type="text" id="opening" onChange={(e)=>(setOpening(e.target.value))}></textarea>
 
                     <label for="body">Main Critique:</label>
-                    <textarea  id="body" onChange={(e)=>{setBody(e.target.value)}} ></textarea>
+                    <textarea  id="body" onChange={(e)=>{setBody(e.target.value)}} required ></textarea>
 
                     <label for="closing">Closing Statements:</label>
                     <textarea  id="closing" onChange={(e)=>{setClosing(e.target.value)}} ></textarea>

@@ -49,10 +49,10 @@ function ChannelPostForm(){
             <div>Create New Workshop Channel</div>
             <form onSubmit={handleSubmit}>
                 <label for="channel_name" require="true">Workshop Name* :</label>
-                <input type="text" id="channel_name" onChange={(e)=>(setName(e.target.value))}></input>
+                <input type="text" id="channel_name" onChange={(e)=>(setName(e.target.value))} required></input>
 
                 <label for="description">Workshop Description:</label>
-                <textarea  id="description" onChange={(e)=>{setDescription(e.target.value)}} ></textarea>
+                <textarea  id="description" onChange={(e)=>{setDescription(e.target.value)}} required></textarea>
 
                 <button type="submit">Create Workshop</button>
             </form>

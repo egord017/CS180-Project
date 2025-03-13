@@ -24,12 +24,15 @@ function GroupPageTemp({setAuth}) {
     const [isAdmin, setIsAdmin] = useState(false);
     const navigate = useNavigate();
 
-    const handleJoinClick = async ()=> {
+    const handleJoinClick = async (e)=> {
+        e.preventDefault();
         console.log(userClient.getUserID(), group?.id);
         joinGroup(group?.id, userClient.getUserID())
         window.location.reload()
     }
-    const handleLeaveClick = async ()=> {
+    const handleLeaveClick = async (e)=> {
+        e.preventDefault();
+
         console.log(userClient.getUserID(), group?.id);
         leaveGroup(group?.id, userClient.getUserID())
         window.location.reload()

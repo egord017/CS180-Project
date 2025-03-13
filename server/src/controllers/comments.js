@@ -8,6 +8,7 @@ async function post_comment(req, res){
             error: "payload is malformed, should be : 'thread_id', 'user_id', 'body'."
         });
     }
+    console.log(body, thread_id, user_id);
     const results = await comments_db.post_comment(thread_id, user_id, body);
     res.send(results);
 }

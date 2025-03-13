@@ -15,7 +15,7 @@ function ThreadPage({ setAuth }) {
   }
 
   async function handleCommentSubmit(event) {
-    // event.preventDefault();
+    event.preventDefault();
     console.log("HI");
     try {
       const res = await fetch("http://localhost:5000/comments", {
@@ -28,6 +28,7 @@ function ThreadPage({ setAuth }) {
         })
       });
       setIsCommenting(false);
+      window.location.reload();
     } catch (err) {
       console.error(err);
     }
@@ -37,15 +38,19 @@ function ThreadPage({ setAuth }) {
     if (channel_id) navigate(-1);
   }
 
-  async function deleteThread() {
-    const req = await fetch(`http://localhost:5000/threads/${thread_id[0]}`, {
+  async function deleteThread(event) {
+    event.preventDefault();
+    const req = await fetch(`http://localhost:5000/threads/${thread_id}`, {
       method: "DELETE"
     });
-    navigate(-1);
+
+    navigate(`/group/${group?.id}`);
   }
 
-  async function deleteComment(comment_id) {
+  async function deleteComment(event, comment_id) {
     try {
+    event.preventDefault();
+
       const response = await fetch(`http://localhost:5000/comments/${comment_id}`, {
         method: "DELETE"
       });
@@ -67,9 +72,14 @@ function ThreadPage({ setAuth }) {
   const [op, setOp] = useState(null);
   const [reply, setReply] = useState("");
 
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isThreadOwner, setIsThreadOwner] = useState(false);
+
   useEffect(() => {
     async function fetchThreadAndComments() {
       try {
+
+
         // Fetch thread
         const thread_obj = await fetch(`http://localhost:5000/threads/${thread_id}`);
         const thread_data = await thread_obj.json();
@@ -85,6 +95,9 @@ function ThreadPage({ setAuth }) {
         const op_data = await op_resp.json();
         setOp(op_data);
 
+        setIsThreadOwner(userClient.isOwnerOfID(op_data?.userid));
+        
+
         // Fetch channel info
         const channelObj = await fetch(`http://localhost:5000/channels/${thread_data.channel_id}`);
         const new_channel = await channelObj.json();
@@ -92,7 +105,12 @@ function ThreadPage({ setAuth }) {
 
         // Fetch group info
         const groupObj = await fetch(`http://localhost:5000/groups/${new_channel.group_id}`);
-        setGroup(await groupObj.json());
+        const group_data = await groupObj.json();
+        setGroup(group_data);
+
+        //check ownership
+        setIsAdmin(await userClient.isAdminOfGroup(group_data?.id));
+
 
         // Fetch each commenter’s profile
         const commenters_data = await Promise.all(
@@ -128,10 +146,13 @@ function ThreadPage({ setAuth }) {
         <Button className="back-btn" onClick={() => backToChannel(thread?.channel_id)}>
           Back
         </Button>
-
-        <Button className="delete-btn" onClick={() => deleteThread()}>
-          Delete Thread
-        </Button>
+      {(isAdmin || isThreadOwner)&&
+      <Button className="delete-btn" onClick={(event) => deleteThread(event)}>
+      Delete Thread
+    </Button>
+      
+      }
+        
         
         
         <div className="info-container">
@@ -179,9 +200,10 @@ function ThreadPage({ setAuth }) {
                 </Link>
                 <p className="comment-text">{comment?.body}</p>
               </div>
-              <button className="del-btn" onClick={() => deleteComment(comment.id)}>
+              {(isAdmin || userClient.isOwnerOfID(comment?.user_id)) && <button className="del-btn" onClick={(e) => deleteComment(e,comment.id)}>
                 Delete
-              </button>
+              </button>}
+              
             </div>
           ))}
         </div>
