@@ -10,14 +10,16 @@ function UsersInGroup() {
     useEffect(() => {
         async function fetchUsers() {
             try {
-                const response = await fetch('http://localhost:5000/groups/users', {
-                    method: 'POST',
+                const response = await fetch(`http://localhost:5000/${group_id}/users`, {
+                    method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ group_id: group_id }), // Send group_id in the body
                 });
-
+                
+                console.log(group_id);
+                console.log(response);
+                
                 if (response.ok) {
                     const data = await response.json();
                     setUsers(data);
