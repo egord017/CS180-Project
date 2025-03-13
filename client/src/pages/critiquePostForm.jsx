@@ -135,7 +135,7 @@ function CritiquePostForm(){
     return (
         <div>
           <Header/>
-          <div className="page">
+          <div className="page-critique">
             <div className="passage">
                 <h3>Author's Notes</h3>
                 <p>{workshopThread?.post_body}</p>
@@ -146,7 +146,7 @@ function CritiquePostForm(){
 
             </div>
             
-            <div className="right-container">
+            <div className="right-container-critique">
                 <h3>Critique Preference</h3>
                 <p>{workshopThread?.preference}</p>
                 <form onSubmit={handleSubmit}>

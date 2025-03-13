@@ -1,4 +1,4 @@
-.page {
+.page-critique {
     display:flex;
     justify-content:center;
     width: 100%;
@@ -6,10 +6,10 @@
     padding:3rem;
 
 }
-.right-container {
+.right-container-critique {
     flex:1;
 }
-.passage {
+.page-critique > .passage {
     flex:1;
 }
 .strikethrough {
