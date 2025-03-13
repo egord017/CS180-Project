@@ -133,7 +133,7 @@ async function leave_group(params){
         const {group_id, user_id} = params;
 
         //check if user is in group
-        const leaveGroup = await pool.query("DELETE FROM user_groups WHERE group_id = $1 AND user_id = $2 RETURNING *", [group_id, user_id]);
+        const leaveGroup = await pool.query("DELETE FROM users_groups WHERE group_id = $1 AND user_id = $2 RETURNING *", [group_id, user_id]);
         if(leaveGroup.rowCount === 0){
             return "not-in-group";
         }
