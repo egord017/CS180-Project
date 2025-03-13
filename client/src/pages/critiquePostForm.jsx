@@ -2,7 +2,7 @@ import {createElement, useEffect, useState} from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import useMousePosition from '../hooks/useMousePosition';
 import './critiquePostForm.css';
-
+import Header from './Header.js';
 import {strike, mark} from "../utils/markup.js";
 //title
 //body
@@ -133,7 +133,9 @@ function CritiquePostForm(){
 
 
     return (
-        <div className="page">
+        <div>
+          <Header/>
+          <div className="page">
             <div className="passage">
                 <h3>Author's Notes</h3>
                 <p>{workshopThread?.post_body}</p>
@@ -169,6 +171,8 @@ function CritiquePostForm(){
             }
             
         </div>
+        </div>
+       
         
         
     )
