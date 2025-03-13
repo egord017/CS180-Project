@@ -56,7 +56,7 @@ function FollowersPage({setAuth}) {
                 {following?.map((follower)=>(
             
                     <div className="followers-list-container">
-                        <div>{follower?.username}</div>
+                        <li>{follower?.username}</li>
                     </div>
 
                 ))
@@ -70,7 +70,7 @@ function FollowersPage({setAuth}) {
             (<><div className="followers-title"><h1>Followers</h1></div>
             {followers?.map((follower)=>(
                 <div className="followers-list-container">
-                    <div>{follower?.username}</div>
+                    <li>{follower?.username}</li>
                 </div>
                 
             ))}</>)

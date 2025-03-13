@@ -137,7 +137,7 @@ const Dashboard = ({setAuth}) => {
     return (
         <Fragment>
             <Header setAuth={setAuth}/>
-            <h1 className="mt-5">{name}'s Dashboard</h1>
+            <div className="dashboard-name"><h1>{name}'s Dashboard</h1></div>
     
             {/* Main Container for Side-by-Side Layout */}
             <div className="dashboard-container">

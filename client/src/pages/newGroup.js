@@ -89,7 +89,6 @@ function NewGroup({setAuth}) {
 //  <Header setAuth={setAuth}/>
         <div className="new-group-page">
             
-            <button onClick={handleExit} id="exit">X</button> 
               
             <div className="group-form">
            
@@ -118,7 +117,7 @@ function NewGroup({setAuth}) {
                     </div>
                     
 
-                    <button id="submit" type="submit">✓</button>
+                    <button id="submit-group" type="submit">✓</button>
 
                 </div>
 

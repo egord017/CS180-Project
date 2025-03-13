@@ -50,34 +50,34 @@ select {
 .firstline-container {
     display: flex;
     align-items: center;
-    column-gap: 47px;
+    column-gap: 90px;
     margin-top: 50px;
+
    
 }
 
-#exit {
 
+#submit-group {
+   
     color: black;
     border: none;
+    background-color: #A4B5A0;
     cursor: pointer;
-    background-color: white;
-    position: fixed;
-    top: 0;
-    left: 0;
+    
     width: 48px;
     height: 48px;
+    
     font-size: 20px;
-  
+    
 
-
-
+    
 }
 
-#submit {
+#submit-group:hover {
    
     color: black;
     border: none;
-    /* background-color: w; */
+    background-color: #4A7C25;
     cursor: pointer;
     
     width: 48px;
