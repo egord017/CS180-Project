@@ -178,7 +178,7 @@ function ThreadPage({setAuth}){
 
     async function deleteComment(comment_id){
         try {
-            const response = await fetch((`http://localhost:5000/comments/${comment_id}`),
+            const response = await fetch((`http://localhost:5000/comments/${comment_id}/delete`),
                 {
                     method:"DELETE"
                 }
@@ -243,7 +243,11 @@ function ThreadPage({setAuth}){
                     <div key={comment.id} className="comment-container">
                         <p className="username">{commenters[comment?.user_id]?.username}</p>
                         <p className="comment-text">{comment?.body}</p>
-                        <button className="del-btn" onClick={() => deleteComment(comment.id)}>Delete</button>
+                        {(localStorage.getItem("userID") === comment.user_id.toString() || isAdmin) && (
+                            <button className="del-btn" onClick={() => deleteComment(comment.id)}>
+                                Delete
+                            </button>
+                        )}
                     </div>
                 ))}
             </div>

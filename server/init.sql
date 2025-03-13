@@ -105,7 +105,7 @@ CREATE TABLE freeform_critiques (
 
 
 CREATE TABLE comments (
-    -- id SERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     user_id uuid,
     thread_id INTEGER,
     body TEXT,
