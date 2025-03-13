@@ -2,73 +2,68 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Button from '../components/Button';
 import './threadPage.css';
+import Header from './Header';
+import ChannelOverview from './ChannelOverview';
+import CreatePost from './CreatePost';  // Import CreatePost
+import { Box, Tabs, Tab } from '@mui/material';
+import * as userClient from "../utils/user";
+import { joinGroup, leaveGroup } from "../api/groupAPI";
 
-// import "./groups.css"; // Import the CSS file
-
-// function Groups() {
-//   const [groupsData, setGroupsData] = useState([]);
-
-//   useEffect(() => {
-//     const getGroups = async () => {
-//     const response = await fetch("http://localhost:5000/groups");
-//     if (!response.ok) {
-//         throw new Error("Failed to fetch groups");
-//     }
-//     const data = await response.json();
-//     setGroupsData(data); 
-//     };
-
-//     getGroups();
-//   }, []);
-
-//   return (
-//     <div className="groups-container">
-//       <div className="groups-header">
-//         <h1>Join A Group</h1>
-//         <button className="groups-add-button">
-//           <span>+</span>
-//         </button>
-//       </div>
-//       <div className="groups-grid">
-//         {groupsData.length > 0 ? (
-//           groupsData.map((group) => (
-//             <div className="group-card" key={group.id}>
-//               <div className="group-card-top"></div>
-//               <div className="group-card-body">
-//                 <p className="group-category">{group.category || "No Category"}</p>
-//                 <h2 className="group-title">{group.name}</h2>
-//                 <p className="group-subtitle">{group.description}</p>
-//               </div>
-//             </div>
-//           ))
-//         ) : (
-//           <p>Loading groups...</p>
-//         )}
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default Groups;
+import './GroupPage.css';
+import UsersInGroup from './UsersInGroup';
+import Settings from './Settings';
 
 function GroupPageTemp() {
     const [group, setGroup] = useState(null);
     const [channels, setChannels] = useState([]);
     const [threads, setThreads] = useState({});
+    const [currentChannel, setCurrentChannel] = useState(null); //TODO: instead of 1, get first ID
     const { group_id } = useParams();
+
+    const [isMember, setIsMember] = useState(false);
     const navigate = useNavigate();
 
-    function visitChannel(channel_id) {
-        navigate(`/channel/${channel_id}`);
+    const handleJoinClick = async ()=> {
+        console.log(userClient.getUserID(), group?.id);
+        joinGroup(group?.id, userClient.getUserID())
+        window.location.reload()
     }
-    function visitChannelForm(){
-        navigate('submit')
+    const handleLeaveClick = async ()=> {
+        console.log(userClient.getUserID(), group?.id);
+        leaveGroup(group?.id, userClient.getUserID())
+        window.location.reload()
     }
+
+    const handlePostClick = async (body, postTitle, curr_channel) => {
+        
+        if (!postTitle) return; // Stop if no title is entered
+
+        try {
+            const res = await fetch(`http://localhost:5000/threads`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    title: postTitle,
+                    body: body,
+                    channel_id: curr_channel, 
+                    user_id: '9a80cfb3-5535-4889-8fca-b213ae3607ba' // Dummy user_id
+                })
+            });
+            console.log("attempting to post: ", postTitle);
+            const data = await res.json();
+            // navigate(`/thread/${data.thread.id}`);
+        } catch (err) {
+            console.error('Error posting thread:', err);
+        }
+    };
 
     useEffect(() => {
         async function fetchGroupData() {
+            //check membership
+            setIsMember(await userClient.isMemberOfGroup(group_id));
+        
+
             try {
-                //fetch and wait for both fetches to finish...
                 const [group_obj, channels_obj] = await Promise.all([
                     fetch(`http://localhost:5000/groups/${group_id}`),
                     fetch(`http://localhost:5000/groups/${group_id}/channels`),
@@ -79,12 +74,11 @@ function GroupPageTemp() {
 
                 setGroup(group_data);
                 setChannels(channels_data);
+                setCurrentChannel(channels_data[0].id);
 
-            //craete promise.all to fetch multiple req??
-            //for each channel grab all threads here. wait for all threads to return.
                 const threads_data = await Promise.all(channels_data.map(async channel => {
                     const results = await fetch(`http://localhost:5000/channels/${channel.id}/threads`)
-                    return await results.json();    
+                    return await results.json();
                 }));
 
                 const threads_dict = channels_data.reduce((acc, channel, index) => {
@@ -97,54 +91,73 @@ function GroupPageTemp() {
                 console.error("error fetching in group : ", error);
             }
         }
-        //console.log("running useeffect");
         fetchGroupData();
     }, [group_id]);
 
-    function getChannelInfo(channel_id) {
-        const channel = channels.find(c => c.id == channel_id);
-        if (!channel) return null;
-        return (
-            <Fragment>
-                <div>{channel.name}</div>
-                <div>{channel.description}</div>
-                <div>-------------</div>
-            </Fragment>
-        );
+    const [value, setValue] = useState(0);
+
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
+
+    function goToWorkshop(group_id){
+        if (group_id) navigate(`/workshop/${group_id}`);
     }
-
-    async function deleteChannel(channel_id){
-        try{
-            //refresh lol
-        }
-        catch (err){
-
-        }
-        
-
-    }
+    
 
     return (
-        <div>
-            <button onClick={()=>(visitChannelForm())}>Create Channel$</button>
-            <div className="group-header">{group?.name}</div>
-            {Object.entries(threads).map(([channel_id, thread_list]) => (
-                <Button class="channel-card" key={channel_id} onClick={() => visitChannel(channel_id)}>
-                    <button onClick={(e)=>{
-                        e.stopPropagation();
-                        deleteChannel(channel_id);
-                    }}>X</button>
-                    {getChannelInfo(channel_id)}
-                    {thread_list.slice(0,3).map((thread) => (
-                        <Fragment key={thread.id}>
-                            <div>{thread.title}</div>
-                            <p>{thread.body?.substr(0, 25)}</p>
-                            <div>--------</div>
+        <div className='group-page-container'>
+            <Header />
+            
+            <div className='group-page-header'>
+                <img
+                    src="https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM="
+                    alt="placeholder"
+                    height="200"
+                    className="cropped-image"
+                />
+                <div className="group-page-title-description-layout">
+                    <div className='group-page-title'>
+                        <h1 id='title'>{group?.name}</h1>
+                    </div>
+                    <div className='green-line'></div>
+                    <div className = "header-button-group">
+                    <Button onClick={() => goToWorkshop(group_id)}> Workshop </Button>
+                    {isMember ? <button onClick={handleLeaveClick}>Leave</button> : <button onClick={handleJoinClick}>Join</button>}
+                     </div>
+                    <h2 id="description">{group?.description}</h2>
+                    
+                    
+                    
+                </div>
 
-                        </Fragment>
-                    ))}
-                </Button>
-            ))}
+                <Box className="tabs-container">
+                    <Tabs
+                        value={value}
+                        onChange={handleChange}
+                        aria-label="simple tabs example"
+                        className="tabs"
+                    >
+                        <Tab label="Channels" />
+                        <Tab label="Group Members" />
+                        <Tab label="Settings" />
+                    </Tabs>
+                </Box>
+            </div>
+
+            <div className='pannel-containers'>
+                <div className='left-pannel'>
+                    {value === 0 && <CreatePost handlePostClick={handlePostClick} curr_channel={currentChannel} />}
+                </div>
+
+                <div className='right-pannel'>
+                    <Box className="tab-content">
+                        {value === 0 && <div><ChannelOverview currentChannel={currentChannel} setCurrentChannel={setCurrentChannel} /> </div>}
+                        {value === 1 && <div><UsersInGroup/></div>}
+                        {value === 2 && <div><Settings/></div>}
+                    </Box>
+                </div>
+            </div>
         </div>
     );
 }

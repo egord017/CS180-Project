@@ -16,6 +16,10 @@ function NewGroup() {
     const onChange = (e) => {
         setInputs({...inputs, [e.target.name] : e.target.value})
     };
+
+    const handleExit = () => {
+        navigate('/groups');
+    }
     
     const userID = localStorage.userID;
 
@@ -42,25 +46,54 @@ function NewGroup() {
     };
     
     return (
-        <div className="new-group-container">
-            <h2>New Group</h2>
+        
+        <div className="new-group-page">
+
+            
+
             <form onSubmit={handleSubmit}>
-                {/* text input for group name */}
-                <input
-                    type="text"
-                    name="groupName"
-                    placeholder="Group Name..."
-                    value={groupName}
-                    onChange={e => onChange(e)}
-                />
+                
+            <button onClick={handleExit} id="exit">X</button> 
+                {/* placeholder for a group's image */}
+                <div className="firstline-container">
+
+                    
+                    
+                    <img src={"/images/placeholder.jpg"} alt={"groupimage"} className="image-box" />
+                
+                    <input
+                        type="text"
+                        id="groupname"
+                        name="groupName"
+                        placeholder="Group Name..."
+                        value={groupName}
+                        onChange={e => onChange(e)}
+                    />
+
+                    <select>
+                        <option value="" disabled selected>- Category -</option>
+                        <option value="public">Category 1</option>
+                        <option value="private">Category 2</option>
+                        <option value="hidden">Category 3</option>
+                    </select>
+
+                    
+                
+                </div>
+
+                <button id="submit" type="submit">✓</button>
                 {/* text area for group description */}
+               
                 <textarea
                      name="description"
+                     id="groupdescription"
                      placeholder="Group Description..."
                      value={description}
                      onChange={e => onChange(e)}
                 />
-                <button type="submit">Create Group</button>
+             
+                
+                
             </form>
         </div>
     );

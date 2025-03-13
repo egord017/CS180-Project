@@ -22,6 +22,11 @@ app.use('/channels', require('./src/routes/channels.js'));
 app.use("/threads", require("./src/routes/threads.js")); //threads route
 app.use("/comments", require("./src/routes/comments.js")); 
 app.use("/profile", require("./src/routes/profile.js")); //profile route
+app.use("/workshops", require("./src/routes/workshop.js")); //workshop
+app.use("/workshop-threads", require("./src/routes/workshopThread.js")); //workshop threads
+app.use("/critiques", require("./src/routes/critiques.js")); //critiques
+app.use("/usersgroups", require("./src/routes/usersGroups.js")); //critiques
+
 
 app.listen(5000, () => {
     console.log("Server is running on port 5000")

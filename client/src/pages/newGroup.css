@@ -1,25 +1,84 @@
-.new-group-container {
-    width: 80%;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    background: #f9f9f9;
-}
-
-input, textarea, select {
+.new-group-page {
     width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    border: 1px solid green;
-    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
 }
 
-button {
-    margin-top: 15px;
-    padding: 10px 20px;
-    background: green;
-    color: white;
+
+ 
+#groupname {
+    width: 730px;
+    height: 40px;
+    padding: 10px;
+    margin-top: 60px;
+    border: 2px solid #4A7C25;
+    border-radius: 10px;
+    
+}
+
+#groupdescription {
+    
+    border-radius: 10px;
+    padding: 10px;
+
+    border: 2px solid #4A7C25;
+    width: 1276px;
+    height: 400px;
+}
+
+.image-box {
+    border: 2px solid #4A7C25;
+    padding: 10px;
+    margin-bottom: 37px;
+    width: 200px;
+    height: 200px;
+}
+
+select {
+    border: 2px solid #4A7C25;
+    width: 251px;
+    height: 40px;
+    border-radius: 10px;
+    margin-top: 60px;
+}
+
+.firstline-container {
+    display: flex;
+    column-gap: 47px;
+    margin-top: 50px;
+   
+}
+
+#exit {
+
+    color: black;
     border: none;
     cursor: pointer;
+    background-color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  
+
+
+
+}
+
+#submit {
+   
+    color: black;
+    border: none;
+    background-color: white;
+    cursor: pointer;
+    position: fixed;
+    width: 48px;
+    height: 48px;
+    top: 0;
+    right: 0;
+    font-size: 20px;
 }

@@ -1,9 +1,13 @@
 const pool = require('../../db.js');
 
 async function post_comment(thread_id, user_id, body){
+    console.log("posting comment");
     try{
+
         const query = "INSERT INTO comments (thread_id, user_id, body) VALUES ($1, $2, $3) RETURNING *";
         const result = await pool.query(query, [thread_id, user_id, body]);
+
+        console.log("result:", result.rows[0]);
         return (result).rows[0];
     }
     catch (err){

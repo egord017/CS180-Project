@@ -160,3 +160,11 @@
   #register-page-background{
 	background-color: #4A7C25;
   }
+
+  #already-have-account{
+    margin-top: 5%;
+    margin-bottom: 0%;
+    padding-bottom: 0px;
+    font-size: 15px;
+  }
+  

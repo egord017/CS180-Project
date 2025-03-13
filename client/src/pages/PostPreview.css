@@ -1,0 +1,84 @@
+.thread-button {
+    all: unset; /* Resets all default MUI styles */
+    display: flex;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+	justify-content: space-between !important;
+	align-content: flex-start !important;
+    cursor: pointer;
+    width: 100%;
+	text-transform: none !important;
+	
+}
+
+.thread-button-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+	background-color: #a4b6a04b;
+	padding-left: 8px;
+	padding-top: 8px;
+	padding-bottom: 8px;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	width: 100%;
+	color: black;
+
+}
+
+.thread-button-body {
+    color: #555;
+	padding-left: 8px;
+	width: 100%;
+	padding-top: 4px;
+    margin: 4px 0;
+}
+
+.thread-button-id {
+    font-size: 0.85rem;
+    color: #888;
+}
+
+
+.post-button-container{
+	background-color: rgb(255, 255, 255);
+	margin-bottom: 2%;
+	margin-left: 1%;
+	width: 100%;
+	border: 1px rgba(100, 100, 100, 0.443) solid;
+	border-radius: 4px;
+	
+}
+
+.post-button-container:hover{
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Subtle shadow effect */
+
+}
+.arrow{
+	opacity: 0.3;
+	width: 2px;
+	height: 2px;
+	display: flex;
+	align-content: right;
+	padding-bottom: 3px;
+	margin-top: -25px;
+}
+.post-preview-layout{
+	display: flex; 
+
+}
+
+.bullet-point{
+	width: 7px;
+	background-color: black;
+	height: 7px;
+	border-radius: 50%;
+	margin-top: 10px;
+}
+
+.arrow-container{
+	display: flex; 
+	flex-direction: column;
+	margin-right: 10px;
+	align-items: flex-end;
+	font-size: small;
+}

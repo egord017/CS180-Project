@@ -6,8 +6,9 @@ import './threadPage.css';
 import "./groups.css";
 
 import { Link } from "react-router-dom";
+import Header from './Header';
 
-function Groups() {
+function Groups({setAuth}) {
   const [groupsData, setGroupsData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 

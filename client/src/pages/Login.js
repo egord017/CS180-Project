@@ -6,7 +6,7 @@ import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
-
+import Header from "./Header";
 
 const Login = ({setAuth}) => {
 
