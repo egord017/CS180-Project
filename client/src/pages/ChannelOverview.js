@@ -8,6 +8,7 @@ import { Card, Tab, Tabs, Box, CardContent, TextField, Modal, Typography } from 
 import Post from './Post';
 import ThreadPage from './threadPage'; 
 import './ChannelOverview.css';
+import * as userClient from "../utils/user";
 import ChannelPostForm from './channelPostForm';
 
 function ChannelOverview({ currentChannel, setCurrentChannel }) {
@@ -19,9 +20,15 @@ function ChannelOverview({ currentChannel, setCurrentChannel }) {
     const navigate = useNavigate();
     const [isChannelModalOpen, setIsChannelModalOpen] = useState(false);
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
 
     function visitChannel(channel_id) {
         setCurrentChannel(channel_id);
+    }
+
+    const checkMemberPerms = async () => {
+        const status = await userClient.isAdminOfGroup(group_id);
+        setIsAdmin(status);
     }
 
     useEffect(() => {
@@ -79,6 +86,7 @@ function ChannelOverview({ currentChannel, setCurrentChannel }) {
         }
         
         fetchGroupData();
+        checkMemberPerms();
     }, [group_id]);
 
     const handleOpenChannelModal = () => setIsChannelModalOpen(true);
@@ -97,10 +105,11 @@ function ChannelOverview({ currentChannel, setCurrentChannel }) {
                     <Button onClick={handleOpenChannelModal} >
                         Switch Channel
                     </Button>
-                    <Button onClick={handleOpenCreateModal}>
-                        Create New
-                    </Button>
-
+                    {isAdmin && (
+                        <Button onClick={handleOpenCreateModal}>
+                            Create New
+                        </Button>
+                    )}
                 </div>
                 
             </div>
