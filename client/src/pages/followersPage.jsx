@@ -4,9 +4,6 @@ import "./followersPage.css";
 import Header from './Header';
 
 function FollowersPage({setAuth}) {
-
-
-    
     const username = Object.values(useParams())[0];
     const [user, setUser] = useState(null);
     const [followers, setFollowers] = useState([]);

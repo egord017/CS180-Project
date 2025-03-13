@@ -10,22 +10,25 @@ export async function strike(event){
     const selected_text = selection.toString();
     const range= selection.getRangeAt(0);
 
+    const parent_anchor = selection.anchorNode.parentNode;
+    const parent_focus = selection.focusNode.parentNode;
+    
+    if (!parent_anchor?.classList.contains("passage-body")){
+        return;
+    }
+
     //get fragments and check for any text inserts.
     const frags = range.extractContents();
     console.log(frags);
     let hasInserts = false;
-    let outsideBounds = false;
     frags.childNodes.forEach((child)=>{
         if (child.tagName=="INS"){
             console.log("run.");
             hasInserts=true;
         }
-        if (child.tagName=="P"){
-            console.log("wtf");
-            outsideBounds=true;
-        }
     })
-    if (hasInserts && !outsideBounds){
+    if (hasInserts){
+        console.log("change");
         frags.childNodes.forEach((child)=>{
             if (child.tagName=="INS"){
             }
@@ -45,8 +48,8 @@ export async function strike(event){
         return;
         
     }
-    const parent_anchor = selection.anchorNode.parentNode;
-    const parent_focus = selection.focusNode.parentNode;
+    
+    
 
     if ((parent_anchor.tagName=="DEL" || parent_anchor.tagName=="MARK") && parent_anchor==parent_focus){
         console.log("SPLIT.");
@@ -90,7 +93,7 @@ export async function strike(event){
         let merged_string = "";
         if ((prev.nodeType==Node.TEXT_NODE && prev.nodeValue=="") || prev.tagName=="DEL"){
             const prev_element = new_string.previousElementSibling;
-            if (prev_element.tagName=="DEL"){
+            if (prev_element?.tagName=="DEL"){
                 // console.log("Merge before.");
                 // console.log(prev);
                 merged_string+=prev_element.innerText;
@@ -100,7 +103,7 @@ export async function strike(event){
         merged_string+=new_string.innerText;
         if ((next.nodeType==Node.TEXT_NODE && next.nodeValue=="") || next.tagName=="DEL"){
             const next_element = new_string.nextElementSibling;
-            if (next_element.tagName=="DEL"){
+            if (next_element?.tagName=="DEL"){
                 // console.log("Please merge after.");
                 // console.log(next);
                 merged_string+= next_element.innerText;
@@ -126,7 +129,12 @@ export async function mark(event){
     const selected_text = selection.toString();
     const range= selection.getRangeAt(0);
 
-
+    const parent_anchor = selection.anchorNode.parentNode;
+    const parent_focus = selection.focusNode.parentNode;
+    
+    if (!parent_anchor?.classList.contains("passage-body")){
+        return;
+    }
     const frags = range.extractContents();
     let hasInserts = false;
     frags.childNodes.forEach((child)=>{
@@ -154,8 +162,7 @@ export async function mark(event){
         return;
     }
 
-    const parent_anchor = selection.anchorNode.parentNode;
-    const parent_focus = selection.focusNode.parentNode;
+    
 
     if ((parent_anchor.tagName=="DEL" || parent_anchor.tagName=="MARK") && parent_anchor==parent_focus){
         console.log("SPLIT.");
@@ -202,9 +209,8 @@ export async function mark(event){
         let merged_string = "";
         if ((prev.nodeType==Node.TEXT_NODE && prev.nodeValue=="") || prev.tagName=="MARK"){
             const prev_element = new_string.previousElementSibling;
-            if (prev_element.tagName=="MARK"){
-                // console.log("Merge before.");
-                // console.log(prev);
+            if (prev_element?.tagName=="MARK"){
+
                 merged_string+=prev_element.innerText;
                 prev_element.remove();
             }
@@ -212,7 +218,7 @@ export async function mark(event){
         merged_string+=new_string.innerText;
         if ((next.nodeType==Node.TEXT_NODE && next.nodeValue=="") || next.tagName=="MARK"){
             const next_element = new_string.nextElementSibling;
-            if (next_element.tagName=="MARK"){
+            if (next_element?.tagName=="MARK"){
                 // console.log("Please merge after.");
                 // console.log(next);
                 merged_string+= next_element.innerText;
