@@ -33,12 +33,19 @@ function GroupPageTemp() {
         leaveGroup(group?.id, userClient.getUserID())
         window.location.reload()
     }
+    const [hasTitle, setHasTitle] = useState(true)
 
     const handlePostClick = async (body, postTitle, curr_channel) => {
         
-        if (!postTitle) return; // Stop if no title is entered
+        if (!postTitle) {
+                setHasTitle(false);
+                return;
+        } // Stop if no title is entered
+        setHasTitle(true);
 
         try {
+            
+
             const res = await fetch(`http://localhost:5000/threads`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -46,7 +53,7 @@ function GroupPageTemp() {
                     title: postTitle,
                     body: body,
                     channel_id: curr_channel, 
-                    user_id: '9a80cfb3-5535-4889-8fca-b213ae3607ba' // Dummy user_id
+                    user_id: localStorage.getItem("userID") // Dummy user_id
                 })
             });
             console.log("attempting to post: ", postTitle);
@@ -147,7 +154,9 @@ function GroupPageTemp() {
 
             <div className='pannel-containers'>
                 <div className='left-pannel'>
-                    {value === 0 && <CreatePost handlePostClick={handlePostClick} curr_channel={currentChannel} />}
+                    
+                    {value === 0 && <CreatePost handlePostClick={handlePostClick} curr_channel={currentChannel} hasTitle={hasTitle}/>}
+                    {!hasTitle && <p>Need a title</p>}
                 </div>
 
                 <div className='right-pannel'>

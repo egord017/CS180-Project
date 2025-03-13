@@ -3,7 +3,13 @@ import "./newGroup.css";
 import {newGroup} from "../api/groupAPI";
 import { useNavigate } from 'react-router-dom';
 
-function NewGroup() {
+function NewGroup({setAuth}) {
+    const [submitErrors, setSubmitErrors] = useState({
+        "group_name":"",
+        "description":""
+    });
+
+
     const [inputs, setInputs] = useState({
         groupName: "",
         description: ""
@@ -34,6 +40,36 @@ function NewGroup() {
         console.log({groupName, description, userID});
 
         try {
+            //clientside
+            let hasError = false;
+            if (groupName===""){
+                setSubmitErrors((prev)=>({...prev, group_name:"Group must have a name."}));
+                hasError=true;
+            }
+            else if (groupName.trim()===""){
+                setSubmitErrors((prev)=>({...prev, group_name:"Group must have letters."}));
+                hasError=true;
+
+            }
+            else{
+                setSubmitErrors((prev)=>({...prev, group_name:""}));
+            }
+            if (description===""){
+                setSubmitErrors((prev)=>({...prev, description:"Must include description."}));
+                hasError=true;
+
+            }
+            else if (description.trim()===""){
+                setSubmitErrors((prev)=>({...prev, description:"Description must contain letters."}));
+                hasError=true;
+
+            }
+            else{
+                setSubmitErrors((prev)=>({...prev, description:""}));
+            }
+            if (hasError) return;
+
+
             const response = await newGroup(groupName, description, userID);
             console.log(response)
             if(response && response.created_group){
@@ -46,22 +82,24 @@ function NewGroup() {
     };
     
     return (
-        
-        <div className="new-group-page">
-
-            
-
+        <div>
+            <Header setAuth={setAuth}/>
+            <div className="group-form">
+            <h2>New Group</h2>
             <form onSubmit={handleSubmit}>
                 
             <button onClick={handleExit} id="exit">X</button> 
                 {/* placeholder for a group's image */}
+
                 <div className="firstline-container">
 
                     
                     
                     <img src={"/images/placeholder.jpg"} alt={"groupimage"} className="image-box" />
-                
-                    <input
+                    <div>
+                {submitErrors.group_name && <p>{submitErrors.group_name}</p>}
+                {submitErrors.description && <p>{submitErrors.description}</p>}
+                <input
                         type="text"
                         id="groupname"
                         name="groupName"
@@ -69,19 +107,13 @@ function NewGroup() {
                         value={groupName}
                         onChange={e => onChange(e)}
                     />
-
-                    <select>
-                        <option value="" disabled selected>- Category -</option>
-                        <option value="public">Category 1</option>
-                        <option value="private">Category 2</option>
-                        <option value="hidden">Category 3</option>
-                    </select>
-
+                    </div>
                     
-                
+
+                    <button id="submit" type="submit">✓</button>
+
                 </div>
 
-                <button id="submit" type="submit">✓</button>
                 {/* text area for group description */}
                
                 <textarea
@@ -92,9 +124,9 @@ function NewGroup() {
                      onChange={e => onChange(e)}
                 />
              
-                
-                
             </form>
+            </div>
+            
         </div>
     );
 }
