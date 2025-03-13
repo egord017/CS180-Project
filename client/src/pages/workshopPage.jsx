@@ -2,7 +2,6 @@ import React,{Fragment, useState, useEffect} from 'react';
 import {useNavigate, useParams, Link} from 'react-router-dom';
 import Button from '../components/Button';
 import './workshopPage.css';
-import Header from './Header.js';
 
 
 function WorkshopPage(){
@@ -50,7 +49,6 @@ function WorkshopPage(){
 
     return (
         <div>
-            <Header/>
             <Button onClick={()=>{backToGroup(workshop?.group_id)}}>Back To Group</Button>
             <Button onClick={()=>{visitThreadForm()}}>Post</Button>
             <div>{group?.name}</div>
