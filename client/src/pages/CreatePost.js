@@ -3,7 +3,7 @@ import { Card, CardContent, TextField } from '@mui/material';
 import Button from '../components/Button';
 import "./CreatePost.css";
 
-const CreatePost = ({ handlePostClick, curr_channel }) => {
+const CreatePost = ({ handlePostClick, curr_channel, hasTitle }) => {
     const [body, setBody] = useState('');
     const [postTitle, setPostTitle] = useState('');
 
@@ -23,7 +23,7 @@ const CreatePost = ({ handlePostClick, curr_channel }) => {
         >
             <CardContent className='post-card'>
                 <h4 id='new-post-title'>Create New Thread</h4>
-
+                {!hasTitle && <p>Need a title</p>}
                 <TextField
                     fullWidth
                     multiline

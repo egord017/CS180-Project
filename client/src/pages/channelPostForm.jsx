@@ -24,6 +24,8 @@ function ChannelPostForm({handleCloseChannelModal, setCurrentChannel}){
         console.log(event);
         event.preventDefault();
         try{
+
+
             const res = await fetch("http://localhost:5000/channels", 
                 {
                     method:"POST",

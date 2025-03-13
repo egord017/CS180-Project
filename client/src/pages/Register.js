@@ -119,10 +119,10 @@ const Register = ({setAuth}) => {
         <h1  id = "login-header">Register</h1>
         <form onSubmit = {onSubmitForm}>
             <h2>USERNAME</h2>
-                <input type="text" name="username" className = "form-control my-3" value={username} onChange={e => onChange(e)} required/> 
+                <input type="text" name="username" className = "form-control my-3" value={username} onChange={e => onChange(e)} /> 
                 {regError.username && <p>{regError.username}</p>}
             <h2>EMAIL</h2>
-                <input type="email" name="email" className = "form-control my-3" value={email} onChange={e => onChange(e)} required/>
+                <input type="email" name="email" className = "form-control my-3" value={email} onChange={e => onChange(e)} />
                 {regError.email && <p>{regError.email}</p>}
 
             <h2>PASSWORD</h2>

@@ -51,7 +51,7 @@ CREATE TABLE channels (
     id SERIAL PRIMARY KEY,
     group_id INTEGER,
     name TEXT NOT NULL,
-    description TEXT NOT NULL,
+    description TEXT,
     FOREIGN KEY (group_id) REFERENCES groups(id) ON DELETE CASCADE
 );
 

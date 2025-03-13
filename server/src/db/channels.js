@@ -30,6 +30,11 @@ async function post_channel(group_id, name, description){
     try{
         const query = "INSERT into channels (group_id, name, description) VALUES ($1, $2, $3) RETURNING *";
         const results = await pool.query(query, [group_id, name, description]);
+
+        if (results.rows.length ==0){
+            return null;
+        }
+        
         return results.rows[0];
     }
     catch (err){
