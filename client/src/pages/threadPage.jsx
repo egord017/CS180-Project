@@ -122,7 +122,7 @@ function ThreadPage({ setAuth }) {
   return (
     <div>
       <Header setAuth={setAuth} />
-
+        
       <div>
         <Button className="back-btn" onClick={() => backToChannel(thread?.channel_id)}>
           Back
@@ -131,29 +131,25 @@ function ThreadPage({ setAuth }) {
         <Button className="delete-btn" onClick={() => deleteThread()}>
           Delete Thread
         </Button>
-
+        
+        
         <div className="info-container">
           <p className="group-name">{group?.name}</p>
           <p className="channel-name">{channel?.name}</p>
         </div>
 
-        {/* 
-          This container is for the thread itself.
-          We'll left-align the title & body in the CSS below.
-        */}
         <div className="op-container">
           <p className="op-username"></p>
           <p className="op-title">{thread?.title}</p>
+          <Link to={`/profile/${op?.username}`} className="op-username">
+             {op?.username}
+          </Link>
           <p className="op-body">{thread?.body}</p>
 
-          <Link to={`/profile/${op?.username}`} className="op-username">
-            {op?.username}
-          </Link>
+          <button className="reply-button" onClick={onCreateCommentPress}>
+            Reply
+          </button>
         </div>
-
-        <button className="reply-button" onClick={onCreateCommentPress}>
-          Reply
-        </button>
 
         {isCommenting ? (
           <form onSubmit={handleCommentSubmit}>
@@ -172,15 +168,25 @@ function ThreadPage({ setAuth }) {
           <h3>Comments</h3>
           {comments.map((comment) => (
             <div key={comment.id} className="comment-container">
-              <p className="username">{commenters[comment?.user_id]?.username}</p>
-              <p className="comment-text">{comment?.body}</p>
+              {/* 
+                Wrap the username & text in a 'comment-content' div 
+                so the delete button can flex to the right 
+              */}
+              <div className="comment-content">
+                <Link to={`/profile/${commenters[comment?.user_id]?.username}`} className="username">
+                    {commenters[comment?.user_id]?.username}
+                </Link>
+                <p className="comment-text">{comment?.body}</p>
+              </div>
               <button className="del-btn" onClick={() => deleteComment(comment.id)}>
                 Delete
               </button>
             </div>
           ))}
         </div>
+        
       </div>
+      
     </div>
   );
 }
