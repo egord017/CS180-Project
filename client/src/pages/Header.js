@@ -12,7 +12,7 @@ const Header = ({setAuth}) => {
     const user_name = await UserClient.getUsername();
     console.log("username:",user_name);
 
-    navigate(`/profile/profile?username=${user_name}`);
+    navigate(`/profile/${user_name}`);
   }
 
 const logout = async () => {

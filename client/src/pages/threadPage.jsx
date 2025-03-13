@@ -167,7 +167,7 @@ function ThreadPage({setAuth}){
             </div>
 
             <div className="op-container">
-            <Link to={`/profile/${op?.userid}`} className="op-username"> 
+            <Link to={`/profile/${op?.username}`} className="op-username"> 
                 {op?.username}
             </Link>
                 <p className="op-username"></p> 
