@@ -10,6 +10,7 @@ import Header from './Header';
 
 function Groups({setAuth}) {
   const [groupsData, setGroupsData] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
 
@@ -21,21 +22,35 @@ function Groups({setAuth}) {
     fetchGroups();
   }, []);
 
+  const filteredGroups = groupsData.filter(group =>
+    group.name.toLowerCase().includes(searchQuery.toLowerCase()) // Case-insensitive search
+  );
+
   return (
-    <div><Header setAuth={setAuth}/>
-    <div className = "background">
-      <div className="groups-container">
-        <div className="groups-header">
-          
-          <h1>View Groups</h1>
-          <Link to="/groups/new_group">
-            <button className="groups-add-button">
-              <span>+</span>
-            </button>
-          </Link>
-        </div>
-        <div className="groups-grid">
-          {groupsData.map((group) => (
+    <div className="background">
+    <div className="groups-container">
+      <div className="groups-header">
+        <h1>Join A Group</h1>
+
+        {/* Search Bar */}
+        <input
+          type="text"
+          placeholder="Search for a group..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="groups-search-bar"
+        />
+
+        <Link to="/groups/new_group">
+          <button className="groups-add-button">
+            <span>+</span>
+          </button>
+        </Link>
+      </div>
+
+      <div className="groups-grid">
+        {filteredGroups.length > 0 ? (
+          filteredGroups.map((group) => (
             <Link to={`/group/${group.id}`} key={group.id} className="group-card">
               <div className="group-card-top"></div>
               <div className="group-card-body">
@@ -43,11 +58,13 @@ function Groups({setAuth}) {
                 <p className="group-subtitle">{group.description}</p>
               </div>
             </Link>
-          ))}
-        </div>
+          ))
+        ) : (
+          <p>No groups found</p>
+        )}
       </div>
     </div>
-    </div>
+  </div>
   );
 }
 
