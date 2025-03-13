@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import "./followersPage.css";
+import Header from './Header';
 
-function FollowersPage() {
+function FollowersPage({setAuth}) {
+
+
+    
     const username = Object.values(useParams())[0];
     const [user, setUser] = useState(null);
     const [followers, setFollowers] = useState([]);
@@ -34,33 +39,49 @@ function FollowersPage() {
 
 
     return (
-        <div>
-            <button onClick={()=>{setShowFollowing(false)}}>Followers</button>
+    <div className="followers-page-container">
+    <Header setAuth={setAuth}/>
 
-            <button onClick={()=>(setShowFollowing(true))}>Following</button>
+            
+            <div className="followers-buttons-container">
+                <button id="followers" onClick={()=>{setShowFollowing(false)}}>Followers</button>
+                <button id="followers" onClick={()=>(setShowFollowing(true))}>Following</button>
+            </div>
+
             {showFollowing ? 
-            (<><h1>Following</h1>
-            {following?.map((follower)=>(
-                
-                <div>
-                    <div>{follower?.username}</div>
-                </div>
-                
-            ))}
-            </>)
+            (
+            <> <div className="followers-title"><h1>Following</h1></div>
+
+            
+                {following?.map((follower)=>(
+            
+                    <div className="followers-list-container">
+                        <div>{follower?.username}</div>
+                    </div>
+
+                ))
+                }
+            
+            
+            </> 
+            )
         
             :
-            (<><h1>Followers</h1>
+            (<><div className="followers-title"><h1>Followers</h1></div>
             {followers?.map((follower)=>(
-                <div>
+                <div className="followers-list-container">
                     <div>{follower?.username}</div>
                 </div>
                 
             ))}</>)
             }
+            
 
 
-        </div>
+            
+
+    </div>
+
     );
 }
 

@@ -82,13 +82,21 @@ function NewGroup({setAuth}) {
     };
     
     return (
-        <div>
-            <Header setAuth={setAuth}/>
+
+        
+   <div>
+
+//  <Header setAuth={setAuth}/>
+        <div className="new-group-page">
+            
+            <button onClick={handleExit} id="exit">X</button> 
+              
             <div className="group-form">
-            <h2>New Group</h2>
+           
+
             <form onSubmit={handleSubmit}>
                 
-            <button onClick={handleExit} id="exit">X</button> 
+            
                 {/* placeholder for a group's image */}
 
                 <div className="firstline-container">
@@ -126,7 +134,7 @@ function NewGroup({setAuth}) {
              
             </form>
             </div>
-            
+          </div>
         </div>
     );
 }
