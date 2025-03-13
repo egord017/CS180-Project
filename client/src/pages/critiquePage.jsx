@@ -5,7 +5,7 @@ import './threadPage.css';
 import Header from './Header.js';
 import {get_groups} from "../api/groupAPI.js"
 
-function CritiquePage(){
+function CritiquePage({setAuth}){
     const {critique_id} = useParams();
     const [critique, setCritique] = useState(null);
     const [thread, setThread] = useState(null);
@@ -39,7 +39,7 @@ function CritiquePage(){
    return (
 
     <div>
-        <Header/>
+        <Header setAuth = {setAuth}/>
         <button className="back-to-thread-btn" onClick={()=>{backToThread()}}>Back</button>
         <div className="critique-container">
             <h1>Critique by {critic?.username}</h1>

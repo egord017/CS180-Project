@@ -5,7 +5,7 @@ import './workshopPage.css';
 import Header from './Header.js';
 
 
-function WorkshopPage(){
+function WorkshopPage({setAuth}){
 
     const workshop_id = Object.values(useParams())[0];
     const [workshop, setWorkshop] =  useState(null);
@@ -50,7 +50,7 @@ function WorkshopPage(){
 
     return (
         <div>
-            <Header/>
+            <Header setAuth = {setAuth}/>
             <Button onClick={()=>{backToGroup(workshop?.group_id)}}>Back To Group</Button>
             <Button onClick={()=>{visitThreadForm()}}>Post</Button>
             <div>{group?.name}</div>

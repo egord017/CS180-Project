@@ -8,7 +8,7 @@ import Header from './Header';
 //channel/id/submit ?
 
 
-function WorkshopThreadPostForm(){
+function WorkshopThreadPostForm({setAuth}){
     const [title, setTitle] = useState("");
     const [context, setContext] = useState("");
     const [preference, setPreference] = useState("");
@@ -54,7 +54,7 @@ function WorkshopThreadPostForm(){
 
     return (
         <div>
-            <Header/>
+            <Header setAuth = {setAuth}/>
             <div className="page">
         
         <form onSubmit={handleSubmit}>

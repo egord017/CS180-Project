@@ -109,7 +109,7 @@ function App() {
             
             <Route 
               path="/channel/:channel_id" 
-              element={isAuthenticated ? <ChannelPage/> : <Navigate to="/login" />}
+              element={isAuthenticated ? <ChannelPage setAuth = {setAuth}/> : <Navigate to="/login" />}
             />
             <Route 
               path="/thread/:thread_id" 
@@ -117,15 +117,15 @@ function App() {
             />
             <Route 
               path="/group/:group_id/channel-submit" 
-              element={<ChannelPostForm/>}
+              element={isAuthenticated? <ChannelPostForm setAuth={setAuth}/> : <Navigate to="/login"/>}
             />
             <Route 
             path="/group/:group_id/workshop-submit" 
-            element={<WorkshopPostForm/>}
+            element={isAuthenticated? <WorkshopPostForm setAuth={setAuth}/> : <Navigate to="/login"/>}
             />
             <Route 
               path="/channel/:channel_id/submit" 
-              element={isAuthenticated ? <ThreadPostForm/> : <Navigate to="/login" />}
+              element={isAuthenticated ? <ThreadPostForm setAuth = {setAuth}/> : <Navigate to="/login" />}
             />
             <Route 
               path="/profile/:userName" 
@@ -138,27 +138,27 @@ function App() {
            />
             <Route
               path="/new_group"
-              element={isAuthenticated? <NewGroup /> : <Navigate to="/login" />}
+              element={isAuthenticated? <NewGroup setAuth = {setAuth}/> : <Navigate to="/login" />}
             />  
             <Route 
               path="/workshop/:workshop_id/" 
-              element={isAuthenticated ? <WorkshopPage/> : <Navigate to="/login" />}
+              element={isAuthenticated ? <WorkshopPage setAuth = {setAuth}/> : <Navigate to="/login" />}
             />
             <Route 
               path="/workshop-thread/:workshop_thread_id/" 
-              element={isAuthenticated ? <WorkshopThreadPage/> : <Navigate to="/login" />}
+              element={isAuthenticated ? <WorkshopThreadPage setAuth = {setAuth}/> : <Navigate to="/login" />}
             />
             <Route 
               path="/critique/:critique_id/" 
-              element={isAuthenticated ? <CritiquePage/> : <Navigate to="/login" />}
+              element={isAuthenticated ? <CritiquePage setAuth = {setAuth}/> : <Navigate to="/login" />}
             />
             <Route 
               path="/workshop/:workshop_id/submit" 
-              element={isAuthenticated ? <WorkshopThreadPostForm/> : <Navigate to="/login" />}
+              element={isAuthenticated ? <WorkshopThreadPostForm setAuth = {setAuth}/> : <Navigate to="/login" />}
             />
             <Route 
               path="/workshop-thread/:workshop_thread_id/submit" 
-              element={isAuthenticated ? <CritiquePostForm/> : <Navigate to="/login" />}
+              element={isAuthenticated ? <CritiquePostForm setAuth = {setAuth}/> : <Navigate to="/login" />}
             />
             
           </Routes>

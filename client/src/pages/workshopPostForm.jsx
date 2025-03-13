@@ -5,7 +5,7 @@ import Button from '../components/Button';
 
 import Header from './Header.js';
 
-function ChannelPostForm(){
+function ChannelPostForm({setAuth}){
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const {group_id} = useParams();
@@ -45,7 +45,7 @@ function ChannelPostForm(){
     return (
         <div>
             <Fragment>
-            <Header/>
+            <Header setAuth = {setAuth}/>
             <div>Create New Workshop Channel</div>
             <form onSubmit={handleSubmit}>
                 <label for="channel_name" require="true">Workshop Name* :</label>

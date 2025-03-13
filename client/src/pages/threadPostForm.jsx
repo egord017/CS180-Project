@@ -6,9 +6,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 //channel_id (should be supplied ...in URL?)
 //channel/id/submit ?
 import './threadPostForm.css';
+import Header from './Header';
 
 
-function ThreadPostForm(){
+function ThreadPostForm({setAuth}){
     const [title, setTitle] = useState("");
     const [body, setBody] = useState("");
     const {channel_id} = useParams();
@@ -46,6 +47,7 @@ function ThreadPostForm(){
 
     return (
         <div className="form-container">
+            <Header setAuth = {setAuth}/>
             <h2 className="create-thread"> Create New Thread </h2>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="title">Title:</label>

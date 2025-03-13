@@ -2,9 +2,10 @@ import React,{Fragment, useState, useEffect} from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Button from '../components/Button';
 import './threadPage.css';
+import Header from './Header';
 
 
-function ChannelPage(){
+function ChannelPage({setAuth}){
 
     const channel_id = Object.values(useParams())[0];
     const [channel, setChannel] =  useState(null);
@@ -48,6 +49,7 @@ function ChannelPage(){
 
     return (
         <div>
+            <Header setAuth = {setAuth}/>
             <Button onClick={()=>{backToGroup(channel?.group_id)}}>Back To Group</Button>
             <Button onClick={()=>{visitThreadForm()}}>Post</Button>
             <div>{group?.name}</div>

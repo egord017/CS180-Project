@@ -11,7 +11,7 @@ import {strike, mark} from "../utils/markup.js";
 //channel/id/submit ?
 
 
-function CritiquePostForm(){
+function CritiquePostForm({setAuth}){
     const [opening, setOpening] = useState("");
     const [body, setBody] = useState("");
     const [closing, setClosing] = useState("");
@@ -134,7 +134,7 @@ function CritiquePostForm(){
 
     return (
         <div>
-          <Header/>
+          <Header setAuth = {setAuth}/>
           <div className="page-critique">
             <div className="passage">
                 <h3>Author's Notes</h3>

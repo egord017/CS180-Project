@@ -3,6 +3,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Button from '../components/Button';
 import './channelPostForm.css';
+import Header from './Header';
 
 //NAME
 //DESCRIPTION
@@ -13,7 +14,7 @@ import './channelPostForm.css';
 //channel/id/submit ?
 
 
-function ChannelPostForm({handleCloseChannelModal, setCurrentChannel}){
+function ChannelPostForm({handleCloseChannelModal, setCurrentChannel, setAuth}){
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const {group_id} = useParams();
@@ -57,6 +58,7 @@ function ChannelPostForm({handleCloseChannelModal, setCurrentChannel}){
 
     return (
         <div className="form-container">
+            <Header setAuth = {setAuth}/>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="channel_name">Channel Name: </label>
                 <input type="text" id="channel_name" value={name} onChange={(e) => setName(e.target.value)} required />
