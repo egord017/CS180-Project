@@ -11,8 +11,9 @@ async function get_group(req, res){
     res.send(results);
 }
 
-async function get_users_group(req, res){
-    const group_id = req.body;
+async function get_users_group(req, res) {
+    // Extract group_id from the route parameters and convert to a number
+    const group_id = Number(req.params.group_id); // or parseInt(req.params.group_id, 10)
     const results = await groups_db.get_users_group(group_id);
     res.send(results);
 }

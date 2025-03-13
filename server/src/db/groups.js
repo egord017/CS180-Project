@@ -18,7 +18,7 @@ async function get_group(group_id){
 
 async function get_users_group(group_id){
     try {
-        const users = await pool.query("SELECT users.username FROM users JOIN user_groups on users.userid = user_groups.user_id WHERE user_groups.group_id = $1", 
+        const users = await pool.query("SELECT users.username FROM users JOIN users_groups on users.userid = users_groups.user_id WHERE users_groups.group_id = $1", 
             [group_id]);
 
         return users.rows;
