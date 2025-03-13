@@ -45,11 +45,12 @@ export const joinGroup = async (group_id, user_id) => {
     });
 
     const parseResponse = await response.json();
+    console.log(parseResponse);
 
     return parseResponse;
 
   } catch (error) {
-    console.error("Error joining grouop", error);
+    console.error("Error joining group", error);
   }
 };
 
@@ -58,16 +59,17 @@ export const leaveGroup = async (group_id, user_id) => {
     const body = {group_id, user_id}
 
     const response = await fetch("http://localhost:5000/groups/leave", {
-      method: "POST",
+      method: "DELETE",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify(body)
     });
 
     const parseResponse = await response.json();
+    console.log(parseResponse);
 
     return parseResponse;
 
   } catch (error) {
-    console.error("Error joining grouop", error);
+    console.error("Error leaving grouop", error);
   }
 };

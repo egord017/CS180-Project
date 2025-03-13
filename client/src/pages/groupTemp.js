@@ -7,6 +7,7 @@ import ChannelOverview from './ChannelOverview';
 import CreatePost from './CreatePost';  // Import CreatePost
 import { Box, Tabs, Tab } from '@mui/material';
 import * as userClient from "../utils/user";
+import { joinGroup, leaveGroup } from "../api/groupAPI";
 
 import './GroupPage.css';
 import UsersInGroup from './UsersInGroup';
@@ -21,6 +22,17 @@ function GroupPageTemp() {
 
     const [isMember, setIsMember] = useState(false);
     const navigate = useNavigate();
+
+    const handleJoinClick = async ()=> {
+        console.log(userClient.getUserID(), group?.id);
+        joinGroup(group?.id, userClient.getUserID())
+        window.location.reload()
+    }
+    const handleLeaveClick = async ()=> {
+        console.log(userClient.getUserID(), group?.id);
+        leaveGroup(group?.id, userClient.getUserID())
+        window.location.reload()
+    }
 
     const handlePostClick = async (body, postTitle, curr_channel) => {
         
@@ -111,8 +123,7 @@ function GroupPageTemp() {
                     <div className='green-line'></div>
                     <div className = "header-button-group">
                     <Button onClick={() => goToWorkshop(group_id)}> Workshop </Button>
-                    <Button> Join Group </Button>
-                        <Button> Leave Group </Button>
+                    {isMember ? <button onClick={handleLeaveClick}>Leave</button> : <button onClick={handleJoinClick}>Join</button>}
                      </div>
                     <h2 id="description">{group?.description}</h2>
                     
