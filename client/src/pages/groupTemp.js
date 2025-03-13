@@ -119,11 +119,6 @@ function GroupPageTemp({setAuth}) {
         setValue(newValue);
     };
 
-    function goToWorkshop(group_id){
-        if (group_id) navigate(`/workshop/${group_id}`);
-    }
-    
-
     return (
         <div className='group-page-container'>
             <Header setAuth = {setAuth}/>
@@ -141,7 +136,6 @@ function GroupPageTemp({setAuth}) {
                     </div>
                     <div className='green-line'></div>
                     <div className = "header-button-group">
-                    <Button onClick={() => goToWorkshop(group_id)}> Workshop </Button>
                     {isMember ? <button onClick={handleLeaveClick}>Leave</button> : <button onClick={handleJoinClick}>Join</button>}
                      </div>
                     <h2 id="description">{group?.description}</h2>
